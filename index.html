@@ -51,10 +51,10 @@
         .generator-card {
             flex: 2;
             min-width: 300px;
-            background: rgba(18, 30, 26, 0.75);
+            background: rgba(18, 30, 26, 0.85);
             backdrop-filter: blur(16px);
             border-radius: 64px;
-            border: 1px solid rgba(255, 210, 100, 0.3);
+            border: 1px solid rgba(255, 210, 100, 0.4);
             box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 215, 0, 0.2) inset;
             padding: 32px 28px 40px;
             transition: all 0.3s;
@@ -105,14 +105,16 @@
         }
 
         .sub-hero {
-            background: rgba(0,0,0,0.4);
-            padding: 10px 20px;
+            background: rgba(0,0,0,0.5);
+            padding: 12px 20px;
             border-radius: 60px;
-            font-size: 0.85rem;
-            color: #FADB67;
+            font-size: 0.9rem;
+            color: #FFE59A;
             margin: 16px 0;
             text-align: center;
             backdrop-filter: blur(4px);
+            font-weight: 600;
+            letter-spacing: 0.3px;
         }
 
         .input-group {
@@ -195,6 +197,25 @@
             max-height: 340px;
             overflow-y: auto;
             border: 1px solid #d4a53e;
+        }
+
+        /* CORREÇÃO DE CONTRASTE - TEXTO DO PLACEHOLDER DOS RESULTADOS AGORA CLARO E LEGÍVEL */
+        .results .empty-message {
+            text-align: center;
+            padding: 28px 20px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #FFECB3 !important;  /* amarelo claro forte */
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.3);
+            border-radius: 32px;
+            letter-spacing: 0.5px;
+        }
+
+        .results .empty-message span {
+            display: inline-block;
+            font-size: 1.3rem;
+            margin: 6px 0;
         }
 
         .results span {
@@ -357,11 +378,15 @@
         </div>
         <div id="alert" class="alert" style="display: none;"></div>
         <div class="results" id="results">
-            <div style="text-align:center; padding:20px;">✨ Clique em "GERAR CENTENAS" ✨<br>⚡ Centenas de emails em 1 segundo ⚡</div>
+            <!-- TEXTO VISÍVEL E COM ALTO CONTRASTE (CORRIGIDO) -->
+            <div class="empty-message">
+                ✨ Gere centenas de emails rapidamente ✨<br>
+                ⚡ Basta digitar seu Gmail ⚡
+            </div>
         </div>
         <div id="count" class="count"></div>
         <div class="credit">
-            🌟 Nossa página <a href="https://geradordegmail.netlify.app/" target="_blank">geradordegmail.netlify.app</a> • tecnologia inovadora 🌟
+            🌟 powered by <a href="https://masandigital.com/" target="_blank">masandigital.com</a> • tecnologia inovadora 🌟
         </div>
     </div>
 
@@ -435,8 +460,14 @@
             alertDiv.style.color = isErr ? "#b13e0c" : "#1d5a45";
         }
 
+        // Função para resetar a UI com a mensagem de boas-vindas totalmente legível
         function resetUI() {
-            resultsDiv.innerHTML = `<div style="text-align:center; padding:20px;">✨ Gere centenas de emails rapidamente ✨<br>⚡ Basta digitar seu Gmail ⚡</div>`;
+            resultsDiv.innerHTML = `
+                <div class="empty-message">
+                    ✨ Gere centenas de emails rapidamente ✨<br>
+                    ⚡ Basta digitar seu Gmail ⚡
+                </div>
+            `;
             countDiv.innerHTML = '';
             hideAlert();
         }
@@ -456,8 +487,7 @@
                     results.push(current);
                     return;
                 }
-                // 1) sem ponto antes do próximo char (quando idx >0 já temos current com chars[idx-1])
-                // porém a lógica correta: sempre adiciona próximo caractere
+                // 1) sem ponto antes do próximo char
                 backtrack(idx+1, current + chars[idx]);
                 // 2) adiciona ponto + caractere (se não for o primeiro caractere já incluso)
                 if(idx > 0) {
@@ -468,10 +498,8 @@
             return results;
         }
 
-        // Segurança anti-lag com limite de exibição (mas gera todas)
         function getSafeVariations(localPart) {
             let all = generateAllDotCombinations(localPart);
-            // Remover possíveis duplicatas raras
             all = [...new Set(all)];
             return all;
         }
@@ -481,42 +509,39 @@
             let fullEmail = emailInput.value.trim();
             if(!fullEmail) {
                 showAlert('Digite um e-mail Gmail válido!', true);
-                resultsDiv.innerHTML = `<div style="text-align:center; padding:20px;">📛 Digite um e-mail para começar...</div>`;
+                resultsDiv.innerHTML = `<div class="empty-message" style="color:#FFD966;">📛 Digite um e-mail para começar...</div>`;
                 countDiv.innerHTML = '';
                 return;
             }
             const lowerEmail = fullEmail.toLowerCase();
             if(!lowerEmail.includes('@gmail.com') || !lowerEmail.endsWith('gmail.com')) {
                 showAlert('❌ Apenas endereços @gmail.com funcionam.', true);
-                resultsDiv.innerHTML = `<div style="text-align:center; padding:20px;">⚠️ Use somente GMAIL (exemplo@gmail.com) ⚠️</div>`;
+                resultsDiv.innerHTML = `<div class="empty-message" style="color:#FFD966;">⚠️ Use somente GMAIL (exemplo@gmail.com) ⚠️</div>`;
                 countDiv.innerHTML = '';
                 return;
             }
             const atPos = fullEmail.indexOf('@');
             let localPart = fullEmail.substring(0, atPos);
-            const domainFixed = '@gmail.com'; // garantia
+            const domainFixed = '@gmail.com';
 
             if(!localPart.length) {
                 showAlert('O nome antes do @ não pode ficar vazio', true);
                 return;
             }
 
-            // Limpeza de pontos para geração pura
             const baseClean = localPart.replace(/\./g, '');
             if(baseClean.length === 0) {
                 showAlert('Nome inválido após remover pontos', true);
                 return;
             }
 
-            // Gerar todas combinações (centenas/milhares)
             let allVariants = getSafeVariations(baseClean);
             if(allVariants.length === 0) {
-                resultsDiv.innerHTML = `<div style="text-align:center; padding:20px;">⚠️ Nenhuma combinação gerada. Tente outro nome.</div>`;
+                resultsDiv.innerHTML = `<div class="empty-message">⚠️ Nenhuma combinação gerada. Tente outro nome.</div>`;
                 countDiv.innerHTML = '';
                 return;
             }
 
-            // Montar lista final com domínio
             let finalEmails = allVariants.map(part => part + domainFixed);
             const MAX_VISUAL = 1500;
             let truncated = false;
@@ -526,7 +551,6 @@
                 displayList = finalEmails.slice(0, MAX_VISUAL);
             }
 
-            // Renderização com interação
             const resultsHtml = displayList.map(email => `<span class="email-item" data-email="${escapeHtml(email)}">📩 ${escapeHtml(email)}</span>`).join('');
             resultsDiv.innerHTML = resultsHtml;
             const totalCount = allVariants.length;
@@ -536,7 +560,6 @@
 
             showToast(`✔️ ${totalCount} variações criadas! Clique em qualquer e-mail para copiar.`, false);
 
-            // Adicionar evento copiar individual
             document.querySelectorAll('.email-item').forEach(el => {
                 el.addEventListener('click', (e) => {
                     const mail = el.getAttribute('data-email') || el.innerText.replace('📩','').trim();
@@ -592,7 +615,6 @@
             });
         }
 
-        // Event listeners
         generateBtn.addEventListener('click', generateVariations);
         copyAllBtn.addEventListener('click', copyAllVariations);
         resetBtn.addEventListener('click', resetGenerator);
@@ -600,11 +622,9 @@
             if(e.key === 'Enter') generateVariations();
         });
 
-        // Placeholder impactante
         emailInput.placeholder = "ex: seuemail@gmail.com → centenas de emails!";
         resetUI();
 
-        // pequeno detalhe: tooltips e brilho
         generateBtn.title = "Gere até milhares de variações de e-mail em segundos!";
         copyAllBtn.title = "Copiar todos os e-mails gerados de uma vez";
         resetBtn.title = "Limpar tudo e começar novamente";
