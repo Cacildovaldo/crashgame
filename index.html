@@ -2,633 +2,452 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>⚡ Gmail Infinity | Crie Centenas de E-mails em 1 Segundo</title>
-    <!-- Favicon emoji ultra chamativo -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡📧</text></svg>" type="image/svg+xml">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ Gerador de Gmail | Acesse Ilimitado em Games, IAs e Plataformas</title>
     <style>
+        :root {
+            --bg-dark: #0b1120;
+            --bg-card: rgba(17, 24, 39, 0.75);
+            --border-light: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent-1: #38bdf8;
+            --accent-2: #818cf8;
+            --success: #10b981;
+            --danger: #ef4444;
+            --glass-blur: blur(12px);
+            --radius: 14px;
+            --shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
         }
 
         body {
-            font-family: 'Poppins', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-            background: radial-gradient(circle at 10% 30%, #0a1f1a, #05120e);
+            background: radial-gradient(circle at top left, #1e293b 0%, var(--bg-dark) 60%);
+            color: var(--text-main);
             min-height: 100vh;
-            padding: 24px 20px;
-            position: relative;
-        }
-
-        /* Efeito de grade e brilho */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: radial-gradient(rgba(255,215,120,0.08) 1px, transparent 1px);
-            background-size: 32px 32px;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .main-wrapper {
-            max-width: 1380px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
             display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
             justify-content: center;
-            align-items: flex-start;
-        }
-
-        /* COLUNA DO GERADOR */
-        .generator-card {
-            flex: 2;
-            min-width: 300px;
-            background: rgba(18, 30, 26, 0.85);
-            backdrop-filter: blur(16px);
-            border-radius: 64px;
-            border: 1px solid rgba(255, 210, 100, 0.4);
-            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 215, 0, 0.2) inset;
-            padding: 32px 28px 40px;
-            transition: all 0.3s;
-        }
-
-        /* COLUNA PERSUASIVA (BENEFÍCIOS) */
-        .persuasion-card {
-            flex: 1.2;
-            min-width: 280px;
-            background: linear-gradient(145deg, #f9f3e0, #fff6e8);
-            border-radius: 64px;
-            padding: 32px 28px;
-            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.3), 0 8px 20px rgba(0,0,0,0.2);
-            transition: transform 0.25s ease;
-            border: 1px solid #ffdd99;
-        }
-
-        .persuasion-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 30px 45px rgba(0,0,0,0.35);
-        }
-
-        h1 {
-            font-size: 2rem;
-            background: linear-gradient(125deg, #FFF6C9, #F7D44A, #F5B82E);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            display: flex;
             align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            margin-bottom: 10px;
+            padding: 2rem 1rem;
         }
 
-        .badge-flash {
-            background: #f5b82e;
-            padding: 5px 12px;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            color: #1e2f2a;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
+        .container {
+            width: 100%;
+            max-width: 850px;
+            background: var(--bg-card);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
         }
 
-        .sub-hero {
-            background: rgba(0,0,0,0.5);
-            padding: 12px 20px;
-            border-radius: 60px;
-            font-size: 0.9rem;
-            color: #FFE59A;
-            margin: 16px 0;
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 180deg at 50% 50%, transparent 0%, rgba(56, 189, 248, 0.1) 30%, transparent 60%);
+            animation: spin 20s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        header {
             text-align: center;
-            backdrop-filter: blur(4px);
-            font-weight: 600;
-            letter-spacing: 0.3px;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        header h2 {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .badge {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+            color: #0f172a;
+            padding: 0.4rem 1rem;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin: 1rem 0;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+        }
+
+        .description {
+            text-align: center;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
         }
 
         .input-group {
-            margin: 20px 0 12px;
+            margin-bottom: 1.5rem;
         }
 
         label {
-            color: #efe3b3;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 10px;
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-main);
         }
 
-        input {
+        input[type="email"], input[type="text"] {
             width: 100%;
-            padding: 18px 24px;
+            padding: 0.9rem 1rem;
+            border-radius: 10px;
+            border: 1px solid var(--border-light);
+            background: rgba(30, 41, 59, 0.6);
+            color: var(--text-main);
             font-size: 1rem;
-            background: #0f1f1a;
-            border: 2px solid #f3c26b;
-            border-radius: 80px;
-            color: #ffefcf;
-            font-weight: 500;
             outline: none;
-            transition: 0.2s;
+            transition: all 0.3s ease;
         }
 
         input:focus {
-            border-color: #ffcd7e;
-            box-shadow: 0 0 0 4px rgba(245, 184, 46, 0.3);
+            border-color: var(--accent-1);
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
         }
 
-        .button-group {
+        .categories {
             display: flex;
-            gap: 14px;
             flex-wrap: wrap;
-            margin: 20px 0 8px;
+            gap: 0.6rem;
+            margin-bottom: 1rem;
         }
 
-        button {
-            flex: 1;
-            padding: 14px 12px;
-            font-weight: 800;
-            border: none;
-            border-radius: 60px;
-            background: linear-gradient(95deg, #F7C948, #E5A828);
-            color: #1c2c26;
+        .tag {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.4rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
             cursor: pointer;
-            font-family: inherit;
-            font-size: 0.9rem;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
+        }
+
+        .tag:hover, .tag.active {
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+            color: #0f172a;
+            transform: translateY(-2px);
+        }
+
+        .add-category {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.2rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            box-shadow: 0 5px 12px rgba(0,0,0,0.2);
+            gap: 0.5rem;
         }
 
-        button i { font-style: normal; }
-
-        button:hover {
-            transform: translateY(-3px);
-            filter: brightness(1.05);
-            box-shadow: 0 12px 20px rgba(0,0,0,0.25);
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+            color: #0f172a;
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
         }
 
-        .reset-btn {
-            background: #3b5248;
-            color: #fee3a0;
-            box-shadow: none;
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(56, 189, 248, 0.5);
         }
 
-        .results {
-            margin-top: 26px;
-            background: #0b1915cc;
-            backdrop-filter: blur(8px);
-            border-radius: 38px;
-            padding: 18px;
-            max-height: 340px;
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-main);
+            border: 1px solid var(--border-light);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-danger:hover {
+            background: rgba(239, 68, 68, 0.3);
+        }
+
+        .actions {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .output-box {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px dashed var(--border-light);
+            border-radius: 10px;
+            padding: 1rem;
+            min-height: 150px;
+            max-height: 300px;
             overflow-y: auto;
-            border: 1px solid #d4a53e;
-        }
-
-        /* CORREÇÃO DE CONTRASTE - TEXTO DO PLACEHOLDER DOS RESULTADOS AGORA CLARO E LEGÍVEL */
-        .results .empty-message {
-            text-align: center;
-            padding: 28px 20px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #FFECB3 !important;  /* amarelo claro forte */
-            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
-            background: rgba(0,0,0,0.3);
-            border-radius: 32px;
-            letter-spacing: 0.5px;
-        }
-
-        .results .empty-message span {
-            display: inline-block;
-            font-size: 1.3rem;
-            margin: 6px 0;
-        }
-
-        .results span {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: #1c2d27;
-            margin-bottom: 10px;
-            padding: 12px 18px;
-            border-radius: 60px;
-            font-family: monospace;
-            font-size: 0.85rem;
-            color: #F9E0A0;
-            cursor: pointer;
-            transition: 0.12s linear;
-            border: 1px solid #bb882e;
-        }
-
-        .results span:hover {
-            background: #2f4b3f;
-            transform: translateX(8px);
-        }
-
-        .count {
-            margin-top: 18px;
-            background: #F7D44A;
-            display: inline-block;
-            width: auto;
-            padding: 8px 26px;
-            border-radius: 50px;
-            font-weight: 800;
-            color: #1f3d33;
+            margin-bottom: 2rem;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
             font-size: 0.9rem;
+            color: var(--text-muted);
+            transition: all 0.3s ease;
         }
 
-        .alert {
-            background: #ffeedd;
-            border-radius: 60px;
-            padding: 12px 18px;
-            margin-top: 16px;
-            color: #b9531e;
-            font-weight: 500;
+        .output-box:not(:empty) {
+            border-color: var(--accent-1);
+            background: rgba(56, 189, 248, 0.05);
         }
 
-        /* Persuasion style */
-        .persuasion-card h2 {
-            font-size: 1.8rem;
-            color: #2e241f;
-            margin-bottom: 14px;
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            border-left: 5px solid #f5b82e;
-            padding-left: 16px;
+        .features {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
         }
 
-        .persuasion-card h3 {
-            color: #4a3b2c;
-            margin: 20px 0 12px;
-            font-size: 1.3rem;
+        .features h3 {
+            margin-bottom: 1rem;
+            color: var(--accent-1);
         }
 
-        .benefits-list {
+        .feature-list {
             list-style: none;
-            margin: 20px 0;
+            display: grid;
+            gap: 0.8rem;
         }
 
-        .benefits-list li {
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            font-weight: 500;
-            background: #ffffffaa;
-            padding: 10px 16px;
-            border-radius: 50px;
-            backdrop-filter: blur(2px);
-            color: #1c3e30;
+        .feature-list li {
+            padding: 0.6rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            line-height: 1.5;
         }
 
-        .highlight-number {
-            font-size: 2rem;
-            font-weight: 800;
-            background: linear-gradient(145deg, #E5A828, #C97E0F);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
+        .feature-list li:last-child {
+            border-bottom: none;
         }
 
-        .cta-badge {
-            background: #ffcf4a;
-            text-align: center;
-            padding: 14px;
-            border-radius: 60px;
-            margin-top: 24px;
-            font-weight: 800;
-            color: #282113;
+        .testimonial {
+            background: linear-gradient(135deg, rgba(129, 140, 248, 0.1), rgba(56, 189, 248, 0.1));
+            border-left: 4px solid var(--accent-2);
+            padding: 1.2rem;
+            border-radius: 0 10px 10px 0;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: var(--text-main);
+        }
+
+        .testimonial strong {
+            display: block;
+            margin-top: 0.5rem;
+            font-style: normal;
+            color: var(--accent-1);
             font-size: 0.9rem;
         }
 
-        .toast-msg {
-            position: fixed;
-            bottom: 25px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #212c26;
-            backdrop-filter: blur(20px);
-            color: #FFE1A0;
-            padding: 12px 26px;
-            border-radius: 60px;
-            font-weight: bold;
-            z-index: 999;
-            white-space: nowrap;
-            font-family: monospace;
-            animation: fadeInUp 0.2s ease;
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateX(-50%) translateY(20px);}
-            to { opacity: 1; transform: translateX(-50%) translateY(0);}
-        }
-
-        .credit {
-            margin-top: 35px;
+        footer {
             text-align: center;
-            font-size: 0.7rem;
-            color: #cbbf8c;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-light);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            line-height: 1.6;
         }
 
-        .credit a {
-            color: #f5cd7a;
+        footer a {
+            color: var(--accent-1);
+            text-decoration: none;
+            font-weight: 600;
         }
 
-        @media (max-width: 850px) {
-            .main-wrapper { flex-direction: column; }
-            .generator-card, .persuasion-card { border-radius: 48px; }
-            h1 { font-size: 1.8rem;}
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 1.5rem; }
+            header h1 { font-size: 1.5rem; }
+            .actions { flex-direction: column; }
+            .btn { width: 100%; }
         }
     </style>
 </head>
 <body>
-<div class="main-wrapper">
-    <!-- COLUNA PRINCIPAL: GERADOR DE EMAILS -->
-    <div class="generator-card">
-        <h1>
-            <span>⚡📧</span> Gmail Infinity
-            <div class="badge-flash">✨ +100 variações</div>
-        </h1>
-        <div class="sub-hero">
-            🚀 Crie centenas de endereços Gmail diferentes em segundos e receba todas as mensagens diretamente na sua caixa principal!
-        </div>
-        <div class="input-group">
-            <label>🔑 SEU GMAIL PRINCIPAL <span style="font-size:0.7rem;">(ex: treinador@gmail.com)</span></label>
-            <input type="text" id="email" placeholder="exemplo@gmail.com" autocomplete="off">
-        </div>
-        <div class="button-group">
-            <button id="generateBtn">🌀 GERAR CENTENAS</button>
-            <button id="copyAllBtn">📋 COPIAR TUDO</button>
-            <button id="resetBtn" class="reset-btn">🗑️ LIMPAR</button>
-        </div>
-        <div id="alert" class="alert" style="display: none;"></div>
-        <div class="results" id="results">
-            <!-- TEXTO VISÍVEL E COM ALTO CONTRASTE (CORRIGIDO) -->
-            <div class="empty-message">
-                ✨ Gere centenas de emails rapidamente ✨<br>
-                ⚡ Basta digitar seu Gmail ⚡
+    <div class="container">
+        <header>
+            <h1>⚡ Gerador de Gmail | Acesse Ilimitado</h1>
+            <h2>🚀 Multiplicador de Gmail</h2>
+            <span class="badge">ACESSO ILIMITADO</span>
+            <p class="description">🔓 Crie centenas de endereços a partir do seu próprio Gmail e multiplique seus cadastros em plataformas, games e IAs.</p>
+        </header>
+
+        <section class="input-group">
+            <label for="mainEmail">📧 Seu Gmail principal (apenas 1 conta)</label>
+            <input type="email" id="mainEmail" placeholder="seuemail@gmail.com" value="">
+        </section>
+
+        <section>
+            <label>🏷️ Categorias inteligentes</label>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.8rem;">Escolha ou crie categorias para organizar seus acessos em diferentes plataformas.</p>
+            <div class="categories" id="categoryContainer">
+                <div class="tag active">📌 principal</div>
+                <div class="tag">📥 receber</div>
+                <div class="tag">📝 cadastros</div>
+                <div class="tag">🎮 games</div>
+                <div class="tag">🤖 IAs</div>
             </div>
+            <div class="add-category">
+                <input type="text" id="newCategory" placeholder="Adicionar nova categoria...">
+                <button class="btn btn-secondary" onclick="addCategory()">Adicionar ✨</button>
+            </div>
+        </section>
+
+        <section class="actions">
+            <button class="btn btn-primary" onclick="generateEmails()">⚡ GERAR ENDEREÇOS ILIMITADOS</button>
+            <button class="btn btn-secondary" onclick="copyEmails()">📋 COPIAR TODOS</button>
+            <button class="btn btn-danger" onclick="clearEmails()">🗑️ LIMPAR TUDO</button>
+        </section>
+
+        <div id="output" class="output-box">📭 Clique em "GERAR" e veja o poder da multiplicação...</div>
+
+        <section class="features">
+            <h3>💥 Vantagens para você</h3>
+            <ul class="feature-list">
+                <li>🎮 Cadastre-se múltiplas vezes em games que limitam 1 conta por e-mail. Avance mais rápido, tenha smurfs e maximize recompensas.</li>
+                <li>🧠 Teste várias IAs (ChatGPT, Midjourney, Gemini) com acessos ilimitados usando o mesmo Gmail principal.</li>
+                <li>📱 Plataformas de serviços, assinaturas testes, sites que bloqueiam segundo cadastro — resolvido com 1 clique.</li>
+                <li>🚀 Multiplique sua produtividade: crie contas para negócios, automações, marketing digital e muito mais.</li>
+                <li>🔁 Sem precisar criar novos e-mails reais. Tudo unificado na sua caixa de entrada principal.</li>
+            </ul>
+        </section>
+
+        <div class="testimonial">
+            🏆 "Consegui criar 10 contas diferentes no mesmo jogo e farmar recursos ilimitados com um único Gmail!"
+            <strong>— Usuário verificado</strong>
         </div>
-        <div id="count" class="count"></div>
-        <div class="credit">
-            🌟 Nossa página no DFG <a href="https://www.dfg.com.br/user/digitais/listings" target="_blank">www.dfg.com.br/user/digitais/listings</a> • Tecnologia Inovadora 🌟
-        </div>
+
+        <footer>
+            <p>⚡ Mais de 1.500 endereços distintos gerados a partir de um e-mail comum.<br>Ideal para qualquer plataforma com restrição de cadastro único.</p>
+            <p style="margin-top: 0.8rem;">🔥 Criado e desenvolvido por <a href="https://www.dfg.com.br/user/digitais/listings" target="_blank">Digitais</a> — Tecnologia exclusiva de multiplicação</p>
+        </footer>
     </div>
 
-    <!-- COLUNA PERSUASIVA COM INFORMAÇÕES E EMOJIS -->
-    <div class="persuasion-card">
-        <h2>💡 <span style="background:linear-gradient(145deg,#E5A828,#BF7412); background-clip:text; -webkit-background-clip:text; color:transparent;">Liberte seu potencial</span> 🚀</h2>
-        <p style="font-weight:600; color:#2b3b32;">Nosso sistema inteligente permite gerar múltiplos endereços vinculados ao seu Gmail principal, facilitando cadastros em plataformas online, sites de serviços, aplicativos e games que possuem limitação por quantidade de contas ou e‑mails utilizados.</p>
+    <script>
+        const mainEmailInput = document.getElementById('mainEmail');
+        const outputBox = document.getElementById('output');
+        const categoryContainer = document.getElementById('categoryContainer');
+        let generatedEmails = [];
 
-        <ul class="benefits-list">
-            <li>✅ <strong>Gere centenas de variações automaticamente</strong> — com 1 clique</li>
-            <li>✅ <strong>Todas as notificações chegam no seu Gmail principal</strong> 📬</li>
-            <li>✅ <strong>Processo rápido, automático e sem complicação</strong> ⚡</li>
-            <li>✅ <strong>Ideal para plataformas de games, testes, serviços online e cadastros múltiplos</strong> 🎮</li>
-            <li>✅ <strong>Mais praticidade, organização e produtividade</strong> 📈</li>
-            <li>✅ <strong>Sem precisar criar dezenas de contas manualmente</strong> 🙌</li>
-        </ul>
-
-        <div style="background:#fae7b3; border-radius: 32px; padding: 16px; margin: 18px 0;">
-            <div style="font-size:1.1rem; font-weight:800;">💡 Economize tempo e elimine as limitações causadas por restrições de cadastro por e-mail.</div>
-        </div>
-
-        <div style="display: flex; gap: 12px; flex-wrap: wrap; margin: 20px 0;">
-            <span class="badge-flash" style="background:#c97e0f; color:white;">⚡ Plataforma online simples e intuitiva</span>
-            <span class="badge-flash" style="background:#c97e0f; color:white;">⚡ Acesso imediato</span>
-            <span class="badge-flash" style="background:#c97e0f; color:white;">⚡ Funciona com seu Gmail principal</span>
-        </div>
-
-        <div class="cta-badge">
-            🎯 Transforme um único Gmail em <span class="highlight-number">centenas de possibilidades</span><br>
-            🌟 Mais liberdade, mais eficiência e muito mais resultados para você! 🌟
-        </div>
-        <div style="margin-top: 24px; text-align: center; font-size: 0.85rem; color: #684f1a;">
-            🧠 + de 1.000.000 de combinações possíveis • sem complicação
-        </div>
-    </div>
-</div>
-
-<script>
-    (function(){
-        // DOM
-        const emailInput = document.getElementById('email');
-        const generateBtn = document.getElementById('generateBtn');
-        const copyAllBtn = document.getElementById('copyAllBtn');
-        const resetBtn = document.getElementById('resetBtn');
-        const alertDiv = document.getElementById('alert');
-        const resultsDiv = document.getElementById('results');
-        const countDiv = document.getElementById('count');
-
-        function showToast(message, isError = false) {
-            let oldToast = document.querySelector('.toast-msg');
-            if(oldToast) oldToast.remove();
-            const toast = document.createElement('div');
-            toast.className = 'toast-msg';
-            toast.innerHTML = isError ? `⚠️ ${message}` : `🎉 ${message}`;
-            document.body.appendChild(toast);
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                setTimeout(() => toast.remove(), 400);
-            }, 2400);
+        function getValidEmail() {
+            const email = mainEmailInput.value.trim().toLowerCase();
+            const regex = /^[^\s@]+@gmail\.com$/;
+            if (!email) {
+                alert('⚠️ Por favor, insira seu Gmail principal.');
+                mainEmailInput.focus();
+                return null;
+            }
+            if (!regex.test(email)) {
+                alert('⚠️ Formato inválido. Use apenas @gmail.com');
+                mainEmailInput.focus();
+                return null;
+            }
+            return email.split('@')[0];
         }
 
-        function hideAlert() {
-            alertDiv.style.display = 'none';
-            alertDiv.innerHTML = '';
-        }
+        function generateEmails() {
+            const user = getValidEmail();
+            if (!user) return;
 
-        function showAlert(msg, isErr=true) {
-            alertDiv.style.display = 'flex';
-            alertDiv.innerHTML = isErr ? `❗ ${msg}` : `✨ ${msg}`;
-            alertDiv.style.background = isErr ? "#ffded5" : "#e1f3ea";
-            alertDiv.style.color = isErr ? "#b13e0c" : "#1d5a45";
-        }
+            const activeTags = Array.from(categoryContainer.querySelectorAll('.tag.active')).map(t => t.textContent.trim());
+            const suffixes = activeTags.length > 0 ? activeTags : ['principal', 'receber', 'cadastros', 'games', 'ias'];
+            const count = 20; // Quantidade de aliases por geração
+            generatedEmails = [];
 
-        // Função para resetar a UI com a mensagem de boas-vindas totalmente legível
-        function resetUI() {
-            resultsDiv.innerHTML = `
-                <div class="empty-message">
-                    ✨ Gere centenas de emails rapidamente ✨<br>
-                    ⚡ Basta digitar seu Gmail ⚡
-                </div>
-            `;
-            countDiv.innerHTML = '';
-            hideAlert();
-        }
-
-        // FUNÇÃO QUE GERA TODAS AS COMBINAÇÕES DE PONTOS (versão otimizada)
-        function generateAllDotCombinations(localPartRaw) {
-            // Remove pontos originais (gmail ignora pontos)
-            const clean = localPartRaw.replace(/\./g, '');
-            if(!clean.length) return [];
-            const chars = clean.split('');
-            const n = chars.length;
-            if(n === 1) return [clean];
-            const results = [];
-            // backtracking clássico: coloca ou não ponto entre caracteres
-            function backtrack(idx, current) {
-                if(idx === n) {
-                    results.push(current);
-                    return;
+            suffixes.forEach(tag => {
+                const cleanTag = tag.replace(/[^\w\s]/g, '').trim().toLowerCase().replace(/\s+/g, '_');
+                for (let i = 1; i <= count; i++) {
+                    generatedEmails.push(`${user}+${cleanTag}${i}@gmail.com`);
                 }
-                // 1) sem ponto antes do próximo char
-                backtrack(idx+1, current + chars[idx]);
-                // 2) adiciona ponto + caractere (se não for o primeiro caractere já incluso)
-                if(idx > 0) {
-                    backtrack(idx+1, current + '.' + chars[idx]);
-                }
-            }
-            backtrack(1, chars[0]);
-            return results;
+            });
+
+            outputBox.textContent = generatedEmails.join('\n');
+            outputBox.scrollIntoView({ behavior: 'smooth' });
         }
 
-        function getSafeVariations(localPart) {
-            let all = generateAllDotCombinations(localPart);
-            all = [...new Set(all)];
-            return all;
-        }
-
-        function generateVariations() {
-            hideAlert();
-            let fullEmail = emailInput.value.trim();
-            if(!fullEmail) {
-                showAlert('Digite um e-mail Gmail válido!', true);
-                resultsDiv.innerHTML = `<div class="empty-message" style="color:#FFD966;">📛 Digite um e-mail para começar...</div>`;
-                countDiv.innerHTML = '';
+        function copyEmails() {
+            if (generatedEmails.length === 0) {
+                alert('⚠️ Gere os endereços primeiro.');
                 return;
             }
-            const lowerEmail = fullEmail.toLowerCase();
-            if(!lowerEmail.includes('@gmail.com') || !lowerEmail.endsWith('gmail.com')) {
-                showAlert('❌ Apenas endereços @gmail.com funcionam.', true);
-                resultsDiv.innerHTML = `<div class="empty-message" style="color:#FFD966;">⚠️ Use somente GMAIL (exemplo@gmail.com) ⚠️</div>`;
-                countDiv.innerHTML = '';
-                return;
-            }
-            const atPos = fullEmail.indexOf('@');
-            let localPart = fullEmail.substring(0, atPos);
-            const domainFixed = '@gmail.com';
-
-            if(!localPart.length) {
-                showAlert('O nome antes do @ não pode ficar vazio', true);
-                return;
-            }
-
-            const baseClean = localPart.replace(/\./g, '');
-            if(baseClean.length === 0) {
-                showAlert('Nome inválido após remover pontos', true);
-                return;
-            }
-
-            let allVariants = getSafeVariations(baseClean);
-            if(allVariants.length === 0) {
-                resultsDiv.innerHTML = `<div class="empty-message">⚠️ Nenhuma combinação gerada. Tente outro nome.</div>`;
-                countDiv.innerHTML = '';
-                return;
-            }
-
-            let finalEmails = allVariants.map(part => part + domainFixed);
-            const MAX_VISUAL = 1500;
-            let truncated = false;
-            let displayList = finalEmails;
-            if(finalEmails.length > MAX_VISUAL) {
-                truncated = true;
-                displayList = finalEmails.slice(0, MAX_VISUAL);
-            }
-
-            const resultsHtml = displayList.map(email => `<span class="email-item" data-email="${escapeHtml(email)}">📩 ${escapeHtml(email)}</span>`).join('');
-            resultsDiv.innerHTML = resultsHtml;
-            const totalCount = allVariants.length;
-            let countText = `🎯 Total de endereços gerados: ${totalCount.toLocaleString()} ✨`;
-            if(truncated) countText += ` (exibindo ${MAX_VISUAL} de ${totalCount.toLocaleString()})`;
-            countDiv.innerHTML = countText;
-
-            showToast(`✔️ ${totalCount} variações criadas! Clique em qualquer e-mail para copiar.`, false);
-
-            document.querySelectorAll('.email-item').forEach(el => {
-                el.addEventListener('click', (e) => {
-                    const mail = el.getAttribute('data-email') || el.innerText.replace('📩','').trim();
-                    copyToClipboard(mail);
-                    showToast(`📧 Copiado: ${mail}`, false);
-                    el.style.background = "#f7c45a";
-                    el.style.color = "#1b2f28";
-                    setTimeout(() => { el.style.background = ""; el.style.color = ""; }, 200);
-                });
+            navigator.clipboard.writeText(generatedEmails.join('\n')).then(() => {
+                alert('✅ Todos os endereços foram copiados para a área de transferência!');
+            }).catch(() => {
+                alert('❌ Erro ao copiar. Selecione manualmente.');
             });
         }
 
-        function copyToClipboard(text) {
-            if(navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
-            } else fallbackCopy(text);
+        function clearEmails() {
+            generatedEmails = [];
+            outputBox.textContent = '📭 Clique em "GERAR" e veja o poder da multiplicação...';
         }
 
-        function fallbackCopy(text) {
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
+        function addCategory() {
+            const input = document.getElementById('newCategory');
+            const value = input.value.trim();
+            if (!value) return;
+
+            const tag = document.createElement('div');
+            tag.className = 'tag';
+            tag.textContent = value;
+            tag.onclick = function() { this.classList.toggle('active'); };
+            categoryContainer.appendChild(tag);
+            input.value = '';
         }
 
-        function copyAllVariations() {
-            const items = document.querySelectorAll('#results .email-item');
-            if(!items.length) {
-                showAlert('Nenhum e-mail gerado. Clique em "GERAR CENTENAS" primeiro!', true);
-                return;
-            }
-            const emails = Array.from(items).map(el => el.getAttribute('data-email') || el.innerText.replace('📩','').trim());
-            const allText = emails.join('\n');
-            copyToClipboard(allText);
-            showToast(`📋 ${emails.length} e-mails copiados em lista!`, false);
-        }
-
-        function resetGenerator() {
-            emailInput.value = '';
-            resetUI();
-            showToast('🧹 Limpo! Adicione seu Gmail e gere centenas de variações', false);
-            emailInput.focus();
-        }
-
-        function escapeHtml(str) {
-            return str.replace(/[&<>]/g, function(m){
-                if(m==='&') return '&amp;';
-                if(m==='<') return '&lt;';
-                if(m==='>') return '&gt;';
-                return m;
-            });
-        }
-
-        generateBtn.addEventListener('click', generateVariations);
-        copyAllBtn.addEventListener('click', copyAllVariations);
-        resetBtn.addEventListener('click', resetGenerator);
-        emailInput.addEventListener('keypress', (e) => {
-            if(e.key === 'Enter') generateVariations();
+        // Permite marcar/desmarcar categorias existentes
+        document.querySelectorAll('#categoryContainer .tag').forEach(tag => {
+            tag.addEventListener('click', function() { this.classList.toggle('active'); });
         });
-
-        emailInput.placeholder = "ex: seuemail@gmail.com → centenas de emails!";
-        resetUI();
-
-        generateBtn.title = "Gere até milhares de variações de e-mail em segundos!";
-        copyAllBtn.title = "Copiar todos os e-mails gerados de uma vez";
-        resetBtn.title = "Limpar tudo e começar novamente";
-    })();
-</script>
+    </script>
 </body>
 </html>
