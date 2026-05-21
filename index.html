@@ -64,15 +64,6 @@
         .success { background: #10b98120; color: #10b981; display: block; }
         .error { background: #ef444420; color: #ef4444; display: block; }
         .info-status { background: #3b82f620; color: #3b82f6; display: block; }
-        .contract-addr {
-            background: #0f172a;
-            padding: 10px;
-            border-radius: 8px;
-            font-family: monospace;
-            font-size: 12px;
-            text-align: center;
-            margin-bottom: 15px;
-        }
         .flex-buttons {
             display: flex;
             gap: 10px;
@@ -82,17 +73,12 @@
             margin: 0;
             background: #475569;
         }
-        .flex-buttons button:hover {
-            background: #64748b;
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>🌾 Honest Yield Farm</h2>
-        <div class="contract-addr">
-            Contrato: 0xB2Df0454E7897A5b0838a07128805bEaC40ED1eF
-        </div>
+        <p style="font-size: 12px; color: #94a3b8;">Contrato: 0xB2Df0454E7897A5b0838a07128805bEaC40ED1eF</p>
         
         <button id="connectBtn">🔌 Conectar MetaMask / Rabby</button>
         
@@ -100,10 +86,9 @@
         
         <div class="info">
             <strong>📊 Status:</strong><br>
-            💰 Saldo do Contrato: <span id="contractBalance">-</span> USDC<br>
-            📊 Posição Ativa: <span id="activePosition">-</span> USDC<br>
-            💵 Lucro Total: <span id="totalProfit">-</span> USDC<br>
-            👤 Owner: <span id="ownerAddress">-</span>
+            💰 Saldo do Contrato (USDC): <span id="contractBalance">-</span><br>
+            📊 Posição Ativa: <span id="activePosition">-</span><br>
+            💵 Lucro Total: <span id="totalProfit">-</span>
         </div>
         
         <h3>🚀 Abrir Posição</h3>
@@ -112,43 +97,37 @@
             <button id="btn1">1 USDC</button>
             <button id="btn5">5 USDC</button>
             <button id="btn10">10 USDC</button>
-            <button id="btn50">50 USDC</button>
         </div>
         
-        <input type="number" id="amount" placeholder="Ou digite o valor" step="0.01" value="1">
+        <input type="number" id="amount" placeholder="Digite o valor" step="0.01" value="1">
         
         <button id="depositBtn" disabled>📤 Depositar e Farmar</button>
         <button id="withdrawBtn" disabled class="danger-btn">🔚 Fechar Posição</button>
         
         <div id="status" class="status"></div>
         
-        <div class="info" style="margin-top: 20px; font-size: 12px;">
-            ⚠️ <strong>Passo a passo:</strong><br>
-            1. Conecte sua carteira<br>
-            2. Verifique se aparece "✅ Owner confirmado"<br>
-            3. Transfira USDC para o contrato (se ainda não fez)<br>
-            4. Digite o valor (ex: 1) e clique em "Depositar e Farmar"<br>
-            5. Aguarde a confirmação da transação
+        <div class="info" style="margin-top: 20px; background: #10b98120; border-left: 3px solid #10b981;">
+            ✅ <strong>Seu contrato já tem saldo!</strong><br>
+            Saldo atual: <strong>$1.02 USDC</strong><br>
+            Você pode depositar <strong>1 USDC</strong> agora mesmo!
         </div>
     </div>
 
     <script>
         const CONTRACT_ADDRESS = "0xB2Df0454E7897A5b0838a07128805bEaC40ED1eF";
-        const USDC_ADDRESS = "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174";
         
+        // ABI APENAS com as funções que existem
         const CONTRACT_ABI = [
             "function depositAndFarm(uint256 amountUSDC) external",
             "function withdrawAndClose() external",
             "function activePosition() view returns (uint256)",
             "function totalProfit() view returns (uint256)",
             "function getContractBalance() view returns (uint256)",
-            "function owner() view returns (address)",
-            "function minDeposit() view returns (uint256)"
+            "function owner() view returns (address)"
         ];
 
         let provider, signer, contract, userAddress;
 
-        // Elementos
         const connectBtn = document.getElementById('connectBtn');
         const depositBtn = document.getElementById('depositBtn');
         const withdrawBtn = document.getElementById('withdrawBtn');
@@ -158,7 +137,6 @@
         document.getElementById('btn1').onclick = () => { amountInput.value = "1"; };
         document.getElementById('btn5').onclick = () => { amountInput.value = "5"; };
         document.getElementById('btn10').onclick = () => { amountInput.value = "10"; };
-        document.getElementById('btn50').onclick = () => { amountInput.value = "50"; };
 
         connectBtn.onclick = async () => {
             if (!window.ethereum) {
@@ -167,13 +145,11 @@
             }
 
             try {
-                // Conectar
                 const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
                 userAddress = accounts[0];
                 provider = new ethers.BrowserProvider(window.ethereum);
                 signer = await provider.getSigner();
 
-                // Verificar rede
                 const network = await provider.getNetwork();
                 if (Number(network.chainId) !== 137) {
                     showStatus('error', '⚠️ Mude para Polygon Mainnet');
@@ -185,46 +161,52 @@
                     } catch(e) { return; }
                 }
 
-                // Conectar ao contrato
                 contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
                 
-                // Buscar owner (sem converter para lower case para debug)
                 const ownerAddress = await contract.owner();
-                const minDeposit = await contract.minDeposit();
                 const balance = await contract.getContractBalance();
+                const position = await contract.activePosition();
                 
-                // Mostrar informações
-                document.getElementById('ownerAddress').innerHTML = `${ownerAddress.slice(0,6)}...${ownerAddress.slice(-4)}`;
-                document.getElementById('contractBalance').innerHTML = Number(ethers.formatUnits(balance, 6)).toFixed(2);
-                
-                // COMPARAÇÃO CORRETA (case-insensitive)
-                const isOwner = ownerAddress.toLowerCase() === userAddress.toLowerCase();
-                
-                console.log("Owner do contrato:", ownerAddress);
+                console.log("Owner:", ownerAddress);
                 console.log("Sua carteira:", userAddress);
-                console.log("É owner?", isOwner);
+                console.log("Saldo do contrato:", ethers.formatUnits(balance, 6));
+                
+                document.getElementById('contractBalance').innerHTML = `$${Number(ethers.formatUnits(balance, 6)).toFixed(4)}`;
+                document.getElementById('activePosition').innerHTML = `$${Number(ethers.formatUnits(position, 6)).toFixed(4)}`;
+                
+                const isOwner = ownerAddress.toLowerCase() === userAddress.toLowerCase();
                 
                 const infoPanel = document.getElementById('infoPanel');
                 infoPanel.style.display = 'block';
                 
                 if (isOwner) {
-                    infoPanel.innerHTML = `✅ Owner confirmado: ${userAddress.slice(0,6)}...${userAddress.slice(-4)} | Mínimo: ${ethers.formatUnits(minDeposit, 6)} USDC`;
+                    infoPanel.innerHTML = `✅ Owner confirmado: ${userAddress.slice(0,6)}...${userAddress.slice(-4)}`;
                     infoPanel.style.background = "#10b98120";
-                    infoPanel.style.color = "#10b981";
                     depositBtn.disabled = false;
                     withdrawBtn.disabled = false;
-                    showStatus('success', '✅ Conectado como OWNER! Agora você pode depositar e farmar.');
+                    
+                    if (Number(ethers.formatUnits(balance, 6)) >= 1) {
+                        showStatus('success', `✅ Contrato tem $${Number(ethers.formatUnits(balance, 6)).toFixed(2)} USDC. Você pode depositar!`);
+                    } else {
+                        showStatus('error', '❌ Contrato sem saldo. Transfira USDC primeiro.');
+                    }
                 } else {
-                    infoPanel.innerHTML = `❌ Você NÃO é o owner!<br>Sua carteira: ${userAddress.slice(0,6)}...${userAddress.slice(-4)}<br>Owner: ${ownerAddress.slice(0,6)}...${ownerAddress.slice(-4)}`;
+                    infoPanel.innerHTML = `❌ Você NÃO é o owner!`;
                     infoPanel.style.background = "#ef444420";
-                    infoPanel.style.color = "#ef4444";
                     depositBtn.disabled = true;
                     withdrawBtn.disabled = true;
-                    showStatus('error', '❌ Você não é o owner do contrato! Use a carteira que implantou o contrato.');
                 }
                 
-                await loadData();
-                setInterval(loadData, 15000);
+                setInterval(async () => {
+                    if (contract) {
+                        const newBalance = await contract.getContractBalance();
+                        document.getElementById('contractBalance').innerHTML = `$${Number(ethers.formatUnits(newBalance, 6)).toFixed(4)}`;
+                        const newPosition = await contract.activePosition();
+                        document.getElementById('activePosition').innerHTML = `$${Number(ethers.formatUnits(newPosition, 6)).toFixed(4)}`;
+                        const newProfit = await contract.totalProfit();
+                        document.getElementById('totalProfit').innerHTML = `$${Number(ethers.formatUnits(newProfit, 6)).toFixed(4)}`;
+                    }
+                }, 10000);
                 
             } catch (error) {
                 showStatus('error', error.message);
@@ -232,27 +214,11 @@
             }
         };
 
-        async function loadData() {
-            if (!contract) return;
-            
-            try {
-                const balance = await contract.getContractBalance();
-                const position = await contract.activePosition();
-                const profit = await contract.totalProfit();
-                
-                document.getElementById('contractBalance').innerHTML = Number(ethers.formatUnits(balance, 6)).toFixed(4);
-                document.getElementById('activePosition').innerHTML = Number(ethers.formatUnits(position, 6)).toFixed(4);
-                document.getElementById('totalProfit').innerHTML = Number(ethers.formatUnits(profit, 6)).toFixed(4);
-            } catch (error) {
-                console.error(error);
-            }
-        }
-
         depositBtn.onclick = async () => {
             let amount = parseFloat(amountInput.value);
             
             if (isNaN(amount) || amount < 1) {
-                showStatus('error', 'Digite um valor maior ou igual a 1 USDC');
+                showStatus('error', 'Digite um valor >= 1 USDC');
                 return;
             }
             
@@ -261,7 +227,7 @@
             const contractBalanceNum = Number(ethers.formatUnits(contractBalance, 6));
             
             if (contractBalanceNum < amount) {
-                showStatus('error', `❌ Contrato tem apenas $${contractBalanceNum.toFixed(2)} USDC. Transfira ${amount} USDC para o contrato primeiro!`);
+                showStatus('error', `❌ Contrato tem apenas $${contractBalanceNum.toFixed(2)} USDC. Transfira ${amount} USDC primeiro.`);
                 return;
             }
             
@@ -272,13 +238,17 @@
             
             try {
                 const tx = await contract.depositAndFarm(amountWei);
-                showStatus('info', `⏳ Transação: ${tx.hash.slice(0,12)}...`);
+                showStatus('info', `⏳ Tx: ${tx.hash.slice(0,12)}...`);
                 await tx.wait();
                 showStatus('success', `✅ Posição aberta com ${amount} USDC!`);
-                await loadData();
+                
+                const newBalance = await contract.getContractBalance();
+                document.getElementById('contractBalance').innerHTML = `$${Number(ethers.formatUnits(newBalance, 6)).toFixed(4)}`;
+                const newPosition = await contract.activePosition();
+                document.getElementById('activePosition').innerHTML = `$${Number(ethers.formatUnits(newPosition, 6)).toFixed(4)}`;
+                
             } catch (error) {
                 showStatus('error', error.reason || error.message);
-                console.error(error);
             } finally {
                 depositBtn.disabled = false;
             }
@@ -294,7 +264,11 @@
                 const tx = await contract.withdrawAndClose();
                 await tx.wait();
                 showStatus('success', '✅ Posição fechada! Lucro transferido.');
-                await loadData();
+                
+                const newBalance = await contract.getContractBalance();
+                document.getElementById('contractBalance').innerHTML = `$${Number(ethers.formatUnits(newBalance, 6)).toFixed(4)}`;
+                document.getElementById('activePosition').innerHTML = `$0.00`;
+                
             } catch (error) {
                 showStatus('error', error.reason || error.message);
             } finally {
