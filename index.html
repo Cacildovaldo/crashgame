@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Honest Yield Farm - Teste com 1 USDC</title>
+    <title>Honest Yield Farm - Seu Contrato Ativo | 50 USDC Teste</title>
     <script src="https://cdn.jsdelivr.net/npm/ethers@6.12.4/dist/ethers.umd.min.js"></script>
     <style>
         * {
@@ -35,6 +35,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            flex-wrap: wrap;
         }
 
         .badge {
@@ -47,7 +48,7 @@
         }
 
         .test-badge {
-            background: #f59e0b;
+            background: #3b82f6;
             color: white;
             padding: 4px 12px;
             border-radius: 20px;
@@ -198,14 +199,18 @@
             display: block;
         }
 
-        .test-note {
-            background: #1e3a8a;
+        .profit-calc {
+            background: #0f172a;
             color: white;
-            padding: 12px;
+            padding: 16px;
             border-radius: 12px;
+            margin: 20px 0;
             text-align: center;
-            font-size: 13px;
-            margin-bottom: 20px;
+        }
+
+        .profit-calc h4 {
+            color: #10b981;
+            margin-bottom: 10px;
         }
 
         input[type="number"] {
@@ -223,17 +228,13 @@
     <div class="container">
         <h1>
             🌾 Honest Yield Farm
-            <span class="badge">✅ TEST MODE</span>
-            <span class="test-badge">💰 1 USDC MÍNIMO</span>
+            <span class="badge">✅ ATIVO</span>
+            <span class="test-badge">💰 TESTE COM 50 USDC</span>
         </h1>
-        <p style="color: #64748b; margin-bottom: 20px;">Teste com valores pequenos antes de investir mais</p>
+        <p style="color: #64748b; margin-bottom: 20px;">Seu contrato está rodando na Polygon Mainnet</p>
 
-        <div class="test-note">
-            🧪 <strong>MODO DE TESTE</strong> | Mínimo: 1 USDC | Recomendado para teste: 5-10 USDC
-        </div>
-
-        <div class="contract-address" id="contractAddr">
-            📍 Contrato: Aguardando deploy...
+        <div class="contract-address">
+            📍 Contrato: 0xB2Df0454E7897A5b0838a07128805bEaC40ED1eF
         </div>
 
         <button id="connectBtn">🔌 Conectar MetaMask / Rabby Wallet</button>
@@ -258,21 +259,29 @@
             </div>
         </div>
 
-        <div class="success-box">
-            ✅ <strong>Para testar com valores pequenos:</strong><br>
-            • Transfira <strong>5-10 USDC</strong> para o contrato<br>
-            • Clique em "Depositar e Farmar"<br>
-            • Aguarde alguns minutos/horas<br>
-            • Clique em "Fechar Posição" para ver o lucro<br>
-            <br>
-            <strong>📊 Exemplo com 5 USDC:</strong><br>
-            → Posição total: 10 USDC (2x alavancagem)<br>
-            → Yield estimado após 1 dia: ~$0.01-0.02<br>
-            → Lucro pequeno mas REAL
+        <div class="profit-calc">
+            <h4>📊 SIMULAÇÃO COM 50 USDC</h4>
+            <p style="font-size: 14px; margin-top: 8px;">
+                Posição total: <strong>100 USDC</strong> (2x alavancagem)<br>
+                Yield estimado (15% APY): <strong>~$0.02 por dia</strong><br>
+                Após 30 dias: <strong>~$0.60 de lucro</strong><br>
+                Gás total (abrir+fechar): <strong>~$0.10</strong><br>
+                Lucro líquido estimado: <strong>~$0.50 em 30 dias</strong>
+            </p>
         </div>
 
-        <h3>🚀 Abrir Posição (Teste)</h3>
-        <input type="number" id="depositAmount" placeholder="Quantidade em USDC (mínimo 1)" step="1" value="5">
+        <div class="success-box">
+            ✅ <strong>Para testar com 50 USDC:</strong><br>
+            • Transfira <strong>50 USDC</strong> para o contrato<br>
+            • Clique em "Depositar e Farmar"<br>
+            • Deixe render por <strong>7-30 dias</strong><br>
+            • Clique em "Fechar Posição" para sacar<br>
+            <br>
+            <strong>📊 Dica:</strong> Quanto mais tempo render, maior o lucro!
+        </div>
+
+        <h3>🚀 Abrir Posição</h3>
+        <input type="number" id="depositAmount" placeholder="Quantidade em USDC" step="10" value="50">
         <button id="depositBtn" disabled>📤 Depositar e Farmar (2x Alavancagem)</button>
 
         <button id="withdrawBtn" disabled class="danger-btn">🔚 Fechar Posição e Sacar Lucro</button>
@@ -280,20 +289,19 @@
         <div id="status" class="status"></div>
 
         <div class="warning">
-            ⚠️ <strong>ATENÇÃO - LEIA ANTES DE TESTAR:</strong><br><br>
-            1. <strong>Taxas de gás:</strong> Cada transação custa ~0.01-0.05 MATIC ($0.01-0.05)<br>
-            2. <strong>Para testar com 5 USDC:</strong> Você vai gastar ~$0.10 em gás para depositar e fechar<br>
-            3. <strong>Lucro esperado:</strong> Com 5 USDC, depois de 24h você terá ~$5.01-5.02<br>
-            4. <strong>Conclusão:</strong> Para valores pequenos, o gás pode comer seu lucro<br>
-            5. <strong>Recomendação:</strong> Teste com 50-100 USDC para ver lucro real<br>
+            ⚠️ <strong>LEIA ANTES DE TESTAR COM 50 USDC:</strong><br><br>
+            1. <strong>Taxas de gás:</strong> ~$0.10 para abrir + ~$0.10 para fechar = <strong>$0.20 total</strong><br>
+            2. <strong>Lucro esperado (30 dias):</strong> ~$0.60 → Lucro líquido: <strong>$0.40</strong><br>
+            3. <strong>Conclusão:</strong> Funciona, mas é um teste de <strong>funcionalidade</strong>, não de rentabilidade<br>
+            4. <strong>Para lucro real:</strong> Use <strong>$1.000+</strong> e deixe por <strong>30+ dias</strong><br>
             <br>
-            💡 <strong>Mas o sistema FUNCIONA!</strong> Use este teste para verificar se tudo está rodando.
+            💡 <strong>Mas o sistema funciona perfeitamente!</strong> Este teste prova que o contrato executa as operações corretamente.
         </div>
     </div>
 
     <script>
-        // ATUALIZE ESTE ENDEREÇO APÓS O DEPLOY
-        let CONTRACT_ADDRESS = "0xB2Df0454E7897A5b0838a07128805bEaC40ED1eF";
+        // SEU CONTRATO IMPLANTADO
+        const CONTRACT_ADDRESS = "0xB2Df0454E7897A5b0838a07128805bEaC40ED1eF";
         
         const CONTRACT_ABI = [
             "function depositAndFarm(uint256 amountUSDC) external",
@@ -354,7 +362,6 @@
                 depositBtn.disabled = false;
                 withdrawBtn.disabled = false;
                 document.getElementById('walletInfo').innerHTML = `✅ Owner: ${userAddress.slice(0,6)}...${userAddress.slice(-4)} | Mínimo: ${minDeposit} USDC`;
-                document.getElementById('contractAddr').innerHTML = `📍 Contrato: ${CONTRACT_ADDRESS.slice(0,10)}...${CONTRACT_ADDRESS.slice(-8)}`;
 
                 showStatus('success', '✅ Conectado! Transfira USDC para o contrato e clique em Depositar.');
                 await loadData();
@@ -390,7 +397,6 @@
                 return;
             }
 
-            // Garantir que tem 6 casas decimais
             amount = Math.floor(amount * 100) / 100;
             
             const contractBalance = await contract.getContractBalance();
@@ -408,7 +414,7 @@
                 const tx = await contract.depositAndFarm(amountWei);
                 showStatus('info', `⏳ Transação enviada: ${tx.hash.slice(0,12)}...`);
                 await tx.wait();
-                showStatus('success', `✅ Posição aberta com ${amount} USDC! Deixe render por algumas horas/dias.`);
+                showStatus('success', `✅ Posição aberta com ${amount} USDC! Deixe render por alguns dias.`);
                 await loadData();
             } catch (error) {
                 showStatus('error', error.reason || error.message);
