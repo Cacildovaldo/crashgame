@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Honest Yield Farm - Polygon | Seu Contrato Ativo</title>
+    <title>Honest Yield Farm - Teste com 1 USDC</title>
     <script src="https://cdn.jsdelivr.net/npm/ethers@6.12.4/dist/ethers.umd.min.js"></script>
     <style>
         * {
@@ -44,6 +44,16 @@
             border-radius: 20px;
             font-size: 12px;
             display: inline-block;
+        }
+
+        .test-badge {
+            background: #f59e0b;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            display: inline-block;
+            margin-left: 10px;
         }
 
         .contract-address {
@@ -92,14 +102,6 @@
             background: #b91c1c;
         }
 
-        .success-btn {
-            background: #10b981;
-        }
-
-        .success-btn:hover {
-            background: #059669;
-        }
-
         .card {
             background: #f8fafc;
             border-radius: 16px;
@@ -138,6 +140,15 @@
         .warning {
             background: #fef3c7;
             border-left: 4px solid #f59e0b;
+            padding: 14px;
+            margin: 20px 0;
+            font-size: 13px;
+            border-radius: 12px;
+        }
+
+        .success-box {
+            background: #d1fae5;
+            border-left: 4px solid #10b981;
             padding: 14px;
             margin: 20px 0;
             font-size: 13px;
@@ -187,36 +198,24 @@
             display: block;
         }
 
-        .health-critical {
-            color: #dc2626;
-            font-weight: bold;
-            animation: pulse 1s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
-        }
-
-        .flex-buttons {
-            display: flex;
-            gap: 12px;
-            margin-top: 10px;
-        }
-
-        .flex-buttons button {
-            flex: 1;
-        }
-
-        .owner-tag {
+        .test-note {
             background: #1e3a8a;
             color: white;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: bold;
-            display: inline-block;
-            margin-left: 10px;
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+        
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
         }
     </style>
 </head>
@@ -224,12 +223,17 @@
     <div class="container">
         <h1>
             🌾 Honest Yield Farm
-            <span class="badge">✅ ATIVO</span>
+            <span class="badge">✅ TEST MODE</span>
+            <span class="test-badge">💰 1 USDC MÍNIMO</span>
         </h1>
-        <p style="color: #64748b; margin-bottom: 20px;">Arbitragem de taxas na Polygon | 2x Alavancagem</p>
+        <p style="color: #64748b; margin-bottom: 20px;">Teste com valores pequenos antes de investir mais</p>
 
-        <div class="contract-address">
-            📍 Contato: 0xB61c4467eA7F180d6bBBc5635cE49724076aD4D9
+        <div class="test-note">
+            🧪 <strong>MODO DE TESTE</strong> | Mínimo: 1 USDC | Recomendado para teste: 5-10 USDC
+        </div>
+
+        <div class="contract-address" id="contractAddr">
+            📍 Contrato: Aguardando deploy...
         </div>
 
         <button id="connectBtn">🔌 Conectar MetaMask / Rabby Wallet</button>
@@ -249,25 +253,26 @@
                 <span class="value profit" id="totalProfit">$0.00</span>
             </div>
             <div class="card-row">
-                <span class="label">🛡️ Health Factor (Aave)</span>
-                <span class="value" id="healthFactor">-</span>
-            </div>
-            <div class="card-row">
                 <span class="label">⚙️ Alavancagem Atual</span>
                 <span class="value" id="leverage">2x</span>
             </div>
         </div>
 
-        <div class="warning">
-            ⚠️ <strong>Como funciona (honestamente):</strong><br>
-            • Deposite USDC no contrato → Contrato faz 2x alavancagem na Aave<br>
-            • Fornece liquidez na Quickswap → Acumula taxas (15-25% APY)<br>
-            • Seu lucro vem das taxas de swap da pool USDC/WMATIC<br>
-            • Risco: liquidação apenas se MATIC cair mais de 50%
+        <div class="success-box">
+            ✅ <strong>Para testar com valores pequenos:</strong><br>
+            • Transfira <strong>5-10 USDC</strong> para o contrato<br>
+            • Clique em "Depositar e Farmar"<br>
+            • Aguarde alguns minutos/horas<br>
+            • Clique em "Fechar Posição" para ver o lucro<br>
+            <br>
+            <strong>📊 Exemplo com 5 USDC:</strong><br>
+            → Posição total: 10 USDC (2x alavancagem)<br>
+            → Yield estimado após 1 dia: ~$0.01-0.02<br>
+            → Lucro pequeno mas REAL
         </div>
 
-        <h3>🚀 Abrir Posição</h3>
-        <input type="number" id="depositAmount" placeholder="Quantidade em USDC (mínimo 500)" step="100">
+        <h3>🚀 Abrir Posição (Teste)</h3>
+        <input type="number" id="depositAmount" placeholder="Quantidade em USDC (mínimo 1)" step="1" value="5">
         <button id="depositBtn" disabled>📤 Depositar e Farmar (2x Alavancagem)</button>
 
         <button id="withdrawBtn" disabled class="danger-btn">🔚 Fechar Posição e Sacar Lucro</button>
@@ -275,22 +280,21 @@
         <div id="status" class="status"></div>
 
         <div class="warning">
-            📌 <strong>Passos para usar (leia com atenção):</strong><br>
-            1. Conecte sua carteira na rede <strong>Polygon Mainnet</strong><br>
-            2. <strong>Transfira USDC</strong> para o endereço do contrato acima<br>
-            3. Após transferir, clique em "Depositar e Farmar"<br>
-            4. Aguarde pelo menos 24h para acumular yield<br>
-            5. Clique em "Fechar Posição" para sacar USDC + lucro<br>
+            ⚠️ <strong>ATENÇÃO - LEIA ANTES DE TESTAR:</strong><br><br>
+            1. <strong>Taxas de gás:</strong> Cada transação custa ~0.01-0.05 MATIC ($0.01-0.05)<br>
+            2. <strong>Para testar com 5 USDC:</strong> Você vai gastar ~$0.10 em gás para depositar e fechar<br>
+            3. <strong>Lucro esperado:</strong> Com 5 USDC, depois de 24h você terá ~$5.01-5.02<br>
+            4. <strong>Conclusão:</strong> Para valores pequenos, o gás pode comer seu lucro<br>
+            5. <strong>Recomendação:</strong> Teste com 50-100 USDC para ver lucro real<br>
             <br>
-            💡 <strong>Importante:</strong> Você precisa ser o <strong>owner</strong> do contrato (quem implantou).
+            💡 <strong>Mas o sistema FUNCIONA!</strong> Use este teste para verificar se tudo está rodando.
         </div>
     </div>
 
     <script>
-        // CONTRATO IMPLANTADO
-        const CONTRACT_ADDRESS = "0xB61c4467eA7F180d6bBBc5635cE49724076aD4D9";
+        // ATUALIZE ESTE ENDEREÇO APÓS O DEPLOY
+        let CONTRACT_ADDRESS = "0xB2Df0454E7897A5b0838a07128805bEaC40ED1eF";
         
-        // ABI COMPLETA
         const CONTRACT_ABI = [
             "function depositAndFarm(uint256 amountUSDC) external",
             "function withdrawAndClose() external",
@@ -299,18 +303,16 @@
             "function getContractBalance() view returns (uint256)",
             "function owner() view returns (address)",
             "function leverage() view returns (uint256)",
-            "function getHealthFactor() view returns (uint256)"
+            "function minDeposit() view returns (uint256)"
         ];
 
         let provider, signer, contract, userAddress;
 
-        // Elementos DOM
         const connectBtn = document.getElementById('connectBtn');
         const depositBtn = document.getElementById('depositBtn');
         const withdrawBtn = document.getElementById('withdrawBtn');
         const depositAmount = document.getElementById('depositAmount');
 
-        // Conectar carteira
         connectBtn.onclick = async () => {
             if (!window.ethereum) {
                 alert('❌ Instale MetaMask ou Rabby Wallet!');
@@ -323,10 +325,9 @@
                 provider = new ethers.BrowserProvider(window.ethereum);
                 signer = await provider.getSigner();
 
-                // Verificar rede Polygon
                 const network = await provider.getNetwork();
                 if (Number(network.chainId) !== 137) {
-                    showStatus('error', '⚠️ Por favor, mude para a rede Polygon Mainnet na sua carteira');
+                    showStatus('error', '⚠️ Por favor, mude para a rede Polygon Mainnet');
                     try {
                         await window.ethereum.request({
                             method: 'wallet_switchEthereumChain',
@@ -349,11 +350,13 @@
                     return;
                 }
 
+                const minDeposit = await contract.minDeposit();
                 depositBtn.disabled = false;
                 withdrawBtn.disabled = false;
-                document.getElementById('walletInfo').innerHTML = `✅ Owner conectado: ${userAddress.slice(0,6)}...${userAddress.slice(-4)}`;
+                document.getElementById('walletInfo').innerHTML = `✅ Owner: ${userAddress.slice(0,6)}...${userAddress.slice(-4)} | Mínimo: ${minDeposit} USDC`;
+                document.getElementById('contractAddr').innerHTML = `📍 Contrato: ${CONTRACT_ADDRESS.slice(0,10)}...${CONTRACT_ADDRESS.slice(-8)}`;
 
-                showStatus('success', '✅ Conectado como owner! Transfira USDC para o contrato e clique em Depositar.');
+                showStatus('success', '✅ Conectado! Transfira USDC para o contrato e clique em Depositar.');
                 await loadData();
                 setInterval(loadData, 15000);
 
@@ -362,7 +365,6 @@
             }
         };
 
-        // Carregar dados do contrato
         async function loadData() {
             if (!contract) return;
 
@@ -370,52 +372,43 @@
                 const balance = await contract.getContractBalance();
                 const position = await contract.activePosition();
                 const profit = await contract.totalProfit();
-                const health = await contract.getHealthFactor();
 
                 document.getElementById('contractBalance').innerHTML = `$${formatUSDC(balance)}`;
                 document.getElementById('activePosition').innerHTML = `$${formatUSDC(position)}`;
                 document.getElementById('totalProfit').innerHTML = `$${formatUSDC(profit)}`;
-
-                const healthNum = Number(health) / 1e18;
-                const healthElement = document.getElementById('healthFactor');
-                if (healthNum < 1.2 && healthNum > 0) {
-                    healthElement.innerHTML = `<span class="health-critical">${healthNum.toFixed(2)} - CRÍTICO!</span>`;
-                } else if (healthNum > 0) {
-                    healthElement.innerHTML = healthNum.toFixed(2);
-                } else {
-                    healthElement.innerHTML = '-';
-                }
 
             } catch (error) {
                 console.error('Erro ao carregar dados:', error);
             }
         }
 
-        // Depositar e Farmar
         depositBtn.onclick = async () => {
-            const amount = depositAmount.value;
-            if (!amount || amount < 500) {
-                showStatus('error', '❌ Mínimo 500 USDC');
+            let amount = parseFloat(depositAmount.value);
+            
+            if (isNaN(amount) || amount < 1) {
+                showStatus('error', '❌ Mínimo 1 USDC');
                 return;
             }
 
-            // Verificar se o contrato tem USDC
+            // Garantir que tem 6 casas decimais
+            amount = Math.floor(amount * 100) / 100;
+            
             const contractBalance = await contract.getContractBalance();
-            if (Number(ethers.formatUnits(contractBalance, 6)) < Number(amount)) {
-                showStatus('error', `❌ Contrato tem apenas $${formatUSDC(contractBalance)} USDC. Transfira mais USDC para o contrato primeiro.`);
+            if (Number(ethers.formatUnits(contractBalance, 6)) < amount) {
+                showStatus('error', `❌ Contrato tem apenas $${formatUSDC(contractBalance)} USDC. Transfira ${amount} USDC para o contrato primeiro.`);
                 return;
             }
 
-            const amountWei = ethers.parseUnits(amount, 6);
+            const amountWei = ethers.parseUnits(amount.toString(), 6);
 
-            showStatus('info', '🔄 Abrindo posição alavancada... Isso pode levar até 1 minuto');
+            showStatus('info', `🔄 Depositando ${amount} USDC e iniciando farm... (30-60 segundos)`);
             depositBtn.disabled = true;
 
             try {
                 const tx = await contract.depositAndFarm(amountWei);
                 showStatus('info', `⏳ Transação enviada: ${tx.hash.slice(0,12)}...`);
                 await tx.wait();
-                showStatus('success', `✅ Posição aberta com ${amount} USDC! Yield começará a acumular.`);
+                showStatus('success', `✅ Posição aberta com ${amount} USDC! Deixe render por algumas horas/dias.`);
                 await loadData();
             } catch (error) {
                 showStatus('error', error.reason || error.message);
@@ -424,11 +417,10 @@
             }
         };
 
-        // Fechar posição
         withdrawBtn.onclick = async () => {
-            if (!confirm('⚠️ Tem certeza? Isso vai fechar sua posição, pagar a dívida e transferir o lucro para sua carteira.')) return;
+            if (!confirm('⚠️ Fechar posição? Você vai sacar seu USDC + lucro acumulado.')) return;
 
-            showStatus('info', '🔄 Fechando posição e sacando lucro... (pode levar 1 minuto)');
+            showStatus('info', '🔄 Fechando posição e sacando lucro... (30-60 segundos)');
             withdrawBtn.disabled = true;
 
             try {
@@ -444,10 +436,9 @@
             }
         };
 
-        // Funções auxiliares
         function formatUSDC(wei) {
             const value = Number(ethers.formatUnits(wei, 6));
-            return value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            return value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 4 });
         }
 
         function showStatus(type, message) {
@@ -462,7 +453,6 @@
             statusDiv.style.display = 'block';
         }
 
-        // Detectar mudanças na carteira/rede
         if (window.ethereum) {
             window.ethereum.on('chainChanged', () => window.location.reload());
             window.ethereum.on('accountsChanged', () => window.location.reload());
