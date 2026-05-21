@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Honest Yield Farm - Seu Contrato Ativo | 50 USDC Teste</title>
+    <title>Honest Yield Farm - Teste com 1 USDC</title>
     <script src="https://cdn.jsdelivr.net/npm/ethers@6.12.4/dist/ethers.umd.min.js"></script>
     <style>
         * {
@@ -45,16 +45,6 @@
             border-radius: 20px;
             font-size: 12px;
             display: inline-block;
-        }
-
-        .test-badge {
-            background: #3b82f6;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 11px;
-            display: inline-block;
-            margin-left: 10px;
         }
 
         .contract-address {
@@ -199,28 +189,28 @@
             display: block;
         }
 
-        .profit-calc {
-            background: #0f172a;
-            color: white;
-            padding: 16px;
-            border-radius: 12px;
-            margin: 20px 0;
-            text-align: center;
+        .value-small {
+            font-size: 14px;
+            color: #64748b;
+            margin-top: 5px;
         }
 
-        .profit-calc h4 {
-            color: #10b981;
-            margin-bottom: 10px;
+        .quick-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
         }
 
-        input[type="number"] {
-            -moz-appearance: textfield;
-        }
-        
-        input[type="number"]::-webkit-inner-spin-button,
-        input[type="number"]::-webkit-outer-spin-button {
-            -webkit-appearance: none;
+        .quick-buttons button {
+            background: #e2e8f0;
+            color: #1e3a8a;
+            padding: 8px;
+            font-size: 14px;
             margin: 0;
+        }
+
+        .quick-buttons button:hover {
+            background: #cbd5e1;
         }
     </style>
 </head>
@@ -228,10 +218,9 @@
     <div class="container">
         <h1>
             🌾 Honest Yield Farm
-            <span class="badge">✅ ATIVO</span>
-            <span class="test-badge">💰 TESTE COM 50 USDC</span>
+            <span class="badge">✅ TESTE 1 USDC</span>
         </h1>
-        <p style="color: #64748b; margin-bottom: 20px;">Seu contrato está rodando na Polygon Mainnet</p>
+        <p style="color: #64748b; margin-bottom: 20px;">Teste com valores pequenos - Mínimo: 1 USDC</p>
 
         <div class="contract-address">
             📍 Contrato: 0xB2Df0454E7897A5b0838a07128805bEaC40ED1eF
@@ -259,29 +248,27 @@
             </div>
         </div>
 
-        <div class="profit-calc">
-            <h4>📊 SIMULAÇÃO COM 50 USDC</h4>
-            <p style="font-size: 14px; margin-top: 8px;">
-                Posição total: <strong>100 USDC</strong> (2x alavancagem)<br>
-                Yield estimado (15% APY): <strong>~$0.02 por dia</strong><br>
-                Após 30 dias: <strong>~$0.60 de lucro</strong><br>
-                Gás total (abrir+fechar): <strong>~$0.10</strong><br>
-                Lucro líquido estimado: <strong>~$0.50 em 30 dias</strong>
-            </p>
-        </div>
-
         <div class="success-box">
-            ✅ <strong>Para testar com 50 USDC:</strong><br>
-            • Transfira <strong>50 USDC</strong> para o contrato<br>
+            ✅ <strong>TESTE COM 1 USDC (ou mais):</strong><br>
+            • Transfira USDC para o contrato<br>
+            • Digite qualquer valor (mínimo 1)<br>
             • Clique em "Depositar e Farmar"<br>
-            • Deixe render por <strong>7-30 dias</strong><br>
-            • Clique em "Fechar Posição" para sacar<br>
-            <br>
-            <strong>📊 Dica:</strong> Quanto mais tempo render, maior o lucro!
+            • Deixe render (quanto mais tempo, melhor)<br>
+            • Clique em "Fechar Posição" para sacar
         </div>
 
         <h3>🚀 Abrir Posição</h3>
-        <input type="number" id="depositAmount" placeholder="Quantidade em USDC" step="10" value="50">
+        
+        <div class="quick-buttons">
+            <button id="btn1">1 USDC</button>
+            <button id="btn5">5 USDC</button>
+            <button id="btn10">10 USDC</button>
+            <button id="btn50">50 USDC</button>
+        </div>
+        
+        <input type="number" id="depositAmount" placeholder="Digite o valor em USDC (mínimo 1)" step="0.01" value="1">
+        <div class="value-small">💡 Mínimo: 1 USDC | O contrato aceita qualquer valor acima disso</div>
+        
         <button id="depositBtn" disabled>📤 Depositar e Farmar (2x Alavancagem)</button>
 
         <button id="withdrawBtn" disabled class="danger-btn">🔚 Fechar Posição e Sacar Lucro</button>
@@ -289,13 +276,13 @@
         <div id="status" class="status"></div>
 
         <div class="warning">
-            ⚠️ <strong>LEIA ANTES DE TESTAR COM 50 USDC:</strong><br><br>
-            1. <strong>Taxas de gás:</strong> ~$0.10 para abrir + ~$0.10 para fechar = <strong>$0.20 total</strong><br>
-            2. <strong>Lucro esperado (30 dias):</strong> ~$0.60 → Lucro líquido: <strong>$0.40</strong><br>
-            3. <strong>Conclusão:</strong> Funciona, mas é um teste de <strong>funcionalidade</strong>, não de rentabilidade<br>
-            4. <strong>Para lucro real:</strong> Use <strong>$1.000+</strong> e deixe por <strong>30+ dias</strong><br>
+            ⚠️ <strong>OBSERVAÇÃO IMPORTANTE:</strong><br><br>
+            • O contrato ACEITA 1 USDC (o mínimo foi alterado para 1)<br>
+            • O frontend agora ACEITA valores decimais (ex: 1.50)<br>
+            • Se aparecer "Mínimo 1 USDC" mesmo digitando 1, verifique se não tem espaços<br>
+            • Para testar, use 1 USDC primeiro, depois aumente<br>
             <br>
-            💡 <strong>Mas o sistema funciona perfeitamente!</strong> Este teste prova que o contrato executa as operações corretamente.
+            💡 <strong>Se ainda não funcionar:</strong> Atualize a página (F5) e tente novamente.
         </div>
     </div>
 
@@ -320,6 +307,12 @@
         const depositBtn = document.getElementById('depositBtn');
         const withdrawBtn = document.getElementById('withdrawBtn');
         const depositAmount = document.getElementById('depositAmount');
+
+        // Botões rápidos
+        document.getElementById('btn1').onclick = () => { depositAmount.value = "1"; };
+        document.getElementById('btn5').onclick = () => { depositAmount.value = "5"; };
+        document.getElementById('btn10').onclick = () => { depositAmount.value = "10"; };
+        document.getElementById('btn50').onclick = () => { depositAmount.value = "50"; };
 
         connectBtn.onclick = async () => {
             if (!window.ethereum) {
@@ -361,7 +354,7 @@
                 const minDeposit = await contract.minDeposit();
                 depositBtn.disabled = false;
                 withdrawBtn.disabled = false;
-                document.getElementById('walletInfo').innerHTML = `✅ Owner: ${userAddress.slice(0,6)}...${userAddress.slice(-4)} | Mínimo: ${minDeposit} USDC`;
+                document.getElementById('walletInfo').innerHTML = `✅ Owner: ${userAddress.slice(0,6)}...${userAddress.slice(-4)} | Mínimo do contrato: ${minDeposit} USDC`;
 
                 showStatus('success', '✅ Conectado! Transfira USDC para o contrato e clique em Depositar.');
                 await loadData();
@@ -390,18 +383,26 @@
         }
 
         depositBtn.onclick = async () => {
-            let amount = parseFloat(depositAmount.value);
+            // PEGA O VALOR EXATO COMO DIGITADO
+            let amountStr = depositAmount.value.replace(',', '.');
+            let amount = parseFloat(amountStr);
+            
+            console.log("Valor digitado:", amountStr, "Convertido:", amount);
             
             if (isNaN(amount) || amount < 1) {
-                showStatus('error', '❌ Mínimo 1 USDC');
+                showStatus('error', '❌ Digite um valor válido (mínimo 1 USDC)');
                 return;
             }
 
-            amount = Math.floor(amount * 100) / 100;
+            // ARREDONDA PARA 6 CASAS DECIMAIS (USDC tem 6)
+            amount = Math.floor(amount * 1000000) / 1000000;
             
+            // VERIFICA SE O CONTRATO TEM SALDO SUFICIENTE
             const contractBalance = await contract.getContractBalance();
-            if (Number(ethers.formatUnits(contractBalance, 6)) < amount) {
-                showStatus('error', `❌ Contrato tem apenas $${formatUSDC(contractBalance)} USDC. Transfira ${amount} USDC para o contrato primeiro.`);
+            const contractBalanceNum = Number(ethers.formatUnits(contractBalance, 6));
+            
+            if (contractBalanceNum < amount) {
+                showStatus('error', `❌ Contrato tem apenas $${contractBalanceNum.toFixed(2)} USDC. Transfira ${amount} USDC para o contrato primeiro.`);
                 return;
             }
 
@@ -417,7 +418,8 @@
                 showStatus('success', `✅ Posição aberta com ${amount} USDC! Deixe render por alguns dias.`);
                 await loadData();
             } catch (error) {
-                showStatus('error', error.reason || error.message);
+                console.error("Erro detalhado:", error);
+                showStatus('error', error.reason || error.message || "Erro desconhecido");
             } finally {
                 depositBtn.disabled = false;
             }
