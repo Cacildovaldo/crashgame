@@ -73,6 +73,12 @@
             margin: 0;
             background: #475569;
         }
+        .debug {
+            font-size: 11px;
+            color: #94a3b8;
+            word-break: break-all;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -106,24 +112,23 @@
         
         <div id="status" class="status"></div>
         
-        <div class="info" style="margin-top: 20px; background: #10b98120; border-left: 3px solid #10b981;">
-            ✅ <strong>Seu contrato já tem saldo!</strong><br>
-            Saldo atual: <strong>$1.02 USDC</strong><br>
-            Você pode depositar <strong>1 USDC</strong> agora mesmo!
-        </div>
+        <div id="debug" class="debug"></div>
     </div>
 
     <script>
         const CONTRACT_ADDRESS = "0xB2Df0454E7897A5b0838a07128805bEaC40ED1eF";
         
-        // ABI APENAS com as funções que existem
+        // ABI COMPLETA com todas as funções que você precisa
         const CONTRACT_ABI = [
             "function depositAndFarm(uint256 amountUSDC) external",
             "function withdrawAndClose() external",
             "function activePosition() view returns (uint256)",
             "function totalProfit() view returns (uint256)",
             "function getContractBalance() view returns (uint256)",
-            "function owner() view returns (address)"
+            "function owner() view returns (address)",
+            "function minDeposit() view returns (uint256)",
+            "function leverage() view returns (uint256)",
+            "function currentPosition() view returns (uint256, uint256, uint256, uint256, address)"
         ];
 
         let provider, signer, contract, userAddress;
@@ -132,6 +137,12 @@
         const depositBtn = document.getElementById('depositBtn');
         const withdrawBtn = document.getElementById('withdrawBtn');
         const amountInput = document.getElementById('amount');
+        const debugDiv = document.getElementById('debug');
+
+        function logDebug(msg) {
+            debugDiv.innerHTML += new Date().toLocaleTimeString() + ": " + msg + "<br>";
+            console.log(msg);
+        }
 
         // Botões rápidos
         document.getElementById('btn1').onclick = () => { amountInput.value = "1"; };
@@ -145,70 +156,93 @@
             }
 
             try {
+                logDebug("1. Conectando à carteira...");
                 const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
                 userAddress = accounts[0];
+                logDebug(`2. Carteira conectada: ${userAddress}`);
+                
                 provider = new ethers.BrowserProvider(window.ethereum);
                 signer = await provider.getSigner();
 
                 const network = await provider.getNetwork();
+                logDebug(`3. Rede: ${network.chainId}`);
+                
                 if (Number(network.chainId) !== 137) {
+                    logDebug("4. Rede incorreta. Mudando para Polygon...");
                     showStatus('error', '⚠️ Mude para Polygon Mainnet');
                     try {
                         await window.ethereum.request({
                             method: 'wallet_switchEthereumChain',
                             params: [{ chainId: '0x89' }]
                         });
+                        setTimeout(() => location.reload(), 2000);
                     } catch(e) { return; }
                 }
 
+                logDebug("4. Conectando ao contrato...");
                 contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
                 
+                logDebug("5. Buscando owner do contrato...");
                 const ownerAddress = await contract.owner();
-                const balance = await contract.getContractBalance();
-                const position = await contract.activePosition();
-                
-                console.log("Owner:", ownerAddress);
-                console.log("Sua carteira:", userAddress);
-                console.log("Saldo do contrato:", ethers.formatUnits(balance, 6));
-                
-                document.getElementById('contractBalance').innerHTML = `$${Number(ethers.formatUnits(balance, 6)).toFixed(4)}`;
-                document.getElementById('activePosition').innerHTML = `$${Number(ethers.formatUnits(position, 6)).toFixed(4)}`;
+                logDebug(`6. Owner do contrato: ${ownerAddress}`);
+                logDebug(`7. Sua carteira: ${userAddress}`);
                 
                 const isOwner = ownerAddress.toLowerCase() === userAddress.toLowerCase();
+                logDebug(`8. É owner? ${isOwner}`);
+                
+                if (!isOwner) {
+                    showStatus('error', '❌ Você não é o owner do contrato!');
+                    depositBtn.disabled = true;
+                    withdrawBtn.disabled = true;
+                    return;
+                }
+                
+                logDebug("9. Buscando saldo do contrato...");
+                const balance = await contract.getContractBalance();
+                const balanceNum = Number(ethers.formatUnits(balance, 6));
+                logDebug(`10. Saldo do contrato: ${balanceNum} USDC`);
+                
+                document.getElementById('contractBalance').innerHTML = `$${balanceNum.toFixed(4)}`;
+                
+                logDebug("11. Buscando posição ativa...");
+                const position = await contract.activePosition();
+                document.getElementById('activePosition').innerHTML = `$${Number(ethers.formatUnits(position, 6)).toFixed(4)}`;
+                
+                logDebug("12. Buscando lucro total...");
+                const profit = await contract.totalProfit();
+                document.getElementById('totalProfit').innerHTML = `$${Number(ethers.formatUnits(profit, 6)).toFixed(4)}`;
                 
                 const infoPanel = document.getElementById('infoPanel');
                 infoPanel.style.display = 'block';
+                infoPanel.innerHTML = `✅ Owner confirmado: ${userAddress.slice(0,6)}...${userAddress.slice(-4)} | Saldo: $${balanceNum.toFixed(2)} USDC`;
+                infoPanel.style.background = "#10b98120";
                 
-                if (isOwner) {
-                    infoPanel.innerHTML = `✅ Owner confirmado: ${userAddress.slice(0,6)}...${userAddress.slice(-4)}`;
-                    infoPanel.style.background = "#10b98120";
-                    depositBtn.disabled = false;
-                    withdrawBtn.disabled = false;
-                    
-                    if (Number(ethers.formatUnits(balance, 6)) >= 1) {
-                        showStatus('success', `✅ Contrato tem $${Number(ethers.formatUnits(balance, 6)).toFixed(2)} USDC. Você pode depositar!`);
-                    } else {
-                        showStatus('error', '❌ Contrato sem saldo. Transfira USDC primeiro.');
-                    }
+                // HABILITA O BOTÃO! (esta é a linha mais importante)
+                depositBtn.disabled = false;
+                withdrawBtn.disabled = false;
+                
+                if (balanceNum >= 1) {
+                    showStatus('success', `✅ Contrato tem $${balanceNum.toFixed(2)} USDC. Digite 1 e clique em Depositar!`);
                 } else {
-                    infoPanel.innerHTML = `❌ Você NÃO é o owner!`;
-                    infoPanel.style.background = "#ef444420";
-                    depositBtn.disabled = true;
-                    withdrawBtn.disabled = true;
+                    showStatus('error', '❌ Contrato sem saldo. Transfira USDC primeiro.');
                 }
                 
+                // Atualiza a cada 15 segundos
                 setInterval(async () => {
                     if (contract) {
-                        const newBalance = await contract.getContractBalance();
-                        document.getElementById('contractBalance').innerHTML = `$${Number(ethers.formatUnits(newBalance, 6)).toFixed(4)}`;
-                        const newPosition = await contract.activePosition();
-                        document.getElementById('activePosition').innerHTML = `$${Number(ethers.formatUnits(newPosition, 6)).toFixed(4)}`;
-                        const newProfit = await contract.totalProfit();
-                        document.getElementById('totalProfit').innerHTML = `$${Number(ethers.formatUnits(newProfit, 6)).toFixed(4)}`;
+                        try {
+                            const newBalance = await contract.getContractBalance();
+                            document.getElementById('contractBalance').innerHTML = `$${Number(ethers.formatUnits(newBalance, 6)).toFixed(4)}`;
+                            const newPosition = await contract.activePosition();
+                            document.getElementById('activePosition').innerHTML = `$${Number(ethers.formatUnits(newPosition, 6)).toFixed(4)}`;
+                            const newProfit = await contract.totalProfit();
+                            document.getElementById('totalProfit').innerHTML = `$${Number(ethers.formatUnits(newProfit, 6)).toFixed(4)}`;
+                        } catch(e) { logDebug("Erro ao atualizar: " + e.message); }
                     }
-                }, 10000);
+                }, 15000);
                 
             } catch (error) {
+                logDebug("ERRO: " + error.message);
                 showStatus('error', error.message);
                 console.error(error);
             }
@@ -217,14 +251,17 @@
         depositBtn.onclick = async () => {
             let amount = parseFloat(amountInput.value);
             
+            logDebug(`Tentando depositar ${amount} USDC...`);
+            
             if (isNaN(amount) || amount < 1) {
                 showStatus('error', 'Digite um valor >= 1 USDC');
                 return;
             }
             
-            // Verificar saldo do contrato
+            // Verificar saldo do contrato NOVAMENTE
             const contractBalance = await contract.getContractBalance();
             const contractBalanceNum = Number(ethers.formatUnits(contractBalance, 6));
+            logDebug(`Saldo do contrato: ${contractBalanceNum} USDC`);
             
             if (contractBalanceNum < amount) {
                 showStatus('error', `❌ Contrato tem apenas $${contractBalanceNum.toFixed(2)} USDC. Transfira ${amount} USDC primeiro.`);
@@ -237,17 +274,24 @@
             depositBtn.disabled = true;
             
             try {
+                logDebug("Enviando transação depositAndFarm...");
                 const tx = await contract.depositAndFarm(amountWei);
+                logDebug(`Tx hash: ${tx.hash}`);
                 showStatus('info', `⏳ Tx: ${tx.hash.slice(0,12)}...`);
+                
                 await tx.wait();
+                logDebug("Transação confirmada!");
+                
                 showStatus('success', `✅ Posição aberta com ${amount} USDC!`);
                 
+                // Atualizar dados
                 const newBalance = await contract.getContractBalance();
                 document.getElementById('contractBalance').innerHTML = `$${Number(ethers.formatUnits(newBalance, 6)).toFixed(4)}`;
                 const newPosition = await contract.activePosition();
                 document.getElementById('activePosition').innerHTML = `$${Number(ethers.formatUnits(newPosition, 6)).toFixed(4)}`;
                 
             } catch (error) {
+                logDebug("ERRO na transação: " + (error.reason || error.message));
                 showStatus('error', error.reason || error.message);
             } finally {
                 depositBtn.disabled = false;
@@ -257,12 +301,15 @@
         withdrawBtn.onclick = async () => {
             if (!confirm('Fechar posição e sacar lucro?')) return;
             
+            logDebug("Fechando posição...");
             showStatus('info', '🔄 Fechando posição...');
             withdrawBtn.disabled = true;
             
             try {
                 const tx = await contract.withdrawAndClose();
+                logDebug(`Tx hash: ${tx.hash}`);
                 await tx.wait();
+                logDebug("Posição fechada com sucesso!");
                 showStatus('success', '✅ Posição fechada! Lucro transferido.');
                 
                 const newBalance = await contract.getContractBalance();
@@ -270,6 +317,7 @@
                 document.getElementById('activePosition').innerHTML = `$0.00`;
                 
             } catch (error) {
+                logDebug("ERRO: " + (error.reason || error.message));
                 showStatus('error', error.reason || error.message);
             } finally {
                 withdrawBtn.disabled = false;
