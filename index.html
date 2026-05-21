@@ -1,367 +1,254 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yield Farm - Funcional</title>
-    <!-- CDN ALTERNATIVO do ethers.js -->
-    <script src="https://cdn.ethers.io/lib/ethers-6.12.4.umd.min.js"></script>
-    <!-- FALLBACK caso o acima falhe -->
-    <script type="text/javascript">
-        if (typeof ethers === 'undefined') {
-            document.write('<script src="https://unpkg.com/ethers@6.12.4/dist/ethers.umd.min.js"><\/script>');
-        }
-    </script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 600px;
-            margin: 50px auto;
-            padding: 20px;
-            background: #0f172a;
-            color: white;
-        }
-        .container {
-            background: #1e293b;
-            padding: 30px;
-            border-radius: 16px;
-        }
-        button {
-            background: #10b981;
-            color: white;
-            border: none;
-            padding: 14px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            width: 100%;
-            margin: 8px 0;
-            font-weight: bold;
-        }
-        button:hover { opacity: 0.9; }
-        button:disabled {
-            background: #475569;
-            cursor: not-allowed;
-        }
-        .danger-btn { background: #dc2626; }
-        input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 8px;
-            border: 1px solid #475569;
-            background: #0f172a;
-            color: white;
-            font-size: 16px;
-        }
-        .info {
-            background: #334155;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 15px 0;
-            font-size: 14px;
-        }
-        .status {
-            margin-top: 15px;
-            padding: 12px;
-            border-radius: 8px;
-            display: none;
-        }
-        .success { background: #10b98120; color: #10b981; display: block; }
-        .error { background: #ef444420; color: #ef4444; display: block; }
-        .info-status { background: #3b82f620; color: #3b82f6; display: block; }
-        .flex-buttons {
-            display: flex;
-            gap: 10px;
-            margin: 10px 0;
-        }
-        .flex-buttons button {
-            margin: 0;
-            background: #475569;
-        }
-        .debug {
-            font-size: 11px;
-            color: #94a3b8;
-            word-break: break-all;
-            margin-top: 10px;
-            background: #0f172a;
-            padding: 10px;
-            border-radius: 8px;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-    </style>
+    <title>Honest Yield Farm V2 - Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <div class="container">
-        <h2>🌾 Honest Yield Farm</h2>
-        <p style="font-size: 12px; color: #94a3b8;">Contrato: 0xB2Df0454E7897A5b0838a07128805bEaC40ED1eF</p>
-        
-        <button id="connectBtn">🔌 Conectar MetaMask / Rabby</button>
-        
-        <div id="infoPanel" class="info" style="display:none;"></div>
-        
-        <div class="info">
-            <strong>📊 Status:</strong><br>
-            💰 Saldo do Contrato (USDC): <span id="contractBalance">-</span><br>
-            📊 Posição Ativa: <span id="activePosition">-</span><br>
-            💵 Lucro Total: <span id="totalProfit">-</span>
+<body class="bg-gray-900 text-gray-100 min-h-screen font-sans">
+
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <header class="flex justify-between items-center border-b border-gray-800 pb-6 mb-8">
+            <div>
+                <h1 class="text-3xl font-bold text-indigo-400">Honest Yield Farm V2</h1>
+                <p class="text-gray-400 text-sm mt-1">Arbitragem de Taxas & Liquidez na Polygon</p>
+            </div>
+            <button id="connectBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-6 rounded-lg transition duration-200 shadow-lg">
+                Conectar Carteira
+            </button>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-gray-800 p-6 rounded-xl border border-gray-700">
+                <span class="text-gray-400 text-xs uppercase tracking-wider">Saldo de USDC no Contrato</span>
+                <div id="contractBalance" class="text-2xl font-bold mt-2 text-green-400">0.00 USDC</div>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-xl border border-gray-700">
+                <span class="text-gray-400 text-xs uppercase tracking-wider">Posição Ativa Atual</span>
+                <div id="activePosition" class="text-2xl font-bold mt-2 text-indigo-400">0.00 USDC</div>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-xl border border-gray-700">
+                <span class="text-gray-400 text-xs uppercase tracking-wider">Lucro Total Acumulado</span>
+                <div id="totalProfit" class="text-2xl font-bold mt-2 text-yellow-400">0.00 USDC</div>
+            </div>
         </div>
-        
-        <h3>🚀 Abrir Posição</h3>
-        
-        <div class="flex-buttons">
-            <button id="btn1">1 USDC</button>
-            <button id="btn5">5 USDC</button>
-            <button id="btn10">10 USDC</button>
+
+        <div id="walletInfo" class="hidden bg-gray-800/50 border border-gray-700 p-4 rounded-lg mb-8 text-sm text-gray-400">
+            <span class="font-semibold text-gray-200">Carteira:</span> <span id="userAddress">---</span>
         </div>
-        
-        <input type="number" id="amount" placeholder="Digite o valor" step="0.01" value="1">
-        
-        <button id="depositBtn" disabled>📤 Depositar e Farmar</button>
-        <button id="withdrawBtn" disabled class="danger-btn">🔚 Fechar Posição</button>
-        
-        <div id="status" class="status"></div>
-        
-        <div id="debug" class="debug"></div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 flex flex-col justify-between">
+                <div>
+                    <h2 class="text-xl font-bold mb-4 text-gray-200">Iniciar Farm</h2>
+                    <p class="text-gray-400 text-sm mb-6">Antes de executar, lembre-se de enviar o USDC diretamente para o endereço do contrato.</p>
+                    
+                    <label class="block text-xs uppercase text-gray-400 font-semibold mb-2">Quantidade de USDC (no contrato)</label>
+                    <input type="number" id="depositAmount" placeholder="Ex: 100" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white focus:outline-none focus:border-indigo-500 mb-4">
+                </div>
+                <button id="farmBtn" disabled class="w-full bg-emerald-600 hover:bg-emerald-700 disabled:bg-gray-700 disabled:cursor-not-allowed text-white font-bold py-3 px-4 rounded-lg transition duration-200">
+                    Executar Deposit & Farm
+                </button>
+            </div>
+
+            <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 flex flex-col justify-between">
+                <div>
+                    <h2 class="text-xl font-bold mb-4 text-gray-200">Encerrar Posição</h2>
+                    <p class="text-gray-400 text-sm mb-6">Remove a liquidez da QuickSwap, paga a dívida pendente na Aave, saca o colateral e envia os lucros gerados para a sua carteira.</p>
+                </div>
+                <button id="withdrawBtn" disabled class="w-full bg-rose-600 hover:bg-rose-700 disabled:bg-gray-700 disabled:cursor-not-allowed text-white font-bold py-3 px-4 rounded-lg transition duration-2000 mt-12">
+                    Withdraw & Close Position
+                </button>
+            </div>
+        </div>
+
+        <div class="mt-8 bg-red-950/20 border border-red-900/50 p-6 rounded-xl">
+            <h3 class="text-lg font-bold text-red-400 mb-2">Funções de Emergência (Dono)</h3>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <input type="text" id="tokenAddress" placeholder="Endereço do Token (ex: USDC)" class="flex-1 bg-gray-900 border border-gray-700 rounded-lg p-3 text-white text-sm focus:outline-none focus:border-red-500">
+                <button id="emergencyBtn" disabled class="bg-red-700 hover:bg-red-600 disabled:bg-gray-700 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-lg text-sm transition duration-200">
+                    Saque de Emergência
+                </button>
+            </div>
+        </div>
     </div>
 
     <script>
-        // Verificar se ethers carregou
-        if (typeof ethers === 'undefined') {
-            document.getElementById('debug').innerHTML = "ERRO: ethers não carregou. Recarregue a página.";
-            alert("Ethers não carregou. Recarregue a página.");
-        } else {
-            console.log("Ethers carregado com sucesso!");
-        }
+        const CONTRACT_ADDRESS = "0xb2df0454e7897a5b0838a07128805beac40ed1ef";
+        const POLYGON_CHAIN_ID = "0x89"; // 137 em decimal
 
-        const CONTRACT_ADDRESS = "0xB2Df0454E7897A5b0838a07128805bEaC40ED1eF";
-        
-        // ABI simplificada
+        // ABI reduzida contendo apenas o estritamente necessário para o Front
         const CONTRACT_ABI = [
-            "function depositAndFarm(uint256 amountUSDC) external",
-            "function withdrawAndClose() external",
+            "function owner() view returns (address)",
             "function activePosition() view returns (uint256)",
             "function totalProfit() view returns (uint256)",
             "function getContractBalance() view returns (uint256)",
-            "function owner() view returns (address)"
+            "function depositAndFarm(uint256 amountUSDC) external",
+            "function withdrawAndClose() external",
+            "function emergencyWithdraw(address token) external"
         ];
 
-        let provider, signer, contract, userAddress;
+        let provider, signer, contract;
 
+        // Elementos da Interface
         const connectBtn = document.getElementById('connectBtn');
-        const depositBtn = document.getElementById('depositBtn');
+        const walletInfo = document.getElementById('walletInfo');
+        const userAddressSpan = document.getElementById('userAddress');
+        const contractBalanceDiv = document.getElementById('contractBalance');
+        const activePositionDiv = document.getElementById('activePosition');
+        const totalProfitDiv = document.getElementById('totalProfit');
+        const depositAmountInput = document.getElementById('depositAmount');
+        const farmBtn = document.getElementById('farmBtn');
         const withdrawBtn = document.getElementById('withdrawBtn');
-        const amountInput = document.getElementById('amount');
-        const debugDiv = document.getElementById('debug');
+        const tokenAddressInput = document.getElementById('tokenAddress');
+        const emergencyBtn = document.getElementById('emergencyBtn');
 
-        function logDebug(msg) {
-            debugDiv.innerHTML += new Date().toLocaleTimeString() + ": " + msg + "<br>";
-            debugDiv.scrollTop = debugDiv.scrollHeight;
-            console.log(msg);
-        }
-
-        // Limpar debug a cada nova conexão
-        function clearDebug() {
-            debugDiv.innerHTML = "";
-        }
-
-        // Botões rápidos
-        document.getElementById('btn1').onclick = () => { amountInput.value = "1"; };
-        document.getElementById('btn5').onclick = () => { amountInput.value = "5"; };
-        document.getElementById('btn10').onclick = () => { amountInput.value = "10"; };
-
-        connectBtn.onclick = async () => {
-            clearDebug();
-            
-            if (typeof ethers === 'undefined') {
-                logDebug("❌ ERRO: ethers não está definido! Recarregue a página.");
-                showStatus('error', 'Ethers não carregou. Recarregue a página (F5).');
-                return;
-            }
-            
-            if (!window.ethereum) {
-                logDebug("❌ MetaMask não instalado!");
-                alert('Instale MetaMask ou Rabby!');
-                return;
-            }
-
-            try {
-                logDebug("1. Solicitando conexão com a carteira...");
-                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                userAddress = accounts[0];
-                logDebug(`2. Carteira conectada: ${userAddress}`);
-                
+        async function init() {
+            if (window.ethereum) {
                 provider = new ethers.BrowserProvider(window.ethereum);
-                signer = await provider.getSigner();
-                logDebug("3. Provider e Signer criados");
-
-                const network = await provider.getNetwork();
-                logDebug(`4. Rede atual: ${network.chainId}`);
                 
-                if (Number(network.chainId) !== 137) {
-                    logDebug("5. Rede incorreta. Solicitando mudança para Polygon...");
-                    showStatus('error', '⚠️ Mudando para Polygon Mainnet...');
-                    await window.ethereum.request({
-                        method: 'wallet_switchEthereumChain',
-                        params: [{ chainId: '0x89' }]
-                    });
-                    logDebug("6. Recarregando página após mudança de rede...");
-                    setTimeout(() => location.reload(), 2000);
-                    return;
-                }
-
-                logDebug("5. Conectando ao contrato...");
-                contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+                // Monitorar mudança de conta ou rede
+                window.ethereum.on('accountsChanged', () => window.location.reload());
+                window.ethereum.on('chainChanged', () => window.location.reload());
                 
-                logDebug("6. Buscando owner do contrato...");
-                const ownerAddress = await contract.owner();
-                logDebug(`7. Owner: ${ownerAddress}`);
-                logDebug(`8. Sua carteira: ${userAddress}`);
-                
-                const isOwner = ownerAddress.toLowerCase() === userAddress.toLowerCase();
-                logDebug(`9. É owner? ${isOwner ? "SIM ✅" : "NÃO ❌"}`);
-                
-                if (!isOwner) {
-                    showStatus('error', '❌ Você não é o owner do contrato!');
-                    depositBtn.disabled = true;
-                    withdrawBtn.disabled = true;
-                    return;
-                }
-                
-                logDebug("10. Buscando saldo do contrato...");
-                const balance = await contract.getContractBalance();
-                const balanceNum = Number(ethers.formatUnits(balance, 6));
-                logDebug(`11. Saldo do contrato: ${balanceNum} USDC`);
-                document.getElementById('contractBalance').innerHTML = `$${balanceNum.toFixed(4)}`;
-                
-                logDebug("12. Buscando posição ativa...");
-                const position = await contract.activePosition();
-                document.getElementById('activePosition').innerHTML = `$${Number(ethers.formatUnits(position, 6)).toFixed(4)}`;
-                
-                logDebug("13. Buscando lucro total...");
-                const profit = await contract.totalProfit();
-                document.getElementById('totalProfit').innerHTML = `$${Number(ethers.formatUnits(profit, 6)).toFixed(4)}`;
-                
-                const infoPanel = document.getElementById('infoPanel');
-                infoPanel.style.display = 'block';
-                infoPanel.innerHTML = `✅ Owner confirmado: ${userAddress.slice(0,6)}...${userAddress.slice(-4)} | Saldo: $${balanceNum.toFixed(2)} USDC`;
-                infoPanel.style.background = "#10b98120";
-                
-                // HABILITAR BOTÕES
-                depositBtn.disabled = false;
-                withdrawBtn.disabled = false;
-                logDebug("14. ✅ Botões habilitados!");
-                
-                if (balanceNum >= 1) {
-                    showStatus('success', `✅ Contrato tem $${balanceNum.toFixed(2)} USDC. Digite 1 e clique em Depositar!`);
-                } else {
-                    showStatus('error', '❌ Contrato sem saldo. Transfira USDC primeiro.');
-                }
-                
-                // Atualizar automaticamente
-                const interval = setInterval(async () => {
-                    if (contract) {
-                        try {
-                            const newBalance = await contract.getContractBalance();
-                            document.getElementById('contractBalance').innerHTML = `$${Number(ethers.formatUnits(newBalance, 6)).toFixed(4)}`;
-                        } catch(e) {}
-                    }
-                }, 15000);
-                
-            } catch (error) {
-                logDebug(`❌ ERRO: ${error.message}`);
-                showStatus('error', error.message);
-                console.error(error);
+                connectBtn.addEventListener('click', connectWallet);
+                farmBtn.addEventListener('click', handleFarm);
+                withdrawBtn.addEventListener('click', handleWithdraw);
+                emergencyBtn.addEventListener('click', handleEmergency);
+            } else {
+                alert('MetaMask ou Rabby Wallet não detectada! Por favor, instale uma extensão Web3.');
             }
-        };
-
-        depositBtn.onclick = async () => {
-            let amount = parseFloat(amountInput.value);
-            
-            logDebug(`Tentando depositar ${amount} USDC...`);
-            
-            if (isNaN(amount) || amount < 1) {
-                showStatus('error', 'Digite um valor >= 1 USDC');
-                return;
-            }
-            
-            // Verificar saldo do contrato
-            const contractBalance = await contract.getContractBalance();
-            const contractBalanceNum = Number(ethers.formatUnits(contractBalance, 6));
-            logDebug(`Saldo do contrato: ${contractBalanceNum} USDC`);
-            
-            if (contractBalanceNum < amount) {
-                showStatus('error', `❌ Contrato tem apenas $${contractBalanceNum.toFixed(2)} USDC. Transfira ${amount} USDC primeiro.`);
-                return;
-            }
-            
-            const amountWei = ethers.parseUnits(amount.toFixed(6), 6);
-            
-            showStatus('info', `🔄 Depositando ${amount} USDC... Aguarde a confirmação.`);
-            depositBtn.disabled = true;
-            
-            try {
-                logDebug("Enviando transação depositAndFarm...");
-                const tx = await contract.depositAndFarm(amountWei);
-                logDebug(`Tx hash: ${tx.hash}`);
-                showStatus('info', `⏳ Transação enviada: ${tx.hash.slice(0,12)}...`);
-                
-                await tx.wait();
-                logDebug("✅ Transação confirmada!");
-                showStatus('success', `✅ Posição aberta com ${amount} USDC!`);
-                
-                // Atualizar dados
-                const newBalance = await contract.getContractBalance();
-                document.getElementById('contractBalance').innerHTML = `$${Number(ethers.formatUnits(newBalance, 6)).toFixed(4)}`;
-                const newPosition = await contract.activePosition();
-                document.getElementById('activePosition').innerHTML = `$${Number(ethers.formatUnits(newPosition, 6)).toFixed(4)}`;
-                
-            } catch (error) {
-                logDebug(`❌ Erro na transação: ${error.reason || error.message}`);
-                showStatus('error', error.reason || error.message);
-            } finally {
-                depositBtn.disabled = false;
-            }
-        };
-
-        withdrawBtn.onclick = async () => {
-            if (!confirm('⚠️ Fechar posição? Você vai sacar seu USDC + lucro acumulado.')) return;
-            
-            logDebug("Fechando posição...");
-            showStatus('info', '🔄 Fechando posição...');
-            withdrawBtn.disabled = true;
-            
-            try {
-                const tx = await contract.withdrawAndClose();
-                logDebug(`Tx hash: ${tx.hash}`);
-                await tx.wait();
-                logDebug("✅ Posição fechada!");
-                showStatus('success', '✅ Posição fechada! Lucro transferido para sua carteira.');
-                
-                const newBalance = await contract.getContractBalance();
-                document.getElementById('contractBalance').innerHTML = `$${Number(ethers.formatUnits(newBalance, 6)).toFixed(4)}`;
-                document.getElementById('activePosition').innerHTML = `$0.00`;
-                
-            } catch (error) {
-                logDebug(`❌ Erro: ${error.reason || error.message}`);
-                showStatus('error', error.reason || error.message);
-            } finally {
-                withdrawBtn.disabled = false;
-            }
-        };
-
-        function showStatus(type, message) {
-            const statusDiv = document.getElementById('status');
-            statusDiv.className = `status ${type === 'success' ? 'success' : (type === 'error' ? 'error' : 'info-status')}`;
-            statusDiv.innerHTML = message;
-            statusDiv.style.display = 'block';
-            setTimeout(() => {
-                if (statusDiv.style.display === 'block') {
-                    statusDiv.style.display = 'none';
-                }
-            }, 15000);
         }
+
+        async function connectWallet() {
+            try {
+                // Solicitar conexão de carteira
+                const accounts = await provider.send("eth_requestAccounts", []);
+                const network = await provider.getNetwork();
+
+                // Verificar se está na rede Polygon
+                if (network.chainId !== 137n) {
+                    try {
+                        await window.ethereum.request({
+                            method: 'wallet_switchEthereumChain',
+                            params: [{ chainId: POLYGON_CHAIN_ID }],
+                        });
+                    } catch (switchError) {
+                        alert('Por favor, altere a rede da sua carteira para a Polygon Mainnet.');
+                        return;
+                    }
+                }
+
+                signer = await provider.getSigner();
+                contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+
+                // UI Updates
+                userAddressSpan.innerText = accounts[0];
+                walletInfo.classList.remove('hidden');
+                connectBtn.innerText = "Conectado";
+                connectBtn.classList.replace('bg-indigo-600', 'bg-gray-700');
+
+                // Ativar botões se for o dono
+                const contractOwner = await contract.owner();
+                if (contractOwner.toLowerCase() === accounts[0].toLowerCase()) {
+                    farmBtn.disabled = false;
+                    withdrawBtn.disabled = false;
+                    emergencyBtn.disabled = false;
+                } else {
+                    alert("Atenção: Você não é o proprietário (owner) deste contrato. As funções de escrita estarão desativadas.");
+                }
+
+                await refreshData();
+            } catch (error) {
+                console.error("Erro ao conectar:", error);
+            }
+        }
+
+        async function refreshData() {
+            if (!contract) return;
+            try {
+                // USDC possui 6 casas decimais no Polygon
+                const balance = await contract.getContractBalance();
+                const activePos = await contract.activePosition();
+                const profit = await contract.totalProfit();
+
+                contractBalanceDiv.innerText = `${parseFloat(ethers.formatUnits(balance, 6)).toFixed(2)} USDC`;
+                activePositionDiv.innerText = `${parseFloat(ethers.formatUnits(activePos, 6)).toFixed(2)} USDC`;
+                totalProfitDiv.innerText = `${parseFloat(ethers.formatUnits(profit, 6)).toFixed(2)} USDC`;
+            } catch (err) {
+                console.error("Erro ao buscar dados do contrato:", err);
+            }
+        }
+
+        async function handleFarm() {
+            const amount = depositAmountInput.value;
+            if (!amount || amount <= 0) return alert("Insira uma quantidade válida.");
+
+            try {
+                // Convertendo para as 6 casas decimais do USDC
+                const parsedAmount = ethers.parseUnits(amount, 6);
+                farmBtn.innerText = "Processando...";
+                farmBtn.disabled = true;
+
+                const tx = await contract.depositAndFarm(parsedAmount);
+                await tx.wait();
+
+                alert("Farm ativado com sucesso!");
+                await refreshData();
+            } catch (error) {
+                console.error(error);
+                alert(`Erro na transação: ${error.reason || error.message}`);
+            } finally {
+                farmBtn.innerText = "Executar Deposit & Farm";
+                farmBtn.disabled = false;
+            }
+        }
+
+        async function handleWithdraw() {
+            try {
+                withdrawBtn.innerText = "Processando...";
+                withdrawBtn.disabled = true;
+
+                const tx = await contract.withdrawAndClose();
+                await tx.wait();
+
+                alert("Posição encerrada e lucros recolhidos!");
+                await refreshData();
+            } catch (error) {
+                console.error(error);
+                alert(`Erro na transação: ${error.reason || error.message}`);
+            } opacity
+            finally {
+                withdrawBtn.innerText = "Withdraw & Close Position";
+                withdrawBtn.disabled = false;
+            }
+        }
+
+        async function handleEmergency() {
+            const token = tokenAddressInput.value;
+            if (!ethers.isAddress(token)) return alert("Insira um endereço de contrato de token válido.");
+
+            try {
+                emergencyBtn.innerText = "Sacando...";
+                emergencyBtn.disabled = true;
+
+                const tx = await contract.emergencyWithdraw(token);
+                await tx.wait();
+
+                alert("Saque de emergência concluído!");
+                await refreshData();
+            } catch (error) {
+                console.error(error);
+                alert(`Erro: ${error.reason || error.message}`);
+            } finally {
+                emergencyBtn.innerText = "Saque de Emergência";
+                emergencyBtn.disabled = false;
+            }
+        }
+
+        window.addEventListener('load', init);
     </script>
 </body>
 </html>
