@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>🌀 Nexus Mail | Gmail Generator Ultra</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌀⚡</text></svg>" type="image/svg+xml">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Honest Yield Farm - Polygon | Seu Contrato Ativo</title>
+    <script src="https://cdn.jsdelivr.net/npm/ethers@6.12.4/dist/ethers.umd.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -14,701 +13,460 @@
         }
 
         body {
-            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, 'Poppins', sans-serif;
-            background: radial-gradient(circle at 80% 10%, #0B0C10, #010101);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
             min-height: 100vh;
-            padding: 30px 20px;
+            padding: 20px;
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 700px;
             margin: 0 auto;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-            justify-content: center;
-            align-items: stretch;
-        }
-
-        /* NOVOS CARDS: design cyberpunk / dark neon */
-        .card {
-            background: rgba(12, 15, 25, 0.75);
-            backdrop-filter: blur(18px);
-            border-radius: 2rem;
-            padding: 36px 32px;
-            box-shadow: 0 30px 40px -20px rgba(0,0,0,0.8), 0 0 0 1px rgba(0, 255, 255, 0.2) inset;
-            transition: 0.2s;
-            border: 1px solid rgba(0, 255, 255, 0.35);
-        }
-
-        .generator-card {
-            flex: 2;
-            min-width: 320px;
-            background: linear-gradient(145deg, rgba(8, 12, 22, 0.9), rgba(2, 5, 14, 0.95));
-        }
-
-        .benefits-card {
-            flex: 1.2;
-            min-width: 280px;
-            background: linear-gradient(135deg, #0B1320, #03070F);
-            border: 1px solid #2affb6;
-            box-shadow: 0 20px 40px rgba(0, 255, 200, 0.1);
+            background: white;
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
         h1 {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            font-size: 2rem;
-            font-weight: 800;
-            background: linear-gradient(125deg, #B0FFE6, #3AFFC2, #00E0FF);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            margin-bottom: 12px;
-            letter-spacing: -0.3px;
-        }
-
-        .badge-pro {
-            background: linear-gradient(95deg, #00FFCC, #00C3A0);
-            padding: 6px 16px;
-            border-radius: 60px;
-            font-size: 0.7rem;
-            font-weight: 800;
-            color: #0A1F1A;
-            letter-spacing: 0.5px;
-            box-shadow: 0 0 8px #00ffcc80;
-        }
-
-        .sub-headline {
-            color: #9EF0E0;
-            margin-bottom: 32px;
-            border-left: 4px solid #2AFFD5;
-            padding-left: 16px;
-            font-weight: 500;
-            font-size: 0.95rem;
-            text-shadow: 0 0 2px #004d40;
-        }
-
-        .input-group {
-            margin-bottom: 28px;
-        }
-
-        label {
-            font-weight: 700;
-            color: #B5FFE6;
+            color: #0f172a;
+            font-size: 28px;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 10px;
-            font-size: 0.9rem;
         }
 
-        input, select {
-            width: 100%;
-            padding: 16px 22px;
-            font-size: 1rem;
-            border-radius: 60px;
-            border: 1.5px solid #1F5E54;
-            background: #07100E;
-            color: #CFFFF0;
-            font-weight: 500;
-            transition: 0.2s;
-            outline: none;
+        .badge {
+            background: #10b981;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            display: inline-block;
         }
 
-        input:focus, select:focus {
-            border-color: #3AFFD5;
-            box-shadow: 0 0 0 3px rgba(58, 255, 213, 0.3);
-        }
-
-        .label-selector {
-            background: #07121E;
-            border-radius: 2rem;
-            padding: 20px 22px;
-            margin: 28px 0 20px;
-            border: 1px solid #2AD4B0;
-        }
-
-        .label-selector h3 {
-            font-size: 1rem;
-            color: #BAFFE9;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 16px;
-        }
-
-        .tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin: 12px 0;
-        }
-
-        .tag {
-            background: #142B28;
-            padding: 8px 20px;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            color: #C4FFEC;
-            cursor: pointer;
-            transition: 0.15s;
-            border: 1px solid #2ECFAF;
-        }
-
-        .tag.active, .tag:hover {
-            background: linear-gradient(95deg, #29FFC4, #00CFA5);
-            color: #03100C;
-            border-color: #B5FFEE;
-            transform: scale(1.02);
-            font-weight: 800;
-            box-shadow: 0 0 12px #2affcb6e;
-        }
-
-        .custom-label-row {
-            display: flex;
-            gap: 12px;
-            margin-top: 18px;
-            flex-wrap: wrap;
-        }
-
-        .custom-label-row input {
-            flex: 2;
-            padding: 12px 18px;
-            background: #071826;
-            border-color: #2F9C86;
-        }
-
-        .small-btn {
-            background: #2AFFC4;
-            color: #02120E;
-            padding: 12px 20px;
-            font-weight: 800;
-            border-radius: 40px;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 0 6px #2affc4;
-            transition: 0.1s;
-        }
-
-        .small-btn:hover {
-            background: #4effd0;
-            transform: scale(0.97);
-        }
-
-        .double-buttons {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-            margin: 25px 0 15px;
+        .contract-address {
+            background: #1e1e2e;
+            color: #a5f3c3;
+            padding: 12px;
+            border-radius: 12px;
+            font-family: monospace;
+            font-size: 13px;
+            word-break: break-all;
+            margin: 15px 0;
+            text-align: center;
+            border: 1px solid #10b981;
         }
 
         button {
-            flex: 1;
-            padding: 16px 12px;
-            font-weight: 800;
+            background: #1e3a8a;
+            color: white;
             border: none;
-            border-radius: 60px;
-            background: linear-gradient(95deg, #2AFFC4, #00BC98);
-            color: #071412;
-            font-family: inherit;
-            font-size: 1rem;
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
-            transition: 0.2s;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            box-shadow: 0 4px 12px rgba(0, 255, 200, 0.3);
+            width: 100%;
+            margin: 8px 0;
+            transition: all 0.2s;
         }
 
         button:hover {
-            transform: translateY(-2px);
-            filter: brightness(1.08);
-            box-shadow: 0 10px 22px rgba(0, 255, 200, 0.4);
+            background: #2563eb;
+            transform: translateY(-1px);
         }
 
-        .copy-all-btn {
-            background: linear-gradient(95deg, #1DAA99, #128F7C);
-            color: #E0FFF2;
-            box-shadow: none;
+        button:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+            transform: none;
         }
 
-        .clear-btn {
-            background: linear-gradient(95deg, #442f2a, #2f1f1a);
-            color: #FFD9A5;
-            box-shadow: none;
+        .danger-btn {
+            background: #dc2626;
         }
 
-        .results-area {
-            margin-top: 28px;
-            background: #030C14cc;
-            border-radius: 32px;
-            padding: 18px;
-            max-height: 350px;
-            overflow-y: auto;
-            border: 1px solid #2CFFC0;
-            backdrop-filter: blur(4px);
+        .danger-btn:hover {
+            background: #b91c1c;
         }
 
-        .email-row {
+        .success-btn {
+            background: #10b981;
+        }
+
+        .success-btn:hover {
+            background: #059669;
+        }
+
+        .card {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #e2e8f0;
+        }
+
+        .card-row {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            background: #0B181F;
-            padding: 12px 18px;
-            margin-bottom: 12px;
-            border-radius: 60px;
-            font-family: monospace;
-            font-size: 0.85rem;
-            border: 1px solid #2DAA93;
-            transition: 0.1s;
-            cursor: pointer;
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e8f0;
         }
 
-        .email-row:hover {
-            background: #1A4E46;
-            transform: translateX(6px);
-            border-color: #7AFFE0;
+        .card-row:last-child {
+            border-bottom: none;
         }
 
-        .email-text {
-            color: #C4FFEA;
+        .label {
+            color: #475569;
+            font-size: 14px;
             font-weight: 500;
-            word-break: break-all;
         }
 
-        .count {
-            margin-top: 20px;
-            background: #00E0B3;
-            padding: 10px 24px;
-            border-radius: 60px;
-            font-weight: 800;
-            color: #021510;
-            text-align: center;
-            font-size: 0.9rem;
-            box-shadow: 0 0 10px #00ffcc;
+        .value {
+            font-weight: 700;
+            font-size: 20px;
+            color: #0f172a;
         }
 
-        /* Benefícios card - dark premium */
-        .benefits-card h2 {
-            font-size: 1.8rem;
-            color: #BDFFE6;
-            margin-bottom: 20px;
-            border-left: 5px solid #2AFFC4;
-            padding-left: 20px;
+        .profit {
+            color: #10b981;
         }
 
-        .benefit-item {
+        .warning {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 14px;
+            margin: 20px 0;
+            font-size: 13px;
+            border-radius: 12px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            font-size: 16px;
+            margin: 10px 0;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        input:focus {
+            border-color: #1e3a8a;
+            box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
+        }
+
+        .status {
+            margin-top: 16px;
+            padding: 14px;
+            border-radius: 12px;
+            display: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .status.success {
+            background: #d1fae5;
+            color: #065f46;
+            display: block;
+        }
+
+        .status.error {
+            background: #fee2e2;
+            color: #991b1b;
+            display: block;
+        }
+
+        .status.info {
+            background: #dbeafe;
+            color: #1e40af;
+            display: block;
+        }
+
+        .health-critical {
+            color: #dc2626;
+            font-weight: bold;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .flex-buttons {
             display: flex;
-            align-items: center;
-            gap: 14px;
-            background: #0E1822;
-            padding: 14px 20px;
-            border-radius: 60px;
-            margin-bottom: 14px;
-            font-weight: 600;
-            color: #D2FFE8;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-            border: 1px solid #29E0BD;
+            gap: 12px;
+            margin-top: 10px;
         }
 
-        .game-icon {
-            font-size: 1.5rem;
+        .flex-buttons button {
+            flex: 1;
         }
 
-        .quote {
-            background: #11232B;
-            border-radius: 28px;
-            padding: 20px;
-            margin-top: 24px;
-            text-align: center;
-            font-weight: 800;
-            color: #DAFFD4;
-            border-left: 4px solid #3CFFD0;
-        }
-
-        .creator-link {
-            margin-top: 24px;
-            text-align: center;
-            font-size: 0.85rem;
-            color: #70CCA9;
-            border-top: 1px solid #25997F;
-            padding-top: 20px;
-        }
-
-        .creator-link a {
-            color: #7CFFDF;
-            text-decoration: none;
+        .owner-tag {
+            background: #1e3a8a;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
             font-weight: bold;
-            transition: 0.2s;
-        }
-
-        .creator-link a:hover {
-            text-decoration: underline;
-            text-shadow: 0 0 4px cyan;
-        }
-
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #0C201C;
-            color: #C6FFEA;
-            padding: 12px 28px;
-            border-radius: 60px;
-            font-weight: bold;
-            z-index: 1000;
-            font-family: monospace;
-            animation: fadeUp 0.2s ease;
-            border-left: 5px solid #2affc4;
-            box-shadow: 0 0 12px #00ffb3;
-        }
-
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateX(-50%) translateY(20px);}
-            to { opacity: 1; transform: translateX(-50%) translateY(0);}
-        }
-
-        @media (max-width: 800px) {
-            .container { flex-direction: column; }
-            h1 { font-size: 1.6rem; }
-            .double-buttons { flex-direction: column; }
+            display: inline-block;
+            margin-left: 10px;
         }
     </style>
 </head>
 <body>
-
-<div class="container">
-    <!-- COLUNA PRINCIPAL: GERADOR MULTIPLICADOR - NOVA APARÊNCIA -->
-    <div class="card generator-card">
+    <div class="container">
         <h1>
-            🌀 Nexus Mail Generator
-            <span class="badge-pro">ACESSO TOTAL</span>
+            🌾 Honest Yield Farm
+            <span class="badge">✅ ATIVO</span>
         </h1>
-        <div class="sub-headline">
-            🔓 Expanda seu Gmail principal em centenas de variações — domine games, IAs, plataformas e muito mais.
+        <p style="color: #64748b; margin-bottom: 20px;">Arbitragem de taxas na Polygon | 2x Alavancagem</p>
+
+        <div class="contract-address">
+            📍 Contato: 0xB61c4467eA7F180d6bBBc5635cE49724076aD4D9
         </div>
 
-        <div class="input-group">
-            <label>📧 Seu e‑mail Gmail base</label>
-            <input type="email" id="baseEmail" placeholder="voce@gmail.com" autocomplete="off">
-        </div>
+        <button id="connectBtn">🔌 Conectar MetaMask / Rabby Wallet</button>
+        <div id="walletInfo" style="margin-top: 12px; font-size: 13px; color: #475569; text-align: center;"></div>
 
-        <div class="label-selector">
-            <h3>🏷️ Categorias dinâmicas</h3>
-            <p style="font-size:0.8rem; margin-bottom:14px; color:#9CEBD5;">Organize endereços por finalidade (cada tag = novo alias +label).</p>
-            <div class="tags">
-                <div class="tag active" data-label="novo">🌀 principal</div>
-                <div class="tag" data-label="receba">📥 receber</div>
-                <div class="tag" data-label="cadastro">📝 cadastros</div>
-                <div class="tag" data-label="games">🎮 games</div>
-                <div class="tag" data-label="IA">🧠 IAs</div>
+        <div class="card">
+            <div class="card-row">
+                <span class="label">💰 Saldo do Contrato (USDC)</span>
+                <span class="value" id="contractBalance">$0.00</span>
             </div>
-            <div class="custom-label-row">
-                <input type="text" id="customLabel" placeholder="➕ Criar categoria exclusiva (ex: vip, beta, loot)">
-                <button id="addCustomLabelBtn" class="small-btn">Adicionar</button>
+            <div class="card-row">
+                <span class="label">📊 Posição Ativa</span>
+                <span class="value" id="activePosition">$0.00</span>
             </div>
-            <div id="customTagsContainer" class="tags" style="margin-top: 12px;"></div>
+            <div class="card-row">
+                <span class="label">💵 Lucro Total Gerado</span>
+                <span class="value profit" id="totalProfit">$0.00</span>
+            </div>
+            <div class="card-row">
+                <span class="label">🛡️ Health Factor (Aave)</span>
+                <span class="value" id="healthFactor">-</span>
+            </div>
+            <div class="card-row">
+                <span class="label">⚙️ Alavancagem Atual</span>
+                <span class="value" id="leverage">2x</span>
+            </div>
         </div>
 
-        <div class="double-buttons">
-            <button id="generateBtn">🌀 GERAR ENDEREÇOS ILIMITADOS</button>
-            <button id="copyAllBtn" class="copy-all-btn">📋 COPIAR TODOS</button>
-            <button id="clearBtn" class="clear-btn">🗑️ LIMPAR TUDO</button>
+        <div class="warning">
+            ⚠️ <strong>Como funciona (honestamente):</strong><br>
+            • Deposite USDC no contrato → Contrato faz 2x alavancagem na Aave<br>
+            • Fornece liquidez na Quickswap → Acumula taxas (15-25% APY)<br>
+            • Seu lucro vem das taxas de swap da pool USDC/WMATIC<br>
+            • Risco: liquidação apenas se MATIC cair mais de 50%
         </div>
 
-        <div class="results-area" id="resultsArea">
-            <div style="text-align:center; color:#64DDC0; padding:28px;">⚡ NexusEngine ativada ⚡<br>Insira seu Gmail e clique em GERAR para desbloquear centenas de combinações</div>
-        </div>
-        <div id="countDisplay" class="count"></div>
+        <h3>🚀 Abrir Posição</h3>
+        <input type="number" id="depositAmount" placeholder="Quantidade em USDC (mínimo 500)" step="100">
+        <button id="depositBtn" disabled>📤 Depositar e Farmar (2x Alavancagem)</button>
 
-        <div class="creator-link">
-            🔥 Desenvolvido por <a href="https://www.dfg.com.br/user/digitais/listings" target="_blank">Digitais Nexus</a> — tecnologia de multiplicação stealth
+        <button id="withdrawBtn" disabled class="danger-btn">🔚 Fechar Posição e Sacar Lucro</button>
+
+        <div id="status" class="status"></div>
+
+        <div class="warning">
+            📌 <strong>Passos para usar (leia com atenção):</strong><br>
+            1. Conecte sua carteira na rede <strong>Polygon Mainnet</strong><br>
+            2. <strong>Transfira USDC</strong> para o endereço do contrato acima<br>
+            3. Após transferir, clique em "Depositar e Farmar"<br>
+            4. Aguarde pelo menos 24h para acumular yield<br>
+            5. Clique em "Fechar Posição" para sacar USDC + lucro<br>
+            <br>
+            💡 <strong>Importante:</strong> Você precisa ser o <strong>owner</strong> do contrato (quem implantou).
         </div>
     </div>
 
-    <!-- COLUNA DE BENEFÍCIOS - VISUAL REFINADO NEON DARK -->
-    <div class="benefits-card">
-        <h2>⚡ Vantagens estratégicas</h2>
-        <div class="benefit-item">
-            <span class="game-icon">🎮</span>
-            <span>Contornar limites de 1 conta por e-mail em games competitivos. Crie smurfs e maximize recompensas.</span>
-        </div>
-        <div class="benefit-item">
-            <span class="game-icon">🧠</span>
-            <span>Teste IAs como ChatGPT, Midjourney, Gemini com múltiplos cadastros usando o mesmo email principal.</span>
-        </div>
-        <div class="benefit-item">
-            <span class="game-icon">📱</span>
-            <span>Plataformas com bloqueio de segundo cadastro: assinaturas, serviços, sites restritivos — resolvido.</span>
-        </div>
-        <div class="benefit-item">
-            <span class="game-icon">🚀</span>
-            <span>Automatize contas para negócios, marketing digital, testes A/B e coleta de dados.</span>
-        </div>
-        <div class="benefit-item">
-            <span class="game-icon">🔁</span>
-            <span>Sem criar novos e-mails reais. Tudo unificado na sua caixa de entrada principal do Gmail.</span>
-        </div>
+    <script>
+        // CONTRATO IMPLANTADO
+        const CONTRACT_ADDRESS = "0xB61c4467eA7F180d6bBBc5635cE49724076aD4D9";
         
-        <div class="quote">
-            🏆 "Nexus Mail: gerei 80 contas diferentes para o mesmo jogo e coletei recursos ilimitados!"<br>
-            — Usuário top tier
-        </div>
-        <div class="quote" style="background:#0D2024; margin-top: 12px;">
-            ⚡ +2.000 endereços distintos possíveis a partir de um único Gmail.<br>
-            <strong>Ideal para qualquer plataforma com restrição única.</strong>
-        </div>
-    </div>
-</div>
+        // ABI COMPLETA
+        const CONTRACT_ABI = [
+            "function depositAndFarm(uint256 amountUSDC) external",
+            "function withdrawAndClose() external",
+            "function activePosition() view returns (uint256)",
+            "function totalProfit() view returns (uint256)",
+            "function getContractBalance() view returns (uint256)",
+            "function owner() view returns (address)",
+            "function leverage() view returns (uint256)",
+            "function getHealthFactor() view returns (uint256)"
+        ];
 
-<script>
-    // Gerenciamento de labels ativos + personalizados (funcionalidade IDÊNTICA, apenas cores novas)
-    let activeCategories = ['novo'];   
-    let customCategories = [];          
+        let provider, signer, contract, userAddress;
 
-    const baseEmailInput = document.getElementById('baseEmail');
-    const generateBtn = document.getElementById('generateBtn');
-    const copyAllBtn = document.getElementById('copyAllBtn');
-    const clearBtn = document.getElementById('clearBtn');
-    const resultsDiv = document.getElementById('resultsArea');
-    const countSpan = document.getElementById('countDisplay');
-    const tagButtons = document.querySelectorAll('.tag[data-label]');
-    const customLabelInput = document.getElementById('customLabel');
-    const addCustomBtn = document.getElementById('addCustomLabelBtn');
-    const customTagsContainer = document.getElementById('customTagsContainer');
+        // Elementos DOM
+        const connectBtn = document.getElementById('connectBtn');
+        const depositBtn = document.getElementById('depositBtn');
+        const withdrawBtn = document.getElementById('withdrawBtn');
+        const depositAmount = document.getElementById('depositAmount');
 
-    // Atualizar UI e tags customizadas
-    function updateCategoriesUI() {
-        tagButtons.forEach(btn => {
-            const val = btn.getAttribute('data-label');
-            if (activeCategories.includes(val)) {
-                btn.classList.add('active');
-            } else {
-                btn.classList.remove('active');
-            }
-        });
-        renderCustomTags();
-    }
-
-    function renderCustomTags() {
-        customTagsContainer.innerHTML = '';
-        customCategories.forEach(cat => {
-            const span = document.createElement('span');
-            span.className = 'tag';
-            if (activeCategories.includes(cat)) span.classList.add('active');
-            span.setAttribute('data-custom', cat);
-            span.textContent = `✨ ${cat}`;
-            span.style.background = activeCategories.includes(cat) ? '#29FFC4' : '#142B28';
-            span.style.color = activeCategories.includes(cat) ? '#03100C' : '#C4FFEC';
-            span.addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (activeCategories.includes(cat)) {
-                    activeCategories = activeCategories.filter(c => c !== cat);
-                } else {
-                    activeCategories.push(cat);
-                }
-                updateCategoriesUI();
-                if (baseEmailInput.value.trim() !== '') generateAllEmails();
-            });
-            customTagsContainer.appendChild(span);
-        });
-    }
-
-    function addNewCategory() {
-        let newCat = customLabelInput.value.trim();
-        if (!newCat) {
-            showToast("Digite o nome da sua categoria (ex: beta, vip)", true);
-            return;
-        }
-        if (customCategories.includes(newCat) || [...tagButtons].some(btn => btn.getAttribute('data-label') === newCat)) {
-            showToast("Essa categoria já existe!", true);
-            return;
-        }
-        customCategories.push(newCat);
-        activeCategories.push(newCat);
-        customLabelInput.value = '';
-        updateCategoriesUI();
-        showToast(`Categoria "${newCat}" adicionada com sucesso ✅`, false);
-        if (baseEmailInput.value.trim() !== '') generateAllEmails();
-    }
-
-    // FUNÇÃO QUE GERA AS VARIAÇÕES - MANTENDO O MECANISMO ORIGINAL MAS SEM EXPLICAR
-    function generateAllEmails() {
-        let emailFull = baseEmailInput.value.trim();
-        if (!emailFull) {
-            resultsDiv.innerHTML = `<div style="text-align:center; color:#64DDC0; padding:20px;">📩 Digite seu Gmail principal para iniciar a multiplicação.</div>`;
-            countSpan.innerHTML = '';
-            return;
-        }
-        if (!emailFull.includes('@gmail.com') || !emailFull.endsWith('gmail.com')) {
-            resultsDiv.innerHTML = `<div style="text-align:center; color:#ffb27a; padding:20px;">❌ Utilize um endereço Gmail válido para ativar a multiplicação.</div>`;
-            countSpan.innerHTML = '';
-            return;
-        }
-
-        const [localPart, domain] = emailFull.split('@');
-        const cleanLocal = localPart.replace(/\./g, '');
-        if (!cleanLocal) {
-            resultsDiv.innerHTML = `<div style="text-align:center; color:#ffb27a;">Nome de usuário inválido.</div>`;
-            return;
-        }
-
-        // Geração de combinações de nome (pontos)
-        let nameVariations = generateNameCombinations(cleanLocal);
-        
-        const categories = activeCategories.length ? activeCategories : ['novo'];
-        let finalEmails = [];
-        
-        for (let variant of nameVariations) {
-            for (let cat of categories) {
-                finalEmails.push(`${variant}+${cat}@${domain}`);
-            }
-        }
-        
-        finalEmails = [...new Set(finalEmails)];
-        
-        if (finalEmails.length === 0) {
-            resultsDiv.innerHTML = `<div style="text-align:center; color:#ffb27a;">Nenhuma combinação gerada. Tente outro nome.</div>`;
-            return;
-        }
-        
-        const MAX_DISPLAY = 1000;
-        const displayList = finalEmails.slice(0, MAX_DISPLAY);
-        const truncated = finalEmails.length > MAX_DISPLAY;
-        
-        resultsDiv.innerHTML = '';
-        displayList.forEach(email => {
-            const row = document.createElement('div');
-            row.className = 'email-row';
-            row.innerHTML = `<span class="email-text">📧 ${escapeHtml(email)}</span><span style="font-size:1rem;">📋</span>`;
-            row.addEventListener('click', () => {
-                copyToClipboard(email);
-                showToast(`Endereço copiado: ${email}`, false);
-                row.style.background = "#2C7868";
-                setTimeout(() => row.style.background = "", 200);
-            });
-            resultsDiv.appendChild(row);
-        });
-        
-        let total = finalEmails.length;
-        countSpan.innerHTML = `🔥 ${total.toLocaleString()} endereços diferentes gerados a partir de uma única conta! 🔥` + (truncated ? ` (exibindo ${MAX_DISPLAY})` : '');
-    }
-
-    // Limpar resultados
-    function clearResults() {
-        resultsDiv.innerHTML = `<div style="text-align:center; color:#64DDC0; padding:28px;">🌀 Nexus Engine pronto 🌀<br>Digite seu Gmail e gere novos endereços sem limites.</div>`;
-        countSpan.innerHTML = '';
-        baseEmailInput.value = '';
-        showToast("🧹 Limpeza completa! Insira novo Gmail para gerar combinações.", false);
-    }
-
-    // Geração de combinações de nome (pontos)
-    function generateNameCombinations(str) {
-        if (!str || str.length === 0) return [''];
-        if (str.length === 1) return [str];
-        let results = [];
-        const chars = str.split('');
-        function backtrack(idx, current) {
-            if (idx === chars.length) {
-                results.push(current);
+        // Conectar carteira
+        connectBtn.onclick = async () => {
+            if (!window.ethereum) {
+                alert('❌ Instale MetaMask ou Rabby Wallet!');
                 return;
             }
-            backtrack(idx + 1, current + chars[idx]);
-            if (idx > 0) {
-                backtrack(idx + 1, current + '.' + chars[idx]);
+
+            try {
+                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                userAddress = accounts[0];
+                provider = new ethers.BrowserProvider(window.ethereum);
+                signer = await provider.getSigner();
+
+                // Verificar rede Polygon
+                const network = await provider.getNetwork();
+                if (Number(network.chainId) !== 137) {
+                    showStatus('error', '⚠️ Por favor, mude para a rede Polygon Mainnet na sua carteira');
+                    try {
+                        await window.ethereum.request({
+                            method: 'wallet_switchEthereumChain',
+                            params: [{ chainId: '0x89' }]
+                        });
+                        setTimeout(() => location.reload(), 1000);
+                    } catch(e) {
+                        return;
+                    }
+                }
+
+                contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+                const owner = await contract.owner();
+
+                if (owner.toLowerCase() !== userAddress.toLowerCase()) {
+                    showStatus('error', '🔒 Você não é o owner deste contrato! Apenas quem implantou pode operar.');
+                    depositBtn.disabled = true;
+                    withdrawBtn.disabled = true;
+                    document.getElementById('walletInfo').innerHTML = `⚠️ Carteira: ${userAddress.slice(0,6)}...${userAddress.slice(-4)} (não é o owner)`;
+                    return;
+                }
+
+                depositBtn.disabled = false;
+                withdrawBtn.disabled = false;
+                document.getElementById('walletInfo').innerHTML = `✅ Owner conectado: ${userAddress.slice(0,6)}...${userAddress.slice(-4)}`;
+
+                showStatus('success', '✅ Conectado como owner! Transfira USDC para o contrato e clique em Depositar.');
+                await loadData();
+                setInterval(loadData, 15000);
+
+            } catch (error) {
+                showStatus('error', error.message);
+            }
+        };
+
+        // Carregar dados do contrato
+        async function loadData() {
+            if (!contract) return;
+
+            try {
+                const balance = await contract.getContractBalance();
+                const position = await contract.activePosition();
+                const profit = await contract.totalProfit();
+                const health = await contract.getHealthFactor();
+
+                document.getElementById('contractBalance').innerHTML = `$${formatUSDC(balance)}`;
+                document.getElementById('activePosition').innerHTML = `$${formatUSDC(position)}`;
+                document.getElementById('totalProfit').innerHTML = `$${formatUSDC(profit)}`;
+
+                const healthNum = Number(health) / 1e18;
+                const healthElement = document.getElementById('healthFactor');
+                if (healthNum < 1.2 && healthNum > 0) {
+                    healthElement.innerHTML = `<span class="health-critical">${healthNum.toFixed(2)} - CRÍTICO!</span>`;
+                } else if (healthNum > 0) {
+                    healthElement.innerHTML = healthNum.toFixed(2);
+                } else {
+                    healthElement.innerHTML = '-';
+                }
+
+            } catch (error) {
+                console.error('Erro ao carregar dados:', error);
             }
         }
-        backtrack(1, chars[0]);
-        return results;
-    }
-    
-    // Utilitários
-    function escapeHtml(str) {
-        return str.replace(/[&<>]/g, function(m){
-            if (m === '&') return '&amp;';
-            if (m === '<') return '&lt;';
-            if (m === '>') return '&gt;';
-            return m;
-        });
-    }
-    
-    function copyToClipboard(text) {
-        if (navigator.clipboard) {
-            navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
-        } else fallbackCopy(text);
-    }
-    
-    function fallbackCopy(text) {
-        const textarea = document.createElement('textarea');
-        textarea.value = text;
-        document.body.appendChild(textarea);
-        textarea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textarea);
-    }
-    
-    function showToast(msg, isError = false) {
-        let oldToast = document.querySelector('.toast');
-        if (oldToast) oldToast.remove();
-        const toast = document.createElement('div');
-        toast.className = 'toast';
-        toast.innerHTML = isError ? `⚠️ ${msg}` : `✨ ${msg}`;
-        document.body.appendChild(toast);
-        setTimeout(() => {
-            toast.style.opacity = '0';
-            setTimeout(() => toast.remove(), 400);
-        }, 2300);
-    }
-    
-    function copyAllEmails() {
-        const rows = document.querySelectorAll('#resultsArea .email-row .email-text');
-        if (!rows.length) {
-            showToast("Nenhum endereço gerado ainda. Clique em GERAR primeiro!", true);
-            return;
+
+        // Depositar e Farmar
+        depositBtn.onclick = async () => {
+            const amount = depositAmount.value;
+            if (!amount || amount < 500) {
+                showStatus('error', '❌ Mínimo 500 USDC');
+                return;
+            }
+
+            // Verificar se o contrato tem USDC
+            const contractBalance = await contract.getContractBalance();
+            if (Number(ethers.formatUnits(contractBalance, 6)) < Number(amount)) {
+                showStatus('error', `❌ Contrato tem apenas $${formatUSDC(contractBalance)} USDC. Transfira mais USDC para o contrato primeiro.`);
+                return;
+            }
+
+            const amountWei = ethers.parseUnits(amount, 6);
+
+            showStatus('info', '🔄 Abrindo posição alavancada... Isso pode levar até 1 minuto');
+            depositBtn.disabled = true;
+
+            try {
+                const tx = await contract.depositAndFarm(amountWei);
+                showStatus('info', `⏳ Transação enviada: ${tx.hash.slice(0,12)}...`);
+                await tx.wait();
+                showStatus('success', `✅ Posição aberta com ${amount} USDC! Yield começará a acumular.`);
+                await loadData();
+            } catch (error) {
+                showStatus('error', error.reason || error.message);
+            } finally {
+                depositBtn.disabled = false;
+            }
+        };
+
+        // Fechar posição
+        withdrawBtn.onclick = async () => {
+            if (!confirm('⚠️ Tem certeza? Isso vai fechar sua posição, pagar a dívida e transferir o lucro para sua carteira.')) return;
+
+            showStatus('info', '🔄 Fechando posição e sacando lucro... (pode levar 1 minuto)');
+            withdrawBtn.disabled = true;
+
+            try {
+                const tx = await contract.withdrawAndClose();
+                showStatus('info', `⏳ Transação enviada: ${tx.hash.slice(0,12)}...`);
+                await tx.wait();
+                showStatus('success', '✅ Posição fechada! Lucro transferido para sua carteira.');
+                await loadData();
+            } catch (error) {
+                showStatus('error', error.reason || error.message);
+            } finally {
+                withdrawBtn.disabled = false;
+            }
+        };
+
+        // Funções auxiliares
+        function formatUSDC(wei) {
+            const value = Number(ethers.formatUnits(wei, 6));
+            return value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
-        const all = Array.from(rows).map(r => r.innerText.trim()).join('\n');
-        copyToClipboard(all);
-        showToast(`📋 ${rows.length} endereços copiados com sucesso!`, false);
-    }
-    
-    // Event listeners
-    function initTagToggles() {
-        tagButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const label = btn.getAttribute('data-label');
-                if (activeCategories.includes(label)) {
-                    activeCategories = activeCategories.filter(c => c !== label);
-                } else {
-                    activeCategories.push(label);
+
+        function showStatus(type, message) {
+            const statusDiv = document.getElementById('status');
+            statusDiv.className = `status ${type}`;
+            statusDiv.innerHTML = message;
+            setTimeout(() => {
+                if (statusDiv.className === `status ${type}`) {
+                    statusDiv.style.display = 'none';
                 }
-                updateCategoriesUI();
-                if (baseEmailInput.value.trim() !== '') generateAllEmails();
-            });
-        });
-    }
-    
-    addCustomBtn.addEventListener('click', addNewCategory);
-    customLabelInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') addNewCategory(); });
-    generateBtn.addEventListener('click', generateAllEmails);
-    copyAllBtn.addEventListener('click', copyAllEmails);
-    clearBtn.addEventListener('click', clearResults);
-    baseEmailInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') generateAllEmails(); });
-    
-    // Inicialização
-    function init() {
-        activeCategories = ['novo'];
-        customCategories = [];
-        updateCategoriesUI();
-        resultsDiv.innerHTML = `<div style="text-align:center; color:#64DDC0; padding:28px;">🌀 Nexus Mail Generator ativo 🌀<br>Clique em "GERAR" e multiplique acessos</div>`;
-    }
-    
-    init();
-    initTagToggles();
-</script>
+            }, 10000);
+            statusDiv.style.display = 'block';
+        }
+
+        // Detectar mudanças na carteira/rede
+        if (window.ethereum) {
+            window.ethereum.on('chainChanged', () => window.location.reload());
+            window.ethereum.on('accountsChanged', () => window.location.reload());
+        }
+    </script>
 </body>
 </html>
