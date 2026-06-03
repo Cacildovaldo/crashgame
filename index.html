@@ -2,253 +2,495 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Honest Yield Farm V2 - Dashboard</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>Troll Flappy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            touch-action: none; /* Previne zoom e scroll no mobile */
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body {
+            background-color: #333;
+            overflow: hidden;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        #gameCanvas {
+            background: linear-gradient(to bottom, #4facfe 0%, #00f2fe 100%);
+            display: block;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        .ui-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none; /* Deixa os cliques passarem para o canvas quando necessário */
+            text-align: center;
+            color: white;
+            text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+        }
+
+        .ui-layer.active {
+            pointer-events: auto;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            color: #ffeb3b;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin: 10px 0;
+        }
+
+        .btn {
+            margin-top: 20px;
+            padding: 15px 30px;
+            font-size: 1.5rem;
+            font-family: inherit;
+            font-weight: bold;
+            color: #fff;
+            background: #ff5722;
+            border: 3px solid #fff;
+            border-radius: 10px;
+            cursor: pointer;
+            pointer-events: auto;
+            transition: transform 0.1s;
+            text-shadow: 2px 2px 0 #000;
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+            background: #e64a19;
+        }
+
+        #scoreDisplay {
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 4rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 3px 3px 0 #000;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        #credits {
+            position: absolute;
+            bottom: 20px;
+            font-size: 1rem;
+            color: #fff;
+            text-shadow: 2px 2px 0 #000;
+            width: 100%;
+            text-align: center;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Ajustes para telas pequenas */
+        @media (max-width: 600px) {
+            h1 { font-size: 2.5rem; }
+            .btn { font-size: 1.2rem; padding: 12px 24px; }
+            #scoreDisplay { font-size: 3rem; top: 15%; }
+        }
+    </style>
 </head>
-<body class="bg-gray-900 text-gray-100 min-h-screen font-sans">
+<body>
 
-    <div class="container mx-auto px-4 py-8 max-w-4xl">
-        <header class="flex justify-between items-center border-b border-gray-800 pb-6 mb-8">
-            <div>
-                <h1 class="text-3xl font-bold text-indigo-400">Honest Yield Farm V2</h1>
-                <p class="text-gray-400 text-sm mt-1">Arbitragem de Taxas & Liquidez na Polygon</p>
-            </div>
-            <button id="connectBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-6 rounded-lg transition duration-200 shadow-lg">
-                Conectar Carteira
-            </button>
-        </header>
+    <canvas id="gameCanvas"></canvas>
+    
+    <div id="scoreDisplay" class="hidden">0</div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div class="bg-gray-800 p-6 rounded-xl border border-gray-700">
-                <span class="text-gray-400 text-xs uppercase tracking-wider">Saldo de USDC no Contrato</span>
-                <div id="contractBalance" class="text-2xl font-bold mt-2 text-green-400">0.00 USDC</div>
-            </div>
-            <div class="bg-gray-800 p-6 rounded-xl border border-gray-700">
-                <span class="text-gray-400 text-xs uppercase tracking-wider">Posição Ativa Atual</span>
-                <div id="activePosition" class="text-2xl font-bold mt-2 text-indigo-400">0.00 USDC</div>
-            </div>
-            <div class="bg-gray-800 p-6 rounded-xl border border-gray-700">
-                <span class="text-gray-400 text-xs uppercase tracking-wider">Lucro Total Acumulado</span>
-                <div id="totalProfit" class="text-2xl font-bold mt-2 text-yellow-400">0.00 USDC</div>
-            </div>
-        </div>
+    <!-- Tela Inicial -->
+    <div id="startScreen" class="ui-layer active">
+        <h1>TROLL FLAPPY</h1>
+        <p>Pressione ESPAÇO ou toque na tela para pular</p>
+        <button class="btn" id="startBtn">JOGAR</button>
+        <div id="credits">Créditos: Rodrigo Bastos</div>
+    </div>
 
-        <div id="walletInfo" class="hidden bg-gray-800/50 border border-gray-700 p-4 rounded-lg mb-8 text-sm text-gray-400">
-            <span class="font-semibold text-gray-200">Carteira:</span> <span id="userAddress">---</span>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 flex flex-col justify-between">
-                <div>
-                    <h2 class="text-xl font-bold mb-4 text-gray-200">Iniciar Farm</h2>
-                    <p class="text-gray-400 text-sm mb-6">Antes de executar, lembre-se de enviar o USDC diretamente para o endereço do contrato.</p>
-                    
-                    <label class="block text-xs uppercase text-gray-400 font-semibold mb-2">Quantidade de USDC (no contrato)</label>
-                    <input type="number" id="depositAmount" placeholder="Ex: 100" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white focus:outline-none focus:border-indigo-500 mb-4">
-                </div>
-                <button id="farmBtn" disabled class="w-full bg-emerald-600 hover:bg-emerald-700 disabled:bg-gray-700 disabled:cursor-not-allowed text-white font-bold py-3 px-4 rounded-lg transition duration-200">
-                    Executar Deposit & Farm
-                </button>
-            </div>
-
-            <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 flex flex-col justify-between">
-                <div>
-                    <h2 class="text-xl font-bold mb-4 text-gray-200">Encerrar Posição</h2>
-                    <p class="text-gray-400 text-sm mb-6">Remove a liquidez da QuickSwap, paga a dívida pendente na Aave, saca o colateral e envia os lucros gerados para a sua carteira.</p>
-                </div>
-                <button id="withdrawBtn" disabled class="w-full bg-rose-600 hover:bg-rose-700 disabled:bg-gray-700 disabled:cursor-not-allowed text-white font-bold py-3 px-4 rounded-lg transition duration-2000 mt-12">
-                    Withdraw & Close Position
-                </button>
-            </div>
-        </div>
-
-        <div class="mt-8 bg-red-950/20 border border-red-900/50 p-6 rounded-xl">
-            <h3 class="text-lg font-bold text-red-400 mb-2">Funções de Emergência (Dono)</h3>
-            <div class="flex flex-col sm:flex-row gap-4">
-                <input type="text" id="tokenAddress" placeholder="Endereço do Token (ex: USDC)" class="flex-1 bg-gray-900 border border-gray-700 rounded-lg p-3 text-white text-sm focus:outline-none focus:border-red-500">
-                <button id="emergencyBtn" disabled class="bg-red-700 hover:bg-red-600 disabled:bg-gray-700 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-lg text-sm transition duration-200">
-                    Saque de Emergência
-                </button>
-            </div>
-        </div>
+    <!-- Tela de Game Over -->
+    <div id="gameOverScreen" class="ui-layer hidden">
+        <h1 style="color: #ff5252;">GAME OVER</h1>
+        <p>Pontuação: <span id="finalScore">0</span></p>
+        <p>Recorde: <span id="bestScore">0</span></p>
+        <button class="btn" id="restartBtn">TENTAR DE NOVO</button>
+        <div id="credits">Créditos: Rodrigo Bastos</div>
     </div>
 
     <script>
-        const CONTRACT_ADDRESS = "0xb2df0454e7897a5b0838a07128805beac40ed1ef";
-        const POLYGON_CHAIN_ID = "0x89"; // 137 em decimal
+        /**
+         * TROLL FLAPPY
+         * Desenvolvido para ser compilado em APK (Cordova/Capacitor/WebView)
+         * Créditos: Rodrigo Bastos
+         */
 
-        // ABI reduzida contendo apenas o estritamente necessário para o Front
-        const CONTRACT_ABI = [
-            "function owner() view returns (address)",
-            "function activePosition() view returns (uint256)",
-            "function totalProfit() view returns (uint256)",
-            "function getContractBalance() view returns (uint256)",
-            "function depositAndFarm(uint256 amountUSDC) external",
-            "function withdrawAndClose() external",
-            "function emergencyWithdraw(address token) external"
-        ];
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Elementos da UI
+        const startScreen = document.getElementById('startScreen');
+        const gameOverScreen = document.getElementById('gameOverScreen');
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const finalScoreEl = document.getElementById('finalScore');
+        const bestScoreEl = document.getElementById('bestScore');
+        const startBtn = document.getElementById('startBtn');
+        const restartBtn = document.getElementById('restartBtn');
 
-        let provider, signer, contract;
+        // Estado do Jogo
+        let gameState = 'MENU'; // MENU, PLAYING, GAMEOVER
+        let frames = 0;
+        let score = 0;
+        let bestScore = localStorage.getItem('trollFlappyBest') || 0;
+        let gameSpeed = 3;
+        let pipeGap = 150;
 
-        // Elementos da Interface
-        const connectBtn = document.getElementById('connectBtn');
-        const walletInfo = document.getElementById('walletInfo');
-        const userAddressSpan = document.getElementById('userAddress');
-        const contractBalanceDiv = document.getElementById('contractBalance');
-        const activePositionDiv = document.getElementById('activePosition');
-        const totalProfitDiv = document.getElementById('totalProfit');
-        const depositAmountInput = document.getElementById('depositAmount');
-        const farmBtn = document.getElementById('farmBtn');
-        const withdrawBtn = document.getElementById('withdrawBtn');
-        const tokenAddressInput = document.getElementById('tokenAddress');
-        const emergencyBtn = document.getElementById('emergencyBtn');
+        // Configurações do Jogador (Trollface)
+        const player = {
+            x: 50,
+            y: 150,
+            radius: 20,
+            velocity: 0,
+            gravity: 0.45,
+            jumpStrength: -7.5,
+            rotation: 0
+        };
 
-        async function init() {
-            if (window.ethereum) {
-                provider = new ethers.BrowserProvider(window.ethereum);
-                
-                // Monitorar mudança de conta ou rede
-                window.ethereum.on('accountsChanged', () => window.location.reload());
-                window.ethereum.on('chainChanged', () => window.location.reload());
-                
-                connectBtn.addEventListener('click', connectWallet);
-                farmBtn.addEventListener('click', handleFarm);
-                withdrawBtn.addEventListener('click', handleWithdraw);
-                emergencyBtn.addEventListener('click', handleEmergency);
-            } else {
-                alert('MetaMask ou Rabby Wallet não detectada! Por favor, instale uma extensão Web3.');
+        // Canos
+        let pipes = [];
+        const pipeWidth = 60;
+        const pipeSpawnRate = 120; // Frames entre cada cano
+
+        // Ajuste de tamanho do canvas
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            player.x = canvas.width * 0.2; // Mantém o jogador a 20% da tela
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // Função para desenhar o Trollface
+        function drawTrollface(x, y, size, rotation) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(rotation);
+
+            // Cabeça
+            ctx.beginPath();
+            ctx.ellipse(0, 0, size, size * 0.85, 0, 0, Math.PI * 2);
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+
+            // Olhos
+            ctx.beginPath();
+            ctx.ellipse(-size * 0.35, -size * 0.2, size * 0.25, size * 0.35, -0.2, 0, Math.PI * 2);
+            ctx.ellipse(size * 0.35, -size * 0.2, size * 0.25, size * 0.35, 0.2, 0, Math.PI * 2);
+            ctx.fillStyle = '#000000';
+            ctx.fill();
+
+            // Sorriso Troll (icônico)
+            ctx.beginPath();
+            ctx.moveTo(-size * 0.6, size * 0.1);
+            ctx.quadraticCurveTo(0, size * 0.9, size * 0.7, size * 0.0);
+            ctx.quadraticCurveTo(size * 0.4, size * 0.4, -size * 0.6, size * 0.1);
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+            ctx.stroke();
+
+            // Nariz
+            ctx.beginPath();
+            ctx.moveTo(-size * 0.1, size * 0.1);
+            ctx.lineTo(size * 0.1, size * 0.1);
+            ctx.lineTo(0, size * 0.35);
+            ctx.closePath();
+            ctx.stroke();
+
+            // Rugas na testa
+            ctx.beginPath();
+            ctx.moveTo(-size * 0.4, -size * 0.55);
+            ctx.lineTo(-size * 0.1, -size * 0.45);
+            ctx.moveTo(size * 0.1, -size * 0.5);
+            ctx.lineTo(size * 0.4, -size * 0.55);
+            ctx.moveTo(-size * 0.2, -size * 0.65);
+            ctx.lineTo(size * 0.2, -size * 0.65);
+            ctx.stroke();
+
+            ctx.restore();
+        }
+
+        // Função para desenhar canos
+        function drawPipes() {
+            ctx.fillStyle = '#73bf2e';
+            ctx.strokeStyle = '#558c22';
+            ctx.lineWidth = 3;
+
+            pipes.forEach(pipe => {
+                // Cano superior
+                ctx.fillRect(pipe.x, 0, pipeWidth, pipe.topHeight);
+                ctx.strokeRect(pipe.x, 0, pipeWidth, pipe.topHeight);
+                // Borda do cano superior
+                ctx.fillRect(pipe.x - 3, pipe.topHeight - 20, pipeWidth + 6, 20);
+                ctx.strokeRect(pipe.x - 3, pipe.topHeight - 20, pipeWidth + 6, 20);
+
+                // Cano inferior
+                let bottomY = pipe.topHeight + pipeGap;
+                let bottomHeight = canvas.height - bottomY;
+                ctx.fillRect(pipe.x, bottomY, pipeWidth, bottomHeight);
+                ctx.strokeRect(pipe.x, bottomY, pipeWidth, bottomHeight);
+                // Borda do cano inferior
+                ctx.fillRect(pipe.x - 3, bottomY, pipeWidth + 6, 20);
+                ctx.strokeRect(pipe.x - 3, bottomY, pipeWidth + 6, 20);
+            });
+        }
+
+        // Função para desenhar o chão
+        function drawGround() {
+            ctx.fillStyle = '#ded895';
+            ctx.fillRect(0, canvas.height - 20, canvas.width, 20);
+            ctx.strokeStyle = '#cbb968';
+            ctx.beginPath();
+            ctx.moveTo(0, canvas.height - 20);
+            ctx.lineTo(canvas.width, canvas.height - 20);
+            ctx.stroke();
+            
+            // Detalhe de grama
+            ctx.fillStyle = '#73bf2e';
+            ctx.fillRect(0, canvas.height - 25, canvas.width, 5);
+        }
+
+        // Lógica de pular
+        function jump() {
+            if (gameState === 'PLAYING') {
+                player.velocity = player.jumpStrength;
+                player.rotation = -0.4;
+                playSound(400, 'square', 0.1);
             }
         }
 
-        async function connectWallet() {
-            try {
-                // Solicitar conexão de carteira
-                const accounts = await provider.send("eth_requestAccounts", []);
-                const network = await provider.getNetwork();
+        // Sistema de áudio simples (Web Audio API) para não depender de arquivos externos
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playSound(freq, type, duration) {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + duration);
+        }
 
-                // Verificar se está na rede Polygon
-                if (network.chainId !== 137n) {
-                    try {
-                        await window.ethereum.request({
-                            method: 'wallet_switchEthereumChain',
-                            params: [{ chainId: POLYGON_CHAIN_ID }],
-                        });
-                    } catch (switchError) {
-                        alert('Por favor, altere a rede da sua carteira para a Polygon Mainnet.');
-                        return;
+        // Atualização da dificuldade
+        function updateDifficulty() {
+            // A cada 5 pontos, aumenta a velocidade e diminui o gap (com limites)
+            let level = Math.floor(score / 5);
+            gameSpeed = Math.min(8, 3 + (level * 0.4));
+            pipeGap = Math.max(90, 150 - (level * 8));
+        }
+
+        // Loop principal do jogo
+        function update() {
+            if (gameState !== 'PLAYING') return;
+
+            frames++;
+            
+            // Física do jogador
+            player.velocity += player.gravity;
+            player.y += player.velocity;
+            
+            // Rotação baseada na velocidade
+            if (player.velocity < 0) {
+                player.rotation = Math.max(-0.5, player.rotation - 0.05);
+            } else {
+                player.rotation = Math.min(1.2, player.rotation + 0.03);
+            }
+
+            // Colisão com o chão ou teto
+            if (player.y + player.radius >= canvas.height - 25 || player.y - player.radius <= 0) {
+                gameOver();
+            }
+
+            // Gerenciamento de canos
+            if (frames % pipeSpawnRate === 0) {
+                let minHeight = 50;
+                let maxHeight = canvas.height - pipeGap - minHeight - 25;
+                let topHeight = Math.floor(Math.random() * (maxHeight - minHeight + 1) + minHeight);
+                pipes.push({
+                    x: canvas.width,
+                    topHeight: topHeight,
+                    passed: false
+                });
+            }
+
+            for (let i = 0; i < pipes.length; i++) {
+                let p = pipes[i];
+                p.x -= gameSpeed;
+
+                // Colisão com canos
+                // Caixa de colisão do jogador (simplificada para retângulo)
+                let playerLeft = player.x - player.radius + 5;
+                let playerRight = player.x + player.radius - 5;
+                let playerTop = player.y - player.radius + 5;
+                let playerBottom = player.y + player.radius - 5;
+
+                let pipeLeft = p.x;
+                let pipeRight = p.x + pipeWidth;
+                let topPipeBottom = p.topHeight;
+                let bottomPipeTop = p.topHeight + pipeGap;
+
+                if (playerRight > pipeLeft && playerLeft < pipeRight) {
+                    if (playerTop < topPipeBottom || playerBottom > bottomPipeTop) {
+                        gameOver();
                     }
                 }
 
-                signer = await provider.getSigner();
-                contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
-
-                // UI Updates
-                userAddressSpan.innerText = accounts[0];
-                walletInfo.classList.remove('hidden');
-                connectBtn.innerText = "Conectado";
-                connectBtn.classList.replace('bg-indigo-600', 'bg-gray-700');
-
-                // Ativar botões se for o dono
-                const contractOwner = await contract.owner();
-                if (contractOwner.toLowerCase() === accounts[0].toLowerCase()) {
-                    farmBtn.disabled = false;
-                    withdrawBtn.disabled = false;
-                    emergencyBtn.disabled = false;
-                } else {
-                    alert("Atenção: Você não é o proprietário (owner) deste contrato. As funções de escrita estarão desativadas.");
+                // Pontuação
+                if (p.x + pipeWidth < player.x && !p.passed) {
+                    score++;
+                    p.passed = true;
+                    scoreDisplay.innerText = score;
+                    updateDifficulty();
+                    playSound(600, 'sine', 0.1);
                 }
 
-                await refreshData();
-            } catch (error) {
-                console.error("Erro ao conectar:", error);
+                // Remover canos fora da tela
+                if (p.x + pipeWidth < 0) {
+                    pipes.shift();
+                    i--;
+                }
             }
         }
 
-        async function refreshData() {
-            if (!contract) return;
-            try {
-                // USDC possui 6 casas decimais no Polygon
-                const balance = await contract.getContractBalance();
-                const activePos = await contract.activePosition();
-                const profit = await contract.totalProfit();
+        function draw() {
+            // Limpar tela
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-                contractBalanceDiv.innerText = `${parseFloat(ethers.formatUnits(balance, 6)).toFixed(2)} USDC`;
-                activePositionDiv.innerText = `${parseFloat(ethers.formatUnits(activePos, 6)).toFixed(2)} USDC`;
-                totalProfitDiv.innerText = `${parseFloat(ethers.formatUnits(profit, 6)).toFixed(2)} USDC`;
-            } catch (err) {
-                console.error("Erro ao buscar dados do contrato:", err);
+            // Desenhar canos
+            drawPipes();
+
+            // Desenhar chão
+            drawGround();
+
+            // Desenhar jogador (Trollface)
+            drawTrollface(player.x, player.y, player.radius, player.rotation);
+        }
+
+        function gameLoop() {
+            update();
+            draw();
+            requestAnimationFrame(gameLoop);
+        }
+
+        function startGame() {
+            gameState = 'PLAYING';
+            score = 0;
+            frames = 0;
+            gameSpeed = 3;
+            pipeGap = 150;
+            player.y = canvas.height / 2;
+            player.velocity = 0;
+            player.rotation = 0;
+            pipes = [];
+            
+            scoreDisplay.innerText = score;
+            scoreDisplay.classList.remove('hidden');
+            startScreen.classList.add('hidden');
+            startScreen.classList.remove('active');
+            gameOverScreen.classList.add('hidden');
+            gameOverScreen.classList.remove('active');
+            
+            // Iniciar contexto de áudio no primeiro interação do usuário
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
             }
         }
 
-        async function handleFarm() {
-            const amount = depositAmountInput.value;
-            if (!amount || amount <= 0) return alert("Insira uma quantidade válida.");
-
-            try {
-                // Convertendo para as 6 casas decimais do USDC
-                const parsedAmount = ethers.parseUnits(amount, 6);
-                farmBtn.innerText = "Processando...";
-                farmBtn.disabled = true;
-
-                const tx = await contract.depositAndFarm(parsedAmount);
-                await tx.wait();
-
-                alert("Farm ativado com sucesso!");
-                await refreshData();
-            } catch (error) {
-                console.error(error);
-                alert(`Erro na transação: ${error.reason || error.message}`);
-            } finally {
-                farmBtn.innerText = "Executar Deposit & Farm";
-                farmBtn.disabled = false;
+        function gameOver() {
+            gameState = 'GAMEOVER';
+            playSound(150, 'sawtooth', 0.3);
+            
+            if (score > bestScore) {
+                bestScore = score;
+                localStorage.setItem('trollFlappyBest', bestScore);
             }
+            
+            finalScoreEl.innerText = score;
+            bestScoreEl.innerText = bestScore;
+            
+            scoreDisplay.classList.add('hidden');
+            gameOverScreen.classList.remove('hidden');
+            gameOverScreen.classList.add('active');
         }
 
-        async function handleWithdraw() {
-            try {
-                withdrawBtn.innerText = "Processando...";
-                withdrawBtn.disabled = true;
-
-                const tx = await contract.withdrawAndClose();
-                await tx.wait();
-
-                alert("Posição encerrada e lucros recolhidos!");
-                await refreshData();
-            } catch (error) {
-                console.error(error);
-                alert(`Erro na transação: ${error.reason || error.message}`);
-            } opacity
-            finally {
-                withdrawBtn.innerText = "Withdraw & Close Position";
-                withdrawBtn.disabled = false;
+        // Controles
+        window.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault(); // Previne scroll da página
+                if (gameState === 'MENU' || gameState === 'GAMEOVER') {
+                    startGame();
+                } else {
+                    jump();
+                }
             }
-        }
+        });
 
-        async function handleEmergency() {
-            const token = tokenAddressInput.value;
-            if (!ethers.isAddress(token)) return alert("Insira um endereço de contrato de token válido.");
-
-            try {
-                emergencyBtn.innerText = "Sacando...";
-                emergencyBtn.disabled = true;
-
-                const tx = await contract.emergencyWithdraw(token);
-                await tx.wait();
-
-                alert("Saque de emergência concluído!");
-                await refreshData();
-            } catch (error) {
-                console.error(error);
-                alert(`Erro: ${error.reason || error.message}`);
-            } finally {
-                emergencyBtn.innerText = "Saque de Emergência";
-                emergencyBtn.disabled = false;
+        // Controles de toque (Mobile)
+        window.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // Previne zoom e scroll
+            if (gameState === 'MENU' || gameState === 'GAMEOVER') {
+                // Só inicia se tocar no botão, mas para facilitar no mobile, 
+                // tocarmos na tela também pode iniciar, exceto se for no botão (que tem seu próprio listener)
+            } else {
+                jump();
             }
-        }
+        }, { passive: false });
 
-        window.addEventListener('load', init);
+        startBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            startGame();
+        });
+
+        restartBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            startGame();
+        });
+
+        // Iniciar loop
+        gameLoop();
+
     </script>
 </body>
 </html>
