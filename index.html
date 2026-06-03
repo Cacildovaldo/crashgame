@@ -7,19 +7,22 @@
     <meta name="mobile-web-app-capable" content="yes">
     <title>Troll Flappy</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Impact&display=swap');
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            touch-action: none; /* Previne zoom e scroll no mobile */
+            touch-action: none;
             user-select: none;
             -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background-color: #333;
+            background-color: #222;
             overflow: hidden;
-            font-family: 'Courier New', Courier, monospace;
+            font-family: 'Impact', 'Arial Black', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -30,7 +33,7 @@
         #gameCanvas {
             background: linear-gradient(to bottom, #4facfe 0%, #00f2fe 100%);
             display: block;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            box-shadow: 0 0 30px rgba(0,0,0,0.6);
         }
 
         .ui-layer {
@@ -43,81 +46,95 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            pointer-events: none; /* Deixa os cliques passarem para o canvas quando necessário */
+            pointer-events: none;
             text-align: center;
             color: white;
-            text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+            text-shadow: 4px 4px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
         }
 
         .ui-layer.active {
             pointer-events: auto;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(4px);
         }
 
-        h1 {
-            font-size: 3rem;
+        .game-title {
+            font-size: 4.5rem;
             margin-bottom: 10px;
             color: #ffeb3b;
+            letter-spacing: 2px;
+            animation: bounce 1.5s infinite ease-in-out;
         }
 
-        p {
-            font-size: 1.2rem;
-            margin: 10px 0;
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+        }
+
+        .subtitle {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 0 #000;
+            font-weight: bold;
         }
 
         .btn {
-            margin-top: 20px;
-            padding: 15px 30px;
-            font-size: 1.5rem;
-            font-family: inherit;
-            font-weight: bold;
+            margin-top: 15px;
+            padding: 15px 40px;
+            font-size: 1.8rem;
+            font-family: 'Impact', 'Arial Black', sans-serif;
             color: #fff;
-            background: #ff5722;
-            border: 3px solid #fff;
-            border-radius: 10px;
+            background: linear-gradient(to bottom, #ff5722, #e64a19);
+            border: 4px solid #fff;
+            border-radius: 15px;
             cursor: pointer;
             pointer-events: auto;
-            transition: transform 0.1s;
-            text-shadow: 2px 2px 0 #000;
+            transition: all 0.1s;
+            text-shadow: 3px 3px 0 #000;
+            box-shadow: 0 6px 0 #bf360c, 0 10px 10px rgba(0,0,0,0.3);
         }
 
         .btn:active {
-            transform: scale(0.95);
-            background: #e64a19;
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #bf360c, 0 4px 4px rgba(0,0,0,0.3);
         }
 
         #scoreDisplay {
             position: absolute;
-            top: 10%;
+            top: 8%;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 4rem;
+            font-size: 5rem;
             font-weight: bold;
             color: white;
-            text-shadow: 3px 3px 0 #000;
+            text-shadow: 4px 4px 0 #000;
             z-index: 10;
             pointer-events: none;
         }
 
         #credits {
             position: absolute;
-            bottom: 20px;
-            font-size: 1rem;
-            color: #fff;
+            bottom: 25px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.1rem;
+            color: #ffeb3b;
             text-shadow: 2px 2px 0 #000;
             width: 100%;
             text-align: center;
+            font-weight: bold;
         }
 
         .hidden {
             display: none !important;
         }
 
-        /* Ajustes para telas pequenas */
         @media (max-width: 600px) {
-            h1 { font-size: 2.5rem; }
-            .btn { font-size: 1.2rem; padding: 12px 24px; }
-            #scoreDisplay { font-size: 3rem; top: 15%; }
+            .game-title { font-size: 3.2rem; }
+            .btn { font-size: 1.4rem; padding: 12px 30px; }
+            #scoreDisplay { font-size: 4rem; top: 12%; }
+            .subtitle { font-size: 0.9rem; padding: 0 20px; }
         }
     </style>
 </head>
@@ -129,26 +146,26 @@
 
     <!-- Tela Inicial -->
     <div id="startScreen" class="ui-layer active">
-        <h1>TROLL FLAPPY</h1>
-        <p>Pressione ESPAÇO ou toque na tela para pular</p>
+        <h1 class="game-title">TROLL FLAPPY</h1>
+        <p class="subtitle">Pressione ESPAÇO ou toque na tela para pular</p>
         <button class="btn" id="startBtn">JOGAR</button>
         <div id="credits">Créditos: Rodrigo Bastos</div>
     </div>
 
     <!-- Tela de Game Over -->
     <div id="gameOverScreen" class="ui-layer hidden">
-        <h1 style="color: #ff5252;">GAME OVER</h1>
-        <p>Pontuação: <span id="finalScore">0</span></p>
-        <p>Recorde: <span id="bestScore">0</span></p>
+        <h1 class="game-title" style="color: #ff5252; animation: none;">GAME OVER</h1>
+        <p class="subtitle">Pontuação: <span id="finalScore" style="color: #ffeb3b; font-size: 1.5rem;">0</span></p>
+        <p class="subtitle">Recorde: <span id="bestScore" style="color: #4caf50; font-size: 1.5rem;">0</span></p>
         <button class="btn" id="restartBtn">TENTAR DE NOVO</button>
         <div id="credits">Créditos: Rodrigo Bastos</div>
     </div>
 
     <script>
         /**
-         * TROLL FLAPPY
-         * Desenvolvido para ser compilado em APK (Cordova/Capacitor/WebView)
+         * TROLL FLAPPY - Versão Aprimorada
          * Créditos: Rodrigo Bastos
+         * 100% Offline, pronto para compilação APK
          */
 
         const canvas = document.getElementById('gameCanvas');
@@ -164,131 +181,171 @@
         const restartBtn = document.getElementById('restartBtn');
 
         // Estado do Jogo
-        let gameState = 'MENU'; // MENU, PLAYING, GAMEOVER
+        let gameState = 'MENU';
         let frames = 0;
         let score = 0;
         let bestScore = localStorage.getItem('trollFlappyBest') || 0;
         let gameSpeed = 3;
         let pipeGap = 150;
 
-        // Configurações do Jogador (Trollface)
+        // Carregar o Trollface via SVG Base64 (100% Offline e nítido em qualquer resolução)
+        const trollfaceSVG = `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+            <path d="M100 30 C 60 30, 30 60, 30 100 C 30 150, 60 180, 100 180 C 140 180, 170 150, 170 100 C 170 60, 140 30, 100 30 Z" fill="#ffffff" stroke="#000000" stroke-width="4"/>
+            <path d="M 60 55 Q 100 45 140 55" fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round"/>
+            <path d="M 70 70 Q 100 60 130 70" fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round"/>
+            <path d="M 50 85 Q 70 65 90 85 Q 70 105 50 85 Z" fill="#000000"/>
+            <path d="M 110 85 Q 130 65 150 85 Q 130 105 110 85 Z" fill="#000000"/>
+            <path d="M 90 100 L 110 100 L 100 120 Z" fill="#000000"/>
+            <path d="M 35 120 Q 100 180 165 120 Q 140 150 100 150 Q 60 150 35 120 Z" fill="#ffffff" stroke="#000000" stroke-width="3"/>
+            <path d="M 35 120 Q 45 110 55 120" fill="none" stroke="#000000" stroke-width="2"/>
+            <path d="M 145 120 Q 155 110 165 120" fill="none" stroke="#000000" stroke-width="2"/>
+            <path d="M 85 155 Q 100 165 115 155" fill="none" stroke="#000000" stroke-width="2"/>
+        </svg>`;
+        const trollfaceImg = new Image();
+        trollfaceImg.src = 'data:image/svg+xml;base64,' + btoa(trollfaceSVG);
+
+        // Jogador
         const player = {
             x: 50,
             y: 150,
-            radius: 20,
+            radius: 22,
             velocity: 0,
             gravity: 0.45,
             jumpStrength: -7.5,
             rotation: 0
         };
 
-        // Canos
+        // Canos e Cenário
         let pipes = [];
-        const pipeWidth = 60;
-        const pipeSpawnRate = 120; // Frames entre cada cano
+        const pipeWidth = 65;
+        const pipeSpawnRate = 110;
+        
+        // Emojis do cenário
+        let clouds = [];
+        let groundDecorations = [];
+        const cloudEmojis = ['☁️', '⛅', '🌤️', '☀️'];
+        const groundEmojis = ['🌱', '🌿', '🌼', '🍀', '🌾'];
 
-        // Ajuste de tamanho do canvas
         function resizeCanvas() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-            player.x = canvas.width * 0.2; // Mantém o jogador a 20% da tela
+            player.x = canvas.width * 0.2;
+            initScenario();
         }
+        
+        function initScenario() {
+            clouds = [];
+            groundDecorations = [];
+            // Gerar nuvens iniciais
+            for (let i = 0; i < 5; i++) {
+                clouds.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * (canvas.height * 0.4),
+                    size: 30 + Math.random() * 40,
+                    speed: 0.3 + Math.random() * 0.5,
+                    emoji: cloudEmojis[Math.floor(Math.random() * cloudEmojis.length)]
+                });
+            }
+            // Gerar decorações do chão
+            const groundY = canvas.height - 25;
+            for (let i = 0; i < canvas.width; i += 40) {
+                if (Math.random() > 0.4) {
+                    groundDecorations.push({
+                        x: i + Math.random() * 20,
+                        y: groundY + 5,
+                        emoji: groundEmojis[Math.floor(Math.random() * groundEmojis.length)],
+                        size: 16 + Math.random() * 10
+                    });
+                }
+            }
+        }
+
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
-        // Função para desenhar o Trollface
-        function drawTrollface(x, y, size, rotation) {
-            ctx.save();
-            ctx.translate(x, y);
-            ctx.rotate(rotation);
-
-            // Cabeça
-            ctx.beginPath();
-            ctx.ellipse(0, 0, size, size * 0.85, 0, 0, Math.PI * 2);
-            ctx.fillStyle = '#ffffff';
-            ctx.fill();
-            ctx.strokeStyle = '#000000';
-            ctx.lineWidth = 3;
-            ctx.stroke();
-
-            // Olhos
-            ctx.beginPath();
-            ctx.ellipse(-size * 0.35, -size * 0.2, size * 0.25, size * 0.35, -0.2, 0, Math.PI * 2);
-            ctx.ellipse(size * 0.35, -size * 0.2, size * 0.25, size * 0.35, 0.2, 0, Math.PI * 2);
-            ctx.fillStyle = '#000000';
-            ctx.fill();
-
-            // Sorriso Troll (icônico)
-            ctx.beginPath();
-            ctx.moveTo(-size * 0.6, size * 0.1);
-            ctx.quadraticCurveTo(0, size * 0.9, size * 0.7, size * 0.0);
-            ctx.quadraticCurveTo(size * 0.4, size * 0.4, -size * 0.6, size * 0.1);
-            ctx.fillStyle = '#ffffff';
-            ctx.fill();
-            ctx.stroke();
-
-            // Nariz
-            ctx.beginPath();
-            ctx.moveTo(-size * 0.1, size * 0.1);
-            ctx.lineTo(size * 0.1, size * 0.1);
-            ctx.lineTo(0, size * 0.35);
-            ctx.closePath();
-            ctx.stroke();
-
-            // Rugas na testa
-            ctx.beginPath();
-            ctx.moveTo(-size * 0.4, -size * 0.55);
-            ctx.lineTo(-size * 0.1, -size * 0.45);
-            ctx.moveTo(size * 0.1, -size * 0.5);
-            ctx.lineTo(size * 0.4, -size * 0.55);
-            ctx.moveTo(-size * 0.2, -size * 0.65);
-            ctx.lineTo(size * 0.2, -size * 0.65);
-            ctx.stroke();
-
-            ctx.restore();
-        }
-
-        // Função para desenhar canos
-        function drawPipes() {
-            ctx.fillStyle = '#73bf2e';
-            ctx.strokeStyle = '#558c22';
-            ctx.lineWidth = 3;
-
-            pipes.forEach(pipe => {
-                // Cano superior
-                ctx.fillRect(pipe.x, 0, pipeWidth, pipe.topHeight);
-                ctx.strokeRect(pipe.x, 0, pipeWidth, pipe.topHeight);
-                // Borda do cano superior
-                ctx.fillRect(pipe.x - 3, pipe.topHeight - 20, pipeWidth + 6, 20);
-                ctx.strokeRect(pipe.x - 3, pipe.topHeight - 20, pipeWidth + 6, 20);
-
-                // Cano inferior
-                let bottomY = pipe.topHeight + pipeGap;
-                let bottomHeight = canvas.height - bottomY;
-                ctx.fillRect(pipe.x, bottomY, pipeWidth, bottomHeight);
-                ctx.strokeRect(pipe.x, bottomY, pipeWidth, bottomHeight);
-                // Borda do cano inferior
-                ctx.fillRect(pipe.x - 3, bottomY, pipeWidth + 6, 20);
-                ctx.strokeRect(pipe.x - 3, bottomY, pipeWidth + 6, 20);
+        function drawScenario() {
+            // Nuvens (Parallax)
+            ctx.font = "40px Arial";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            clouds.forEach(cloud => {
+                ctx.font = `${cloud.size}px Arial`;
+                ctx.fillText(cloud.emoji, cloud.x, cloud.y);
+                if (gameState === 'PLAYING') {
+                    cloud.x -= cloud.speed;
+                    if (cloud.x < -50) {
+                        cloud.x = canvas.width + 50;
+                        cloud.y = Math.random() * (canvas.height * 0.4);
+                    }
+                }
             });
         }
 
-        // Função para desenhar o chão
         function drawGround() {
+            // Base do chão
             ctx.fillStyle = '#ded895';
-            ctx.fillRect(0, canvas.height - 20, canvas.width, 20);
-            ctx.strokeStyle = '#cbb968';
-            ctx.beginPath();
-            ctx.moveTo(0, canvas.height - 20);
-            ctx.lineTo(canvas.width, canvas.height - 20);
-            ctx.stroke();
+            ctx.fillRect(0, canvas.height - 25, canvas.width, 25);
             
-            // Detalhe de grama
+            // Linha de grama
             ctx.fillStyle = '#73bf2e';
-            ctx.fillRect(0, canvas.height - 25, canvas.width, 5);
+            ctx.fillRect(0, canvas.height - 30, canvas.width, 8);
+            ctx.strokeStyle = '#558c22';
+            ctx.beginPath();
+            ctx.moveTo(0, canvas.height - 30);
+            ctx.lineTo(canvas.width, canvas.height - 30);
+            ctx.stroke();
+
+            // Emojis de decoração do chão
+            groundDecorations.forEach(decor => {
+                ctx.font = `${decor.size}px Arial`;
+                ctx.fillText(decor.emoji, decor.x, decor.y);
+                if (gameState === 'PLAYING') {
+                    decor.x -= gameSpeed;
+                    if (decor.x < -20) {
+                        decor.x = canvas.width + 20;
+                    }
+                }
+            });
         }
 
-        // Lógica de pular
+        function drawPipes() {
+            pipes.forEach(pipe => {
+                // Gradiente para os canos ficarem mais bonitos
+                let gradient = ctx.createLinearGradient(pipe.x, 0, pipe.x + pipeWidth, 0);
+                gradient.addColorStop(0, '#558c22');
+                gradient.addColorStop(0.5, '#73bf2e');
+                gradient.addColorStop(1, '#4a7a1e');
+                
+                ctx.fillStyle = gradient;
+                ctx.strokeStyle = '#2d5016';
+                ctx.lineWidth = 3;
+
+                // Cano superior
+                ctx.fillRect(pipe.x, 0, pipeWidth, pipe.topHeight);
+                ctx.strokeRect(pipe.x, 0, pipeWidth, pipe.topHeight);
+                ctx.fillRect(pipe.x - 4, pipe.topHeight - 25, pipeWidth + 8, 25);
+                ctx.strokeRect(pipe.x - 4, pipe.topHeight - 25, pipeWidth + 8, 25);
+
+                // Cano inferior
+                let bottomY = pipe.topHeight + pipeGap;
+                let bottomHeight = canvas.height - bottomY - 25;
+                ctx.fillRect(pipe.x, bottomY, pipeWidth, bottomHeight);
+                ctx.strokeRect(pipe.x, bottomY, pipeWidth, bottomHeight);
+                ctx.fillRect(pipe.x - 4, bottomY, pipeWidth + 8, 25);
+                ctx.strokeRect(pipe.x - 4, bottomY, pipeWidth + 8, 25);
+            });
+        }
+
+        function drawPlayer() {
+            ctx.save();
+            ctx.translate(player.x, player.y);
+            ctx.rotate(player.rotation);
+            // Desenha o Trollface SVG carregado
+            ctx.drawImage(trollfaceImg, -player.radius, -player.radius, player.radius * 2, player.radius * 2);
+            ctx.restore();
+        }
+
         function jump() {
             if (gameState === 'PLAYING') {
                 player.velocity = player.jumpStrength;
@@ -297,7 +354,6 @@
             }
         }
 
-        // Sistema de áudio simples (Web Audio API) para não depender de arquivos externos
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         function playSound(freq, type, duration) {
             if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -313,58 +369,44 @@
             osc.stop(audioCtx.currentTime + duration);
         }
 
-        // Atualização da dificuldade
         function updateDifficulty() {
-            // A cada 5 pontos, aumenta a velocidade e diminui o gap (com limites)
             let level = Math.floor(score / 5);
             gameSpeed = Math.min(8, 3 + (level * 0.4));
-            pipeGap = Math.max(90, 150 - (level * 8));
+            pipeGap = Math.max(95, 150 - (level * 8));
         }
 
-        // Loop principal do jogo
         function update() {
             if (gameState !== 'PLAYING') return;
 
             frames++;
-            
-            // Física do jogador
             player.velocity += player.gravity;
             player.y += player.velocity;
             
-            // Rotação baseada na velocidade
             if (player.velocity < 0) {
                 player.rotation = Math.max(-0.5, player.rotation - 0.05);
             } else {
                 player.rotation = Math.min(1.2, player.rotation + 0.03);
             }
 
-            // Colisão com o chão ou teto
-            if (player.y + player.radius >= canvas.height - 25 || player.y - player.radius <= 0) {
+            if (player.y + player.radius >= canvas.height - 30 || player.y - player.radius <= 0) {
                 gameOver();
             }
 
-            // Gerenciamento de canos
             if (frames % pipeSpawnRate === 0) {
-                let minHeight = 50;
-                let maxHeight = canvas.height - pipeGap - minHeight - 25;
+                let minHeight = 60;
+                let maxHeight = canvas.height - pipeGap - minHeight - 30;
                 let topHeight = Math.floor(Math.random() * (maxHeight - minHeight + 1) + minHeight);
-                pipes.push({
-                    x: canvas.width,
-                    topHeight: topHeight,
-                    passed: false
-                });
+                pipes.push({ x: canvas.width, topHeight: topHeight, passed: false });
             }
 
             for (let i = 0; i < pipes.length; i++) {
                 let p = pipes[i];
                 p.x -= gameSpeed;
 
-                // Colisão com canos
-                // Caixa de colisão do jogador (simplificada para retângulo)
-                let playerLeft = player.x - player.radius + 5;
-                let playerRight = player.x + player.radius - 5;
-                let playerTop = player.y - player.radius + 5;
-                let playerBottom = player.y + player.radius - 5;
+                let playerLeft = player.x - player.radius + 6;
+                let playerRight = player.x + player.radius - 6;
+                let playerTop = player.y - player.radius + 6;
+                let playerBottom = player.y + player.radius - 6;
 
                 let pipeLeft = p.x;
                 let pipeRight = p.x + pipeWidth;
@@ -377,7 +419,6 @@
                     }
                 }
 
-                // Pontuação
                 if (p.x + pipeWidth < player.x && !p.passed) {
                     score++;
                     p.passed = true;
@@ -386,7 +427,6 @@
                     playSound(600, 'sine', 0.1);
                 }
 
-                // Remover canos fora da tela
                 if (p.x + pipeWidth < 0) {
                     pipes.shift();
                     i--;
@@ -395,17 +435,11 @@
         }
 
         function draw() {
-            // Limpar tela
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Desenhar canos
+            drawScenario();
             drawPipes();
-
-            // Desenhar chão
             drawGround();
-
-            // Desenhar jogador (Trollface)
-            drawTrollface(player.x, player.y, player.radius, player.rotation);
+            drawPlayer();
         }
 
         function gameLoop() {
@@ -432,10 +466,7 @@
             gameOverScreen.classList.add('hidden');
             gameOverScreen.classList.remove('active');
             
-            // Iniciar contexto de áudio no primeiro interação do usuário
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
+            if (audioCtx.state === 'suspended') audioCtx.resume();
         }
 
         function gameOver() {
@@ -458,7 +489,7 @@
         // Controles
         window.addEventListener('keydown', (e) => {
             if (e.code === 'Space') {
-                e.preventDefault(); // Previne scroll da página
+                e.preventDefault();
                 if (gameState === 'MENU' || gameState === 'GAMEOVER') {
                     startGame();
                 } else {
@@ -467,30 +498,18 @@
             }
         });
 
-        // Controles de toque (Mobile)
         window.addEventListener('touchstart', (e) => {
-            e.preventDefault(); // Previne zoom e scroll
-            if (gameState === 'MENU' || gameState === 'GAMEOVER') {
-                // Só inicia se tocar no botão, mas para facilitar no mobile, 
-                // tocarmos na tela também pode iniciar, exceto se for no botão (que tem seu próprio listener)
-            } else {
-                jump();
+            if (e.target.tagName !== 'BUTTON') {
+                e.preventDefault();
+                if (gameState === 'PLAYING') jump();
             }
         }, { passive: false });
 
-        startBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            startGame();
-        });
+        startBtn.addEventListener('click', (e) => { e.stopPropagation(); startGame(); });
+        restartBtn.addEventListener('click', (e) => { e.stopPropagation(); startGame(); });
 
-        restartBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            startGame();
-        });
-
-        // Iniciar loop
+        // Iniciar
         gameLoop();
-
     </script>
 </body>
 </html>
