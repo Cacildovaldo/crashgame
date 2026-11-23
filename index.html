@@ -50,6 +50,96 @@
       -webkit-font-smoothing: antialiased;
     }
 
+    /* ===== TELA DE BLOQUEIO ===== */
+    #lockScreen {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #0b2545 0%, #133c6e 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 9999;
+    }
+    #lockScreen.hidden { display: none !important; }
+
+    .lock-card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 34px 30px;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+      text-align: center;
+    }
+    .lock-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 16px;
+      background: linear-gradient(145deg, #1e4b85, #0b2545);
+      border: 2px solid #fbbf24;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+    }
+    .lock-card h2 {
+      color: var(--primary);
+      font-size: 1.3rem;
+      margin-bottom: 6px;
+    }
+    .lock-card p {
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-bottom: 20px;
+    }
+    .lock-card input[type="password"] {
+      width: 100%;
+      padding: 13px 15px;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      font-size: 1rem;
+      text-align: center;
+      letter-spacing: 2px;
+      margin-bottom: 14px;
+      font-family: inherit;
+    }
+    .lock-card input[type="password"]:focus {
+      outline: none;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+    .lock-card button {
+      width: 100%;
+      padding: 13px;
+      background: var(--accent);
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .lock-card button:hover { background: var(--accent-hover); }
+    .lock-error {
+      color: var(--danger);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-top: 12px;
+      min-height: 20px;
+    }
+    .lock-hint {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border-light);
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    /* ============================== */
+
     .road-hazard-strip {
       height: 6px;
       background: repeating-linear-gradient(
@@ -614,12 +704,12 @@
       @page { size: A4 portrait; margin: 2cm 2cm 2cm 2.5cm; }
       body { background: #ffffff !important; }
 
-      /* Esconde TUDO que não é o documento */
       .road-hazard-strip,
       .legal-top-bar,
       header,
       .hero,
       .how-strip,
+      #lockScreen,
       #step-1,
       #step-2,
       .step-header,
@@ -630,7 +720,6 @@
         display: none !important;
       }
 
-      /* O container vira apenas um wrapper neutro */
       .container {
         margin: 0 !important;
         padding: 0 !important;
@@ -639,7 +728,6 @@
         max-width: 100% !important;
       }
 
-      /* O step-4 vira a página inteira, sem card */
       #step-4 {
         display: block !important;
         margin: 0 !important;
@@ -650,7 +738,6 @@
         border-radius: 0 !important;
       }
 
-      /* Remove o fundo cinza do wrapper do papel */
       .paper-wrapper {
         margin: 0 !important;
         padding: 0 !important;
@@ -661,7 +748,6 @@
         overflow: visible !important;
       }
 
-      /* O documento ocupa a folha, sem sombra e sem padding extra */
       .a4-document {
         box-shadow: none !important;
         padding: 0 !important;
@@ -675,404 +761,456 @@
 </head>
 <body>
 
-  <div class="road-hazard-strip"></div>
-
-  <div class="legal-top-bar">
-    ⚖️ <strong>Aviso Legal:</strong> Ferramenta tecnológica de autoatendimento para geração de modelos de documentos administrativos. <strong>Não prestamos consultoria jurídica, análise de caso nem serviços advocatícios.</strong> Sem vínculo com DETRAN, CONTRAN, SENATRAN ou PRF.
-  </div>
-
-  <header>
-    <div class="header-inner">
-      <div class="brand">
-        <div class="brand-icon" aria-hidden="true">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-            <rect x="6" y="2" width="12" height="20" rx="3" fill="#0f172a" stroke="#fbbf24" stroke-width="1.6"/>
-            <circle cx="12" cy="6.5" r="2.2" fill="#ef4444"/>
-            <circle cx="12" cy="12" r="2.2" fill="#fbbf24"/>
-            <circle cx="12" cy="17.5" r="2.2" fill="#22c55e"/>
-          </svg>
-        </div>
-        <div>
-          <h1>AutoRecurso 🚦</h1>
-          <p>Gerador Inteligente de Recursos de Multas • CTB Atualizado</p>
-        </div>
-      </div>
-
-      <div class="header-status">
-        <div class="credit-badge">
-          <span class="credit-dot"></span>
-          <span>✅ Acesso Liberado</span>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <section class="hero">
-    <div class="hero-card">
-      <div>
-        <span class="hero-tag">🚗 25+ Modelos Atualizados • Sem Cadastro • Privacidade Zero Rastro</span>
-        <h2>Recorra da sua multa de trânsito em minutos direto do navegador! 📄</h2>
-        <p>
-          Escolha entre as infrações mais comuns do Brasil — <strong>Farol Vermelho 🚦, Faixa de Pedestres 🚸, Ultrapassagem pelo Acostamento 🛣️, Lei Seca 🍺, Radares 📸, Free Flow 🚧 e Motoristas de App/Entregadores (EAR) 🛵</strong> — preencha e imprima ou salve em PDF.
-        </p>
-        <div class="hero-features">
-          <span class="hero-feat-pill">⚡ Preenchimento rápido</span>
-          <span class="hero-feat-pill">🛡️ Zero rastro de dados pessoais</span>
-          <span class="hero-feat-pill">🖨️ Imprimir, PDF e Word (.doc)</span>
-        </div>
-      </div>
-
-      <div class="hero-right">
-        <div class="traffic-scene-box" aria-hidden="true">
-          <svg viewBox="0 0 420 140" width="100%" height="126">
-            <ellipse cx="65" cy="26" rx="26" ry="11" fill="#ffffff" opacity="0.85"/>
-            <ellipse cx="82" cy="24" rx="18" ry="10" fill="#ffffff" opacity="0.85"/>
-            <ellipse cx="320" cy="22" rx="30" ry="10" fill="#ffffff" opacity="0.8"/>
-
-            <rect x="215" y="18" width="6" height="82" fill="#475569"/>
-            <rect x="360" y="18" width="6" height="82" fill="#475569"/>
-            <rect x="210" y="16" width="160" height="12" rx="3" fill="#1e3a8a"/>
-            <rect x="242" y="18" width="96" height="8" rx="2" fill="#38bdf8"/>
-            <text x="290" y="25" font-size="6.5" font-weight="bold" fill="#0f172a" text-anchor="middle" font-family="Arial">FREE FLOW / RADAR</text>
-
-            <rect x="162" y="50" width="3.5" height="50" fill="#64748b"/>
-            <circle cx="163.7" cy="40" r="16" fill="#ffffff" stroke="#dc2626" stroke-width="4"/>
-            <text x="163.7" y="42.5" font-size="11" font-weight="900" fill="#0f172a" text-anchor="middle" font-family="Arial">80</text>
-            <text x="163.7" y="49.5" font-size="4.8" font-weight="bold" fill="#334155" text-anchor="middle" font-family="Arial">km/h</text>
-
-            <rect x="34" y="56" width="4" height="44" fill="#334155"/>
-            <rect x="26" y="20" width="20" height="42" rx="4" fill="#1e293b"/>
-            <circle cx="36" cy="29" r="4.5" fill="#ef4444"/>
-            <circle cx="36" cy="41" r="4.5" fill="#f59e0b"/>
-            <circle cx="36" cy="53" r="4.5" fill="#22c55e"/>
-
-            <rect x="0" y="96" width="420" height="44" fill="#334155"/>
-            <rect x="0" y="96" width="420" height="3" fill="#fbbf24"/>
-            <rect x="52" y="102" width="26" height="5" fill="#ffffff" opacity="0.9"/>
-            <rect x="52" y="112" width="26" height="5" fill="#ffffff" opacity="0.9"/>
-            <rect x="52" y="122" width="26" height="5" fill="#ffffff" opacity="0.9"/>
-            <rect x="52" y="132" width="26" height="5" fill="#ffffff" opacity="0.9"/>
-            <rect x="105" y="117" width="32" height="4" rx="2" fill="#f8fafc" opacity="0.8"/>
-            <rect x="160" y="117" width="32" height="4" rx="2" fill="#f8fafc" opacity="0.8"/>
-            <rect x="215" y="117" width="32" height="4" rx="2" fill="#f8fafc" opacity="0.8"/>
-            <rect x="270" y="117" width="32" height="4" rx="2" fill="#f8fafc" opacity="0.8"/>
-            <rect x="325" y="117" width="32" height="4" rx="2" fill="#f8fafc" opacity="0.8"/>
-            <rect x="380" y="117" width="32" height="4" rx="2" fill="#f8fafc" opacity="0.8"/>
-
-            <g transform="translate(115, 76)">
-              <path d="M12,16 L20,4 L54,4 L66,16 L80,18 L82,29 L4,29 L6,18 Z" fill="#2563eb"/>
-              <path d="M22,7 L36,7 L36,15 L15,15 Z" fill="#bae6fd"/>
-              <path d="M40,7 L52,7 L61,15 L40,15 Z" fill="#bae6fd"/>
-              <circle cx="20" cy="30" r="7" fill="#0f172a"/>
-              <circle cx="20" cy="30" r="3" fill="#cbd5e1"/>
-              <circle cx="66" cy="30" r="7" fill="#0f172a"/>
-              <circle cx="66" cy="30" r="3" fill="#cbd5e1"/>
-              <rect x="77" y="20" width="5" height="4" rx="1" fill="#fef08a"/>
-            </g>
-
-            <g transform="translate(275, 81)">
-              <rect x="4" y="4" width="16" height="14" rx="2" fill="#dc2626"/>
-              <circle cx="12" cy="24" r="6" fill="#0f172a"/>
-              <circle cx="12" cy="24" r="2.5" fill="#cbd5e1"/>
-              <circle cx="42" cy="24" r="6" fill="#0f172a"/>
-              <circle cx="42" cy="24" r="2.5" fill="#cbd5e1"/>
-              <path d="M14,22 L24,14 L36,14 L41,22" stroke="#f59e0b" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-              <circle cx="28" cy="6" r="5" fill="#fbbf24"/>
-            </g>
-          </svg>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="how-strip" aria-label="Como funciona">
-    <div class="how-item">
-      <div class="how-emoji">🔍</div>
-      <div><strong>1. Escolha a Multa</strong><span>Busque pelo código ou placa</span></div>
-    </div>
-    <div class="how-item">
-      <div class="how-emoji">📝</div>
-      <div><strong>2. Preencha os Dados</strong><span>Sem salvar rastro no servidor</span></div>
-    </div>
-    <div class="how-item">
-      <div class="how-emoji">📄</div>
-      <div><strong>3. Gere o Documento</strong><span>Modelo pronto para protocolar</span></div>
-    </div>
-    <div class="how-item">
-      <div class="how-emoji">🖨️</div>
-      <div><strong>4. Imprima ou PDF</strong><span>Assine e protocole no órgão</span></div>
-    </div>
-  </section>
-
-  <main class="container">
-
-    <section id="step-1" class="step-card">
-      <div class="step-header">
-        <div class="step-title-group">
-          <div class="step-num">1</div>
-          <div>
-            <h3>🚦 Escolha a Categoria ou Busque pelo Código da Multa</h3>
-            <p>Clique em uma placa de trânsito abaixo ou digite o código (ex: 590-80, 567-32, 605-03, 745-50, 773-02).</p>
-          </div>
-        </div>
-        <span id="catalogCountBadge" style="font-size: 0.82rem; font-weight: 700; color: var(--primary); background: #e0f2fe; padding: 6px 13px; border-radius: 999px;">
-          25 modelos disponíveis
-        </span>
-      </div>
-
-      <div class="signs-showcase">
-        <div class="signs-showcase-title">
-          <span>🛑 Acesso Rápido por Sinalização &amp; Tipo de Infração</span>
-          <span style="font-weight: 500; color: var(--muted); text-transform: none;">Clique em uma placa para filtrar</span>
-        </div>
-        <div class="signs-row" id="signsRow"></div>
-      </div>
-
-      <div class="catalog-controls">
-        <div class="search-box">
-          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-          </svg>
-          <input type="text" id="templateSearch" placeholder="🔍 Digite o código da multa (590-80, 567-32, 605-03, 745-50, 773-02, 763-31...) ou palavra (acostamento, faixa de pedestre, farol vermelho)..." oninput="renderTemplates()" />
-        </div>
-        <div id="filterPills" class="filter-pills"></div>
-      </div>
-
-      <div id="templateGrid" class="template-grid"></div>
-    </section>
-
-    <section id="step-2" class="step-card">
-      <div class="step-header">
-        <div class="step-title-group">
-          <div class="step-num">2</div>
-          <div>
-            <h3>📝 Preenchimento dos Dados (Sem Rastro em Servidores)</h3>
-            <p>Tudo é montado dentro do seu navegador. Seus dados pessoais nunca ficam gravados.</p>
-          </div>
-        </div>
-        <button id="btnClearForm" type="button" class="btn btn-danger-outline" onclick="clearFormData()">
-          🗑️ Apagar Dados da Tela
-        </button>
-      </div>
-
-      <form id="resourceForm" onsubmit="handleGenerate(event)">
-        <div class="form-section-title">1. Instância e Órgão Destinatário</div>
-        <div class="form-grid">
-          <div class="form-group">
-            <label>Fase / Tipo de Peça <span class="req">*</span></label>
-            <select id="f_instancia" required>
-              <option value="DEFESA PRÉVIA (Defesa da Autuação)">Defesa Prévia (Notificação de Autuação)</option>
-              <option value="RECURSO ADMINISTRATIVO À JARI (1ª Instância)" selected>Recurso à JARI (1ª Instância - Penalidade)</option>
-              <option value="RECURSO AO CETRAN / CONTRANDIFE (2ª Instância)">Recurso ao CETRAN (2ª Instância)</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Órgão Autuador <span class="req">*</span></label>
-            <input type="text" id="f_orgao" placeholder="Ex: DETRAN-SP, PRF, DNIT, DER, CET" required />
-          </div>
-          <div class="form-group">
-            <label>Cidade / UF <span class="req">*</span></label>
-            <input type="text" id="f_cidade_uf" placeholder="Ex: São Paulo / SP" required />
-          </div>
-        </div>
-
-        <div class="form-section-title">2. Dados do Condutor / Proprietário</div>
-        <div class="form-grid">
-          <div class="form-group">
-            <label>Nome Completo <span class="req">*</span></label>
-            <input type="text" id="f_nome" placeholder="Nome completo sem abreviações" required />
-          </div>
-          <div class="form-group">
-            <label>CPF <span class="req">*</span></label>
-            <input type="text" id="f_cpf" placeholder="000.000.000-00" maxlength="14" oninput="maskCPF(this)" required />
-          </div>
-          <div class="form-group">
-            <label>RG / Órgão Emissor</label>
-            <input type="text" id="f_rg" placeholder="Ex: 12.345.678-9 SSP/SP" />
-          </div>
-          <div class="form-group">
-            <label>Nº da CNH <span class="req">*</span></label>
-            <input type="text" id="f_cnh" placeholder="Registro da CNH" required />
-          </div>
-          <div class="form-group">
-            <label>Categoria CNH</label>
-            <select id="f_cat_cnh">
-              <option value="A">A</option>
-              <option value="B" selected>B</option>
-              <option value="AB">AB</option>
-              <option value="C">C</option>
-              <option value="D">D</option>
-              <option value="E">E</option>
-              <option value="AC">AC</option>
-              <option value="AD">AD</option>
-              <option value="AE">AE</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>E-mail ou Telefone (opcional)</label>
-            <input type="text" id="f_contato" placeholder="Opcional na qualificação" />
-          </div>
-          <div class="form-group full">
-            <label>Endereço Completo (Rua, Nº, Bairro, CEP) <span class="req">*</span></label>
-            <input type="text" id="f_endereco" placeholder="Ex: Rua Exemplo, 100, Centro, CEP 01000-000" required />
-          </div>
-        </div>
-
-        <label class="ear-highlight">
-          <input type="checkbox" id="f_ear" />
-          <span>🚕 Condutor possui <strong>EAR (Exerce Atividade Remunerada)</strong> na CNH — Motorista de App / Entregador / Profissional</span>
-        </label>
-
-        <div class="form-section-title">3. Dados do Veículo e da Notificação (Campos Obrigatórios)</div>
-        <div class="form-grid">
-          <div class="form-group">
-            <label>Placa do Veículo <span class="req">*</span></label>
-            <input type="text" id="f_placa" placeholder="ABC1D23" maxlength="8" style="text-transform: uppercase;" required />
-          </div>
-          <div class="form-group">
-            <label>Marca / Modelo / Cor</label>
-            <input type="text" id="f_veiculo" placeholder="Ex: Fiat Argo Branco 2023" />
-          </div>
-          <div class="form-group">
-            <label>RENAVAM</label>
-            <input type="text" id="f_renavam" placeholder="Número do RENAVAM" />
-          </div>
-          <div class="form-group">
-            <label>Nº do Auto de Infração (AIT) <span class="req">*</span></label>
-            <input type="text" id="f_ait" placeholder="Ex: E101234567" required />
-          </div>
-          <div class="form-group">
-            <label>Data do Ocorrido (Infração) <span class="req">*</span></label>
-            <input type="date" id="f_data_infracao" required />
-          </div>
-          <div class="form-group">
-            <label>Data de Expedição da Notificação <span class="req">*</span></label>
-            <input type="date" id="f_data_notificacao" required />
-          </div>
-          <div class="form-group">
-            <label>Local da Infração <span class="req">*</span></label>
-            <input type="text" id="f_local" placeholder="Rodovia/Rua, KM ou altura do nº" required />
-          </div>
-          <div class="form-group">
-            <label>Enquadramento / Código e Artigo <span class="req">*</span></label>
-            <input type="text" id="f_artigo" required />
-          </div>
-          <div class="form-group full">
-            <label>Detalhes Específicos do Ocorrido (Opcional — ex: havia veículo quebrado na pista, trânsito travou sobre a faixa, sinalização encoberta, etc.)</label>
-            <textarea id="f_obs" rows="3" placeholder="Descreva aqui qualquer detalhe do momento da multa para reforçar seu documento..."></textarea>
-          </div>
-        </div>
-
-        <div class="form-actions">
-          <div style="font-size: 0.84rem; color: var(--muted);">
-            ✅ Acesso liberado — gere quantos recursos precisar nesta sessão.
-          </div>
-          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-            <button type="button" class="btn btn-outline" onclick="fillDemoExample()">
-              ⚡ Preencher Exemplo Teste
-            </button>
-            <button id="btnGenerateDoc" type="submit" class="btn btn-primary">
-              📄 Gerar Recurso
-            </button>
-          </div>
-        </div>
-      </form>
-    </section>
-
-    <section id="step-4" class="step-card hidden">
-      <div class="step-header">
-        <div class="step-title-group">
-          <div class="step-num">3</div>
-          <div>
-            <h3>📄 Documento Gerado — Imprimir, Salvar PDF ou Word</h3>
-            <p>Formato limpo em papel A4 pronto para assinar e protocolar no órgão de trânsito.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="toolbar-doc">
-        <span style="font-size: 0.86rem; color: var(--primary); font-weight: 700;">
-          ✅ Ações do Documento:
-        </span>
-        <div class="toolbar-buttons">
-          <button type="button" class="btn btn-primary" onclick="printOrSavePDF()">
-            🖨️ Imprimir / Salvar em PDF
-          </button>
-          <button type="button" class="btn btn-dark" onclick="downloadWordDoc()">
-            📥 Baixar em Word (.doc)
-          </button>
-          <button type="button" class="btn btn-outline" onclick="copyDocText()">
-            📋 Copiar Texto
-          </button>
-        </div>
-      </div>
-
-      <div class="paper-wrapper">
-        <article id="generatedDocument" class="a4-document"></article>
-      </div>
-    </section>
-
-  </main>
-
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-top">
-        <div>
-          <strong style="color: #ffffff; font-size: 1rem;">🚦 AutoRecurso</strong>
-          <p style="margin-top: 4px; max-width: 590px;">
-            Ferramenta tecnológica de autoatendimento documental. Não somos escritório de advocacia, não prestamos consultoria jurídica e não possuímos vínculo com DETRAN, CONTRAN, SENATRAN, PRF, ANTT ou Prefeituras.
-          </p>
-          <p style="margin-top: 8px; color: #fbbf24; font-weight: 600;">
-            💳 Serviço pago — acesso adquirido por intermédio de maisfy.com.br ou plwdesign.online.
-          </p>
-        </div>
-        <div class="footer-links">
-          <a onclick="openModal('termsModal')">📄 Termos de Uso</a>
-          <a onclick="openModal('privacyModal')">🛡️ Privacidade (Zero Rastro)</a>
-        </div>
-      </div>
-      <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
-        <span>&copy; 2026 AutoRecurso — Todos os direitos reservados.</span>
-        <span>🔒 Processamento 100% no Navegador (LGPD Friendly).</span>
-      </div>
-      <div style="text-align: center; padding-top: 12px; border-top: 1px solid rgba(255, 255, 255, 0.08); color: #94a3b8; font-size: 0.8rem;">
-        Site desenvolvido por <strong style="color: #fbbf24;">Rodrigo Rocha</strong> • Projeto e desenvolvimento web.
-      </div>
-    </div>
-  </footer>
-
-  <!-- MODAIS DE TERMOS E PRIVACIDADE -->
-  <div id="termsModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
-    <div class="modal-card wide">
-      <button type="button" class="modal-close" onclick="closeModal('termsModal')">&times;</button>
-      <h3 style="color: var(--primary); margin-bottom: 12px;">📄 Termos de Uso</h3>
-      <div style="font-size: 0.88rem; color: #334155; line-height: 1.7;">
-        <p><strong>1. Objeto.</strong> Este site disponibiliza uma ferramenta tecnológica de autoatendimento para geração de modelos de documentos administrativos relacionados a multas de trânsito.</p>
-        <p><strong>2. Natureza do serviço.</strong> O AutoRecurso não é escritório de advocacia, não presta consultoria jurídica, não analisa casos concretos e não garante resultado favorável em recursos administrativos.</p>
-        <p><strong>3. Serviço pago e origem do acesso.</strong> Trata-se de serviço pago, cujo acesso é disponibilizado exclusivamente por intermédio das plataformas <strong>maisfy.com.br</strong> ou <strong>plwdesign.online</strong>. A reprodução, o compartilhamento indevido do link ou o uso por terceiros não autorizados é expressamente proibido.</p>
-        <p><strong>4. Responsabilidade do usuário.</strong> O usuário é integralmente responsável pelas informações preenchidas, pela conferência dos dados e pelo protocolo do documento perante o órgão de trânsito competente.</p>
-        <p><strong>5. Privacidade.</strong> Os dados informados são processados exclusivamente no navegador do usuário, não sendo armazenados em servidores do AutoRecurso.</p>
-        <p><strong>6. Atualização.</strong> Os modelos são baseados no Código de Trânsito Brasileiro (Lei 9.503/1997) e podem ser atualizados periodicamente, sem aviso prévio.</p>
-        <p><strong>7. Desenvolvimento.</strong> Site desenvolvido por <strong>Rodrigo Rocha</strong>.</p>
+  <!-- ===== TELA DE BLOQUEIO (senha) ===== -->
+  <div id="lockScreen">
+    <div class="lock-card">
+      <div class="lock-icon">🔒</div>
+      <h2>Acesso Restrito</h2>
+      <p>Digite a senha mensal para acessar o gerador de recursos.</p>
+      <input type="password" id="lockPassword" placeholder="Digite a senha" autocomplete="off" onkeypress="if(event.key==='Enter') tryUnlock()" />
+      <button type="button" onclick="tryUnlock()">🔓 Desbloquear</button>
+      <div id="lockError" class="lock-error"></div>
+      <div class="lock-hint">
+        A senha é atualizada mensalmente.<br/>
+        Se você é cliente e não recebeu a senha do mês, entre em contato pelo suporte da plataforma onde realizou a compra.
       </div>
     </div>
   </div>
+  <!-- ==================================== -->
 
-  <div id="privacyModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
-    <div class="modal-card wide">
-      <button type="button" class="modal-close" onclick="closeModal('privacyModal')">&times;</button>
-      <h3 style="color: var(--primary); margin-bottom: 12px;">🛡️ Política de Privacidade (Zero Rastro)</h3>
-      <div style="font-size: 0.88rem; color: #334155; line-height: 1.7;">
-        <p><strong>1. Processamento local.</strong> Todos os dados preenchidos no formulário são processados exclusivamente no navegador do usuário (client-side), não sendo transmitidos, armazenados ou compartilhados com o AutoRecurso ou terceiros.</p>
-        <p><strong>2. Sem cookies de rastreamento.</strong> Esta ferramenta não utiliza cookies de rastreamento, pixels de terceiros ou ferramentas de analytics que identifiquem o usuário.</p>
-        <p><strong>3. Sem armazenamento.</strong> Ao fechar a página ou clicar em "Apagar Dados da Tela", todas as informações preenchidas são permanentemente descartadas da memória do navegador.</p>
-        <p><strong>4. LGPD.</strong> Esta ferramenta foi projetada em conformidade com a Lei Geral de Proteção de Dados (Lei 13.709/2018), adotando o princípio da minimização de dados.</p>
-        <p><strong>5. Acesso restrito.</strong> O serviço é pago e de acesso restrito a clientes das plataformas maisfy.com.br e plwdesign.online. O link não deve ser compartilhado.</p>
+  <div id="siteContent" class="hidden">
+
+    <div class="road-hazard-strip"></div>
+
+    <div class="legal-top-bar">
+      ⚖️ <strong>Aviso Legal:</strong> Ferramenta tecnológica de autoatendimento para geração de modelos de documentos administrativos. <strong>Não prestamos consultoria jurídica, análise de caso nem serviços advocatícios.</strong> Sem vínculo com DETRAN, CONTRAN, SENATRAN ou PRF.
+    </div>
+
+    <header>
+      <div class="header-inner">
+        <div class="brand">
+          <div class="brand-icon" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+              <rect x="6" y="2" width="12" height="20" rx="3" fill="#0f172a" stroke="#fbbf24" stroke-width="1.6"/>
+              <circle cx="12" cy="6.5" r="2.2" fill="#ef4444"/>
+              <circle cx="12" cy="12" r="2.2" fill="#fbbf24"/>
+              <circle cx="12" cy="17.5" r="2.2" fill="#22c55e"/>
+            </svg>
+          </div>
+          <div>
+            <h1>AutoRecurso 🚦</h1>
+            <p>Gerador Inteligente de Recursos de Multas • CTB Atualizado</p>
+          </div>
+        </div>
+
+        <div class="header-status">
+          <div class="credit-badge">
+            <span class="credit-dot"></span>
+            <span>✅ Acesso Liberado</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-card">
+        <div>
+          <span class="hero-tag">🚗 25+ Modelos Atualizados • Sem Cadastro • Privacidade Zero Rastro</span>
+          <h2>Recorra da sua multa de trânsito em minutos direto do navegador! 📄</h2>
+          <p>
+            Escolha entre as infrações mais comuns do Brasil — <strong>Farol Vermelho 🚦, Faixa de Pedestres 🚸, Ultrapassagem pelo Acostamento 🛣️, Lei Seca 🍺, Radares 📸, Free Flow 🚧 e Motoristas de App/Entregadores (EAR) 🛵</strong> — preencha e imprima ou salve em PDF.
+          </p>
+          <div class="hero-features">
+            <span class="hero-feat-pill">⚡ Preenchimento rápido</span>
+            <span class="hero-feat-pill">🛡️ Zero rastro de dados pessoais</span>
+            <span class="hero-feat-pill">🖨️ Imprimir, PDF e Word (.doc)</span>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <div class="traffic-scene-box" aria-hidden="true">
+            <svg viewBox="0 0 420 140" width="100%" height="126">
+              <ellipse cx="65" cy="26" rx="26" ry="11" fill="#ffffff" opacity="0.85"/>
+              <ellipse cx="82" cy="24" rx="18" ry="10" fill="#ffffff" opacity="0.85"/>
+              <ellipse cx="320" cy="22" rx="30" ry="10" fill="#ffffff" opacity="0.8"/>
+
+              <rect x="215" y="18" width="6" height="82" fill="#475569"/>
+              <rect x="360" y="18" width="6" height="82" fill="#475569"/>
+              <rect x="210" y="16" width="160" height="12" rx="3" fill="#1e3a8a"/>
+              <rect x="242" y="18" width="96" height="8" rx="2" fill="#38bdf8"/>
+              <text x="290" y="25" font-size="6.5" font-weight="bold" fill="#0f172a" text-anchor="middle" font-family="Arial">FREE FLOW / RADAR</text>
+
+              <rect x="162" y="50" width="3.5" height="50" fill="#64748b"/>
+              <circle cx="163.7" cy="40" r="16" fill="#ffffff" stroke="#dc2626" stroke-width="4"/>
+              <text x="163.7" y="42.5" font-size="11" font-weight="900" fill="#0f172a" text-anchor="middle" font-family="Arial">80</text>
+              <text x="163.7" y="49.5" font-size="4.8" font-weight="bold" fill="#334155" text-anchor="middle" font-family="Arial">km/h</text>
+
+              <rect x="34" y="56" width="4" height="44" fill="#334155"/>
+              <rect x="26" y="20" width="20" height="42" rx="4" fill="#1e293b"/>
+              <circle cx="36" cy="29" r="4.5" fill="#ef4444"/>
+              <circle cx="36" cy="41" r="4.5" fill="#f59e0b"/>
+              <circle cx="36" cy="53" r="4.5" fill="#22c55e"/>
+
+              <rect x="0" y="96" width="420" height="44" fill="#334155"/>
+              <rect x="0" y="96" width="420" height="3" fill="#fbbf24"/>
+              <rect x="52" y="102" width="26" height="5" fill="#ffffff" opacity="0.9"/>
+              <rect x="52" y="112" width="26" height="5" fill="#ffffff" opacity="0.9"/>
+              <rect x="52" y="122" width="26" height="5" fill="#ffffff" opacity="0.9"/>
+              <rect x="52" y="132" width="26" height="5" fill="#ffffff" opacity="0.9"/>
+              <rect x="105" y="117" width="32" height="4" rx="2" fill="#f8fafc" opacity="0.8"/>
+              <rect x="160" y="117" width="32" height="4" rx="2" fill="#f8fafc" opacity="0.8"/>
+              <rect x="215" y="117" width="32" height="4" rx="2" fill="#f8fafc" opacity="0.8"/>
+              <rect x="270" y="117" width="32" height="4" rx="2" fill="#f8fafc" opacity="0.8"/>
+              <rect x="325" y="117" width="32" height="4" rx="2" fill="#f8fafc" opacity="0.8"/>
+              <rect x="380" y="117" width="32" height="4" rx="2" fill="#f8fafc" opacity="0.8"/>
+
+              <g transform="translate(115, 76)">
+                <path d="M12,16 L20,4 L54,4 L66,16 L80,18 L82,29 L4,29 L6,18 Z" fill="#2563eb"/>
+                <path d="M22,7 L36,7 L36,15 L15,15 Z" fill="#bae6fd"/>
+                <path d="M40,7 L52,7 L61,15 L40,15 Z" fill="#bae6fd"/>
+                <circle cx="20" cy="30" r="7" fill="#0f172a"/>
+                <circle cx="20" cy="30" r="3" fill="#cbd5e1"/>
+                <circle cx="66" cy="30" r="7" fill="#0f172a"/>
+                <circle cx="66" cy="30" r="3" fill="#cbd5e1"/>
+                <rect x="77" y="20" width="5" height="4" rx="1" fill="#fef08a"/>
+              </g>
+
+              <g transform="translate(275, 81)">
+                <rect x="4" y="4" width="16" height="14" rx="2" fill="#dc2626"/>
+                <circle cx="12" cy="24" r="6" fill="#0f172a"/>
+                <circle cx="12" cy="24" r="2.5" fill="#cbd5e1"/>
+                <circle cx="42" cy="24" r="6" fill="#0f172a"/>
+                <circle cx="42" cy="24" r="2.5" fill="#cbd5e1"/>
+                <path d="M14,22 L24,14 L36,14 L41,22" stroke="#f59e0b" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                <circle cx="28" cy="6" r="5" fill="#fbbf24"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="how-strip" aria-label="Como funciona">
+      <div class="how-item">
+        <div class="how-emoji">🔍</div>
+        <div><strong>1. Escolha a Multa</strong><span>Busque pelo código ou placa</span></div>
+      </div>
+      <div class="how-item">
+        <div class="how-emoji">📝</div>
+        <div><strong>2. Preencha os Dados</strong><span>Sem salvar rastro no servidor</span></div>
+      </div>
+      <div class="how-item">
+        <div class="how-emoji">📄</div>
+        <div><strong>3. Gere o Documento</strong><span>Modelo pronto para protocolar</span></div>
+      </div>
+      <div class="how-item">
+        <div class="how-emoji">🖨️</div>
+        <div><strong>4. Imprima ou PDF</strong><span>Assine e protocole no órgão</span></div>
+      </div>
+    </section>
+
+    <main class="container">
+
+      <section id="step-1" class="step-card">
+        <div class="step-header">
+          <div class="step-title-group">
+            <div class="step-num">1</div>
+            <div>
+              <h3>🚦 Escolha a Categoria ou Busque pelo Código da Multa</h3>
+              <p>Clique em uma placa de trânsito abaixo ou digite o código (ex: 590-80, 567-32, 605-03, 745-50, 773-02).</p>
+            </div>
+          </div>
+          <span id="catalogCountBadge" style="font-size: 0.82rem; font-weight: 700; color: var(--primary); background: #e0f2fe; padding: 6px 13px; border-radius: 999px;">
+            25 modelos disponíveis
+          </span>
+        </div>
+
+        <div class="signs-showcase">
+          <div class="signs-showcase-title">
+            <span>🛑 Acesso Rápido por Sinalização &amp; Tipo de Infração</span>
+            <span style="font-weight: 500; color: var(--muted); text-transform: none;">Clique em uma placa para filtrar</span>
+          </div>
+          <div class="signs-row" id="signsRow"></div>
+        </div>
+
+        <div class="catalog-controls">
+          <div class="search-box">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+            <input type="text" id="templateSearch" placeholder="🔍 Digite o código da multa (590-80, 567-32, 605-03, 745-50, 773-02, 763-31...) ou palavra (acostamento, faixa de pedestre, farol vermelho)..." oninput="renderTemplates()" />
+          </div>
+          <div id="filterPills" class="filter-pills"></div>
+        </div>
+
+        <div id="templateGrid" class="template-grid"></div>
+      </section>
+
+      <section id="step-2" class="step-card">
+        <div class="step-header">
+          <div class="step-title-group">
+            <div class="step-num">2</div>
+            <div>
+              <h3>📝 Preenchimento dos Dados (Sem Rastro em Servidores)</h3>
+              <p>Tudo é montado dentro do seu navegador. Seus dados pessoais nunca ficam gravados.</p>
+            </div>
+          </div>
+          <button id="btnClearForm" type="button" class="btn btn-danger-outline" onclick="clearFormData()">
+            🗑️ Apagar Dados da Tela
+          </button>
+        </div>
+
+        <form id="resourceForm" onsubmit="handleGenerate(event)">
+          <div class="form-section-title">1. Instância e Órgão Destinatário</div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Fase / Tipo de Peça <span class="req">*</span></label>
+              <select id="f_instancia" required>
+                <option value="DEFESA PRÉVIA (Defesa da Autuação)">Defesa Prévia (Notificação de Autuação)</option>
+                <option value="RECURSO ADMINISTRATIVO À JARI (1ª Instância)" selected>Recurso à JARI (1ª Instância - Penalidade)</option>
+                <option value="RECURSO AO CETRAN / CONTRANDIFE (2ª Instância)">Recurso ao CETRAN (2ª Instância)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Órgão Autuador <span class="req">*</span></label>
+              <input type="text" id="f_orgao" placeholder="Ex: DETRAN-SP, PRF, DNIT, DER, CET" required />
+            </div>
+            <div class="form-group">
+              <label>Cidade / UF <span class="req">*</span></label>
+              <input type="text" id="f_cidade_uf" placeholder="Ex: São Paulo / SP" required />
+            </div>
+          </div>
+
+          <div class="form-section-title">2. Dados do Condutor / Proprietário</div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Nome Completo <span class="req">*</span></label>
+              <input type="text" id="f_nome" placeholder="Nome completo sem abreviações" required />
+            </div>
+            <div class="form-group">
+              <label>CPF <span class="req">*</span></label>
+              <input type="text" id="f_cpf" placeholder="000.000.000-00" maxlength="14" oninput="maskCPF(this)" required />
+            </div>
+            <div class="form-group">
+              <label>RG / Órgão Emissor</label>
+              <input type="text" id="f_rg" placeholder="Ex: 12.345.678-9 SSP/SP" />
+            </div>
+            <div class="form-group">
+              <label>Nº da CNH <span class="req">*</span></label>
+              <input type="text" id="f_cnh" placeholder="Registro da CNH" required />
+            </div>
+            <div class="form-group">
+              <label>Categoria CNH</label>
+              <select id="f_cat_cnh">
+                <option value="A">A</option>
+                <option value="B" selected>B</option>
+                <option value="AB">AB</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+                <option value="E">E</option>
+                <option value="AC">AC</option>
+                <option value="AD">AD</option>
+                <option value="AE">AE</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>E-mail ou Telefone (opcional)</label>
+              <input type="text" id="f_contato" placeholder="Opcional na qualificação" />
+            </div>
+            <div class="form-group full">
+              <label>Endereço Completo (Rua, Nº, Bairro, CEP) <span class="req">*</span></label>
+              <input type="text" id="f_endereco" placeholder="Ex: Rua Exemplo, 100, Centro, CEP 01000-000" required />
+            </div>
+          </div>
+
+          <label class="ear-highlight">
+            <input type="checkbox" id="f_ear" />
+            <span>🚕 Condutor possui <strong>EAR (Exerce Atividade Remunerada)</strong> na CNH — Motorista de App / Entregador / Profissional</span>
+          </label>
+
+          <div class="form-section-title">3. Dados do Veículo e da Notificação (Campos Obrigatórios)</div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Placa do Veículo <span class="req">*</span></label>
+              <input type="text" id="f_placa" placeholder="ABC1D23" maxlength="8" style="text-transform: uppercase;" required />
+            </div>
+            <div class="form-group">
+              <label>Marca / Modelo / Cor</label>
+              <input type="text" id="f_veiculo" placeholder="Ex: Fiat Argo Branco 2023" />
+            </div>
+            <div class="form-group">
+              <label>RENAVAM</label>
+              <input type="text" id="f_renavam" placeholder="Número do RENAVAM" />
+            </div>
+            <div class="form-group">
+              <label>Nº do Auto de Infração (AIT) <span class="req">*</span></label>
+              <input type="text" id="f_ait" placeholder="Ex: E101234567" required />
+            </div>
+            <div class="form-group">
+              <label>Data do Ocorrido (Infração) <span class="req">*</span></label>
+              <input type="date" id="f_data_infracao" required />
+            </div>
+            <div class="form-group">
+              <label>Data de Expedição da Notificação <span class="req">*</span></label>
+              <input type="date" id="f_data_notificacao" required />
+            </div>
+            <div class="form-group">
+              <label>Local da Infração <span class="req">*</span></label>
+              <input type="text" id="f_local" placeholder="Rodovia/Rua, KM ou altura do nº" required />
+            </div>
+            <div class="form-group">
+              <label>Enquadramento / Código e Artigo <span class="req">*</span></label>
+              <input type="text" id="f_artigo" required />
+            </div>
+            <div class="form-group full">
+              <label>Detalhes Específicos do Ocorrido (Opcional — ex: havia veículo quebrado na pista, trânsito travou sobre a faixa, sinalização encoberta, etc.)</label>
+              <textarea id="f_obs" rows="3" placeholder="Descreva aqui qualquer detalhe do momento da multa para reforçar seu documento..."></textarea>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <div style="font-size: 0.84rem; color: var(--muted);">
+              ✅ Acesso liberado — gere quantos recursos precisar nesta sessão.
+            </div>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <button type="button" class="btn btn-outline" onclick="fillDemoExample()">
+                ⚡ Preencher Exemplo Teste
+              </button>
+              <button id="btnGenerateDoc" type="submit" class="btn btn-primary">
+                📄 Gerar Recurso
+              </button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <section id="step-4" class="step-card hidden">
+        <div class="step-header">
+          <div class="step-title-group">
+            <div class="step-num">3</div>
+            <div>
+              <h3>📄 Documento Gerado — Imprimir, Salvar PDF ou Word</h3>
+              <p>Formato limpo em papel A4 pronto para assinar e protocolar no órgão de trânsito.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="toolbar-doc">
+          <span style="font-size: 0.86rem; color: var(--primary); font-weight: 700;">
+            ✅ Ações do Documento:
+          </span>
+          <div class="toolbar-buttons">
+            <button type="button" class="btn btn-primary" onclick="printOrSavePDF()">
+              🖨️ Imprimir / Salvar em PDF
+            </button>
+            <button type="button" class="btn btn-dark" onclick="downloadWordDoc()">
+              📥 Baixar em Word (.doc)
+            </button>
+            <button type="button" class="btn btn-outline" onclick="copyDocText()">
+              📋 Copiar Texto
+            </button>
+          </div>
+        </div>
+
+        <div class="paper-wrapper">
+          <article id="generatedDocument" class="a4-document"></article>
+        </div>
+      </section>
+
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <div class="footer-top">
+          <div>
+            <strong style="color: #ffffff; font-size: 1rem;">🚦 AutoRecurso</strong>
+            <p style="margin-top: 4px; max-width: 590px;">
+              Ferramenta tecnológica de autoatendimento documental. Não somos escritório de advocacia, não prestamos consultoria jurídica e não possuímos vínculo com DETRAN, CONTRAN, SENATRAN, PRF, ANTT ou Prefeituras.
+            </p>
+            <p style="margin-top: 8px; color: #fbbf24; font-weight: 600;">
+              💳 Serviço pago — acesso adquirido por intermédio de maisfy.com.br ou plwdesign.online.
+            </p>
+          </div>
+          <div class="footer-links">
+            <a onclick="openModal('termsModal')">📄 Termos de Uso</a>
+            <a onclick="openModal('privacyModal')">🛡️ Privacidade (Zero Rastro)</a>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+          <span>&copy; 2026 AutoRecurso — Todos os direitos reservados.</span>
+          <span>🔒 Processamento 100% no Navegador (LGPD Friendly).</span>
+        </div>
+        <div style="text-align: center; padding-top: 12px; border-top: 1px solid rgba(255, 255, 255, 0.08); color: #94a3b8; font-size: 0.8rem;">
+          Site desenvolvido por <strong style="color: #fbbf24;">Rodrigo Rocha</strong> • Projeto e desenvolvimento web.
+        </div>
+      </div>
+    </footer>
+
+    <!-- MODAIS DE TERMOS E PRIVACIDADE -->
+    <div id="termsModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+      <div class="modal-card wide">
+        <button type="button" class="modal-close" onclick="closeModal('termsModal')">&times;</button>
+        <h3 style="color: var(--primary); margin-bottom: 12px;">📄 Termos de Uso</h3>
+        <div style="font-size: 0.88rem; color: #334155; line-height: 1.7;">
+          <p><strong>1. Objeto.</strong> Este site disponibiliza uma ferramenta tecnológica de autoatendimento para geração de modelos de documentos administrativos relacionados a multas de trânsito.</p>
+          <p><strong>2. Natureza do serviço.</strong> O AutoRecurso não é escritório de advocacia, não presta consultoria jurídica, não analisa casos concretos e não garante resultado favorável em recursos administrativos.</p>
+          <p><strong>3. Serviço pago e origem do acesso.</strong> Trata-se de serviço pago, cujo acesso é disponibilizado exclusivamente por intermédio das plataformas <strong>maisfy.com.br</strong> ou <strong>plwdesign.online</strong>. A reprodução, o compartilhamento indevido do link ou o uso por terceiros não autorizados é expressamente proibido.</p>
+          <p><strong>4. Responsabilidade do usuário.</strong> O usuário é integralmente responsável pelas informações preenchidas, pela conferência dos dados e pelo protocolo do documento perante o órgão de trânsito competente.</p>
+          <p><strong>5. Privacidade.</strong> Os dados informados são processados exclusivamente no navegador do usuário, não sendo armazenados em servidores do AutoRecurso.</p>
+          <p><strong>6. Atualização.</strong> Os modelos são baseados no Código de Trânsito Brasileiro (Lei 9.503/1997) e podem ser atualizados periodicamente, sem aviso prévio.</p>
+          <p><strong>7. Desenvolvimento.</strong> Site desenvolvido por <strong>Rodrigo Rocha</strong>.</p>
+        </div>
       </div>
     </div>
+
+    <div id="privacyModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+      <div class="modal-card wide">
+        <button type="button" class="modal-close" onclick="closeModal('privacyModal')">&times;</button>
+        <h3 style="color: var(--primary); margin-bottom: 12px;">🛡️ Política de Privacidade (Zero Rastro)</h3>
+        <div style="font-size: 0.88rem; color: #334155; line-height: 1.7;">
+          <p><strong>1. Processamento local.</strong> Todos os dados preenchidos no formulário são processados exclusivamente no navegador do usuário (client-side), não sendo transmitidos, armazenados ou compartilhados com o AutoRecurso ou terceiros.</p>
+          <p><strong>2. Sem cookies de rastreamento.</strong> Esta ferramenta não utiliza cookies de rastreamento, pixels de terceiros ou ferramentas de analytics que identifiquem o usuário.</p>
+          <p><strong>3. Sem armazenamento.</strong> Ao fechar a página ou clicar em "Apagar Dados da Tela", todas as informações preenchidas são permanentemente descartadas da memória do navegador.</p>
+          <p><strong>4. LGPD.</strong> Esta ferramenta foi projetada em conformidade com a Lei Geral de Proteção de Dados (Lei 13.709/2018), adotando o princípio da minimização de dados.</p>
+          <p><strong>5. Acesso restrito.</strong> O serviço é pago e de acesso restrito a clientes das plataformas maisfy.com.br e plwdesign.online. O link não deve ser compartilhado.</p>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <script>
+    // ============================================================
+    // 0. PROTEÇÃO POR SENHA (troque a senha todo mês)
+    // ============================================================
+    const SENHA_ATUAL = "AUTORECURSO2026"; // <-- TROQUE ESTA SENHA MENSALMENTE
+
+    function tryUnlock() {
+      const input = document.getElementById('lockPassword');
+      const error = document.getElementById('lockError');
+      const valor = input.value.trim();
+
+      if (valor === SENHA_ATUAL) {
+        sessionStorage.setItem('autorecurso_ok', '1');
+        mostrarSite();
+      } else {
+        error.textContent = '❌ Senha incorreta. Verifique a senha do mês e tente novamente.';
+        input.value = '';
+        input.focus();
+      }
+    }
+
+    function mostrarSite() {
+      document.getElementById('lockScreen').classList.add('hidden');
+      document.getElementById('siteContent').classList.remove('hidden');
+    }
+
+    function verificarSessao() {
+      if (sessionStorage.getItem('autorecurso_ok') === '1') {
+        mostrarSite();
+      }
+    }
+
     // ============================================================
     // 1. CATÁLOGO DE MODELOS (25 modelos)
     // ============================================================
@@ -1455,9 +1593,15 @@
     // 12. INICIALIZAÇÃO
     // ============================================================
     document.addEventListener('DOMContentLoaded', () => {
+      verificarSessao();
       renderSigns();
       renderFilterPills();
       renderTemplates();
+
+      // Se a sessão já estiver válida, foca direto no conteúdo
+      if (sessionStorage.getItem('autorecurso_ok') === '1') {
+        setTimeout(() => document.getElementById('lockPassword').blur(), 100);
+      }
     });
   </script>
 </body>
