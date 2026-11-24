@@ -50,96 +50,6 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ===== TELA DE BLOQUEIO ===== */
-    #lockScreen {
-      position: fixed;
-      inset: 0;
-      background: linear-gradient(135deg, #0b2545 0%, #133c6e 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      z-index: 9999;
-    }
-    #lockScreen.hidden { display: none !important; }
-
-    .lock-card {
-      background: #ffffff;
-      border-radius: 16px;
-      padding: 34px 30px;
-      max-width: 420px;
-      width: 100%;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
-      text-align: center;
-    }
-    .lock-icon {
-      width: 64px;
-      height: 64px;
-      margin: 0 auto 16px;
-      background: linear-gradient(145deg, #1e4b85, #0b2545);
-      border: 2px solid #fbbf24;
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.8rem;
-    }
-    .lock-card h2 {
-      color: var(--primary);
-      font-size: 1.3rem;
-      margin-bottom: 6px;
-    }
-    .lock-card p {
-      color: var(--muted);
-      font-size: 0.88rem;
-      margin-bottom: 20px;
-    }
-    .lock-card input[type="password"] {
-      width: 100%;
-      padding: 13px 15px;
-      border: 2px solid var(--border);
-      border-radius: 10px;
-      font-size: 1rem;
-      text-align: center;
-      letter-spacing: 2px;
-      margin-bottom: 14px;
-      font-family: inherit;
-    }
-    .lock-card input[type="password"]:focus {
-      outline: none;
-      border-color: var(--blue);
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
-    }
-    .lock-card button {
-      width: 100%;
-      padding: 13px;
-      background: var(--accent);
-      color: #ffffff;
-      border: none;
-      border-radius: 10px;
-      font-size: 0.95rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .lock-card button:hover { background: var(--accent-hover); }
-    .lock-error {
-      color: var(--danger);
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-top: 12px;
-      min-height: 20px;
-    }
-    .lock-hint {
-      margin-top: 18px;
-      padding-top: 14px;
-      border-top: 1px solid var(--border-light);
-      font-size: 0.78rem;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-    /* ============================== */
-
     .road-hazard-strip {
       height: 6px;
       background: repeating-linear-gradient(
@@ -540,6 +450,93 @@
     .btn-danger-outline { background: #ffffff; color: var(--danger); border: 1px solid #fecaca; }
     .btn-danger-outline:hover { background: #fef2f2; }
 
+    #lockScreen {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #0b2545 0%, #133c6e 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 9999;
+    }
+    #lockScreen.hidden { display: none !important; }
+    .lock-card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 34px 30px;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+      text-align: center;
+    }
+    .lock-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 16px;
+      background: linear-gradient(145deg, #1e4b85, #0b2545);
+      border: 2px solid #fbbf24;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+    }
+    .lock-card h2 {
+      color: var(--primary);
+      font-size: 1.3rem;
+      margin-bottom: 6px;
+    }
+    .lock-card p {
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-bottom: 20px;
+    }
+    .lock-card input[type="password"] {
+      width: 100%;
+      padding: 13px 15px;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      font-size: 1rem;
+      text-align: center;
+      letter-spacing: 2px;
+      margin-bottom: 14px;
+      font-family: inherit;
+    }
+    .lock-card input[type="password"]:focus {
+      outline: none;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+    .lock-card button {
+      width: 100%;
+      padding: 13px;
+      background: var(--accent);
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .lock-card button:hover { background: var(--accent-hover); }
+    .lock-error {
+      color: var(--danger);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-top: 12px;
+      min-height: 20px;
+    }
+    .lock-hint {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border-light);
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
     .hidden { display: none !important; }
 
     .form-section-title {
@@ -704,12 +701,12 @@
       @page { size: A4 portrait; margin: 2cm 2cm 2cm 2.5cm; }
       body { background: #ffffff !important; }
 
+      /* Esconde TUDO que não é o documento */
       .road-hazard-strip,
       .legal-top-bar,
       header,
       .hero,
       .how-strip,
-      #lockScreen,
       #step-1,
       #step-2,
       .step-header,
@@ -720,6 +717,7 @@
         display: none !important;
       }
 
+      /* O container vira apenas um wrapper neutro */
       .container {
         margin: 0 !important;
         padding: 0 !important;
@@ -728,6 +726,7 @@
         max-width: 100% !important;
       }
 
+      /* O step-4 vira a página inteira, sem card */
       #step-4 {
         display: block !important;
         margin: 0 !important;
@@ -738,6 +737,7 @@
         border-radius: 0 !important;
       }
 
+      /* Remove o fundo cinza do wrapper do papel */
       .paper-wrapper {
         margin: 0 !important;
         padding: 0 !important;
@@ -748,6 +748,7 @@
         overflow: visible !important;
       }
 
+      /* O documento ocupa a folha, sem sombra e sem padding extra */
       .a4-document {
         box-shadow: none !important;
         padding: 0 !important;
@@ -761,436 +762,428 @@
 </head>
 <body>
 
-  <!-- ===== TELA DE BLOQUEIO (senha) ===== -->
   <div id="lockScreen">
     <div class="lock-card">
-      <div class="lock-icon">🔒</div>
+      <div class="lock-icon" aria-hidden="true">🔒</div>
       <h2>Acesso Restrito</h2>
-      <p>Digite a senha atual para acessar o gerador de recursos.</p>
+      <p>Digite a senha atual para acessar o gerador de recursos de multas.</p>
       <input type="password" id="lockPassword" placeholder="Digite a senha" autocomplete="off" onkeypress="if(event.key==='Enter') tryUnlock()" />
       <button type="button" onclick="tryUnlock()">🔓 Desbloquear</button>
-      <div id="lockError" class="lock-error"></div>
+      <div id="lockError" class="lock-error" role="alert"></div>
       <div class="lock-hint">
         A senha é atualizada periodicamente.<br/>
         Se você é cliente e não recebeu a senha, entre em contato pelo suporte da plataforma onde realizou a compra.
       </div>
     </div>
   </div>
-  <!-- ==================================== -->
-
   <div id="siteContent" class="hidden">
+  <div class="road-hazard-strip"></div>
 
-    <div class="road-hazard-strip"></div>
+  <div class="legal-top-bar">
+    ⚖️ <strong>Aviso Legal:</strong> Ferramenta tecnológica de autoatendimento para geração de modelos de documentos administrativos. <strong>Não prestamos consultoria jurídica, análise de caso nem serviços advocatícios.</strong> Sem vínculo com DETRAN, CONTRAN, SENATRAN ou PRF.
+  </div>
 
-    <div class="legal-top-bar">
-      ⚖️ <strong>Aviso Legal:</strong> Ferramenta tecnológica de autoatendimento para geração de modelos de documentos administrativos. <strong>Não prestamos consultoria jurídica, análise de caso nem serviços advocatícios.</strong> Sem vínculo com DETRAN, CONTRAN, SENATRAN ou PRF.
-    </div>
-
-    <header>
-      <div class="header-inner">
-        <div class="brand">
-          <div class="brand-icon" aria-hidden="true">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-              <rect x="6" y="2" width="12" height="20" rx="3" fill="#0f172a" stroke="#fbbf24" stroke-width="1.6"/>
-              <circle cx="12" cy="6.5" r="2.2" fill="#ef4444"/>
-              <circle cx="12" cy="12" r="2.2" fill="#fbbf24"/>
-              <circle cx="12" cy="17.5" r="2.2" fill="#22c55e"/>
-            </svg>
-          </div>
-          <div>
-            <h1>AutoRecurso 🚦</h1>
-            <p>Gerador Inteligente de Recursos de Multas • CTB Atualizado</p>
-          </div>
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-icon" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+            <rect x="6" y="2" width="12" height="20" rx="3" fill="#0f172a" stroke="#fbbf24" stroke-width="1.6"/>
+            <circle cx="12" cy="6.5" r="2.2" fill="#ef4444"/>
+            <circle cx="12" cy="12" r="2.2" fill="#fbbf24"/>
+            <circle cx="12" cy="17.5" r="2.2" fill="#22c55e"/>
+          </svg>
         </div>
-
-        <div class="header-status">
-          <div class="credit-badge">
-            <span class="credit-dot"></span>
-            <span>✅ Acesso Liberado</span>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <section class="hero">
-      <div class="hero-card">
         <div>
-          <span class="hero-tag">🚗 25+ Modelos Atualizados • Sem Cadastro • Privacidade Zero Rastro</span>
-          <h2>Recorra da sua multa de trânsito em minutos direto do navegador! 📄</h2>
-          <p>
-            Escolha entre as infrações mais comuns do Brasil — <strong>Farol Vermelho 🚦, Faixa de Pedestres 🚸, Ultrapassagem pelo Acostamento 🛣️, Lei Seca 🍺, Radares 📸, Free Flow 🚧 e Motoristas de App/Entregadores (EAR) 🛵</strong> — preencha e imprima ou salve em PDF.
-          </p>
-          <div class="hero-features">
-            <span class="hero-feat-pill">⚡ Preenchimento rápido</span>
-            <span class="hero-feat-pill">🛡️ Zero rastro de dados pessoais</span>
-            <span class="hero-feat-pill">🖨️ Imprimir, PDF e Word (.doc)</span>
-          </div>
-        </div>
-
-        <div class="hero-right">
-          <div class="traffic-scene-box" aria-hidden="true">
-            <svg viewBox="0 0 420 140" width="100%" height="126">
-              <ellipse cx="65" cy="26" rx="26" ry="11" fill="#ffffff" opacity="0.85"/>
-              <ellipse cx="82" cy="24" rx="18" ry="10" fill="#ffffff" opacity="0.85"/>
-              <ellipse cx="320" cy="22" rx="30" ry="10" fill="#ffffff" opacity="0.8"/>
-
-              <rect x="215" y="18" width="6" height="82" fill="#475569"/>
-              <rect x="360" y="18" width="6" height="82" fill="#475569"/>
-              <rect x="210" y="16" width="160" height="12" rx="3" fill="#1e3a8a"/>
-              <rect x="242" y="18" width="96" height="8" rx="2" fill="#38bdf8"/>
-              <text x="290" y="25" font-size="6.5" font-weight="bold" fill="#0f172a" text-anchor="middle" font-family="Arial">FREE FLOW / RADAR</text>
-
-              <rect x="162" y="50" width="3.5" height="50" fill="#64748b"/>
-              <circle cx="163.7" cy="40" r="16" fill="#ffffff" stroke="#dc2626" stroke-width="4"/>
-              <text x="163.7" y="42.5" font-size="11" font-weight="900" fill="#0f172a" text-anchor="middle" font-family="Arial">80</text>
-              <text x="163.7" y="49.5" font-size="4.8" font-weight="bold" fill="#334155" text-anchor="middle" font-family="Arial">km/h</text>
-
-              <rect x="34" y="56" width="4" height="44" fill="#334155"/>
-              <rect x="26" y="20" width="20" height="42" rx="4" fill="#1e293b"/>
-              <circle cx="36" cy="29" r="4.5" fill="#ef4444"/>
-              <circle cx="36" cy="41" r="4.5" fill="#f59e0b"/>
-              <circle cx="36" cy="53" r="4.5" fill="#22c55e"/>
-
-              <rect x="0" y="96" width="420" height="44" fill="#334155"/>
-              <rect x="0" y="96" width="420" height="3" fill="#fbbf24"/>
-              <rect x="52" y="102" width="26" height="5" fill="#ffffff" opacity="0.9"/>
-              <rect x="52" y="112" width="26" height="5" fill="#ffffff" opacity="0.9"/>
-              <rect x="52" y="122" width="26" height="5" fill="#ffffff" opacity="0.9"/>
-              <rect x="52" y="132" width="26" height="5" fill="#ffffff" opacity="0.9"/>
-              <rect x="105" y="117" width="32" height="4" rx="2" fill="#f8fafc" opacity="0.8"/>
-              <rect x="160" y="117" width="32" height="4" rx="2" fill="#f8fafc" opacity="0.8"/>
-              <rect x="215" y="117" width="32" height="4" rx="2" fill="#f8fafc" opacity="0.8"/>
-              <rect x="270" y="117" width="32" height="4" rx="2" fill="#f8fafc" opacity="0.8"/>
-              <rect x="325" y="117" width="32" height="4" rx="2" fill="#f8fafc" opacity="0.8"/>
-              <rect x="380" y="117" width="32" height="4" rx="2" fill="#f8fafc" opacity="0.8"/>
-
-              <g transform="translate(115, 76)">
-                <path d="M12,16 L20,4 L54,4 L66,16 L80,18 L82,29 L4,29 L6,18 Z" fill="#2563eb"/>
-                <path d="M22,7 L36,7 L36,15 L15,15 Z" fill="#bae6fd"/>
-                <path d="M40,7 L52,7 L61,15 L40,15 Z" fill="#bae6fd"/>
-                <circle cx="20" cy="30" r="7" fill="#0f172a"/>
-                <circle cx="20" cy="30" r="3" fill="#cbd5e1"/>
-                <circle cx="66" cy="30" r="7" fill="#0f172a"/>
-                <circle cx="66" cy="30" r="3" fill="#cbd5e1"/>
-                <rect x="77" y="20" width="5" height="4" rx="1" fill="#fef08a"/>
-              </g>
-
-              <g transform="translate(275, 81)">
-                <rect x="4" y="4" width="16" height="14" rx="2" fill="#dc2626"/>
-                <circle cx="12" cy="24" r="6" fill="#0f172a"/>
-                <circle cx="12" cy="24" r="2.5" fill="#cbd5e1"/>
-                <circle cx="42" cy="24" r="6" fill="#0f172a"/>
-                <circle cx="42" cy="24" r="2.5" fill="#cbd5e1"/>
-                <path d="M14,22 L24,14 L36,14 L41,22" stroke="#f59e0b" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-                <circle cx="28" cy="6" r="5" fill="#fbbf24"/>
-              </g>
-            </svg>
-          </div>
+          <h1>AutoRecurso 🚦</h1>
+          <p>Modelos por artigo do CTB • Processamento local</p>
         </div>
       </div>
+
+      <div class="header-status">
+        <div class="credit-badge">
+          <span class="credit-dot"></span>
+          <span>🔒 Funciona offline</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-card">
+      <div>
+        <span class="hero-tag">🚗 104 modelos por artigo do CTB • Sem cadastro • Processamento local</span>
+        <h2>Prepare um modelo de defesa ou recurso de trânsito 📄</h2>
+        <p>
+          Consulte modelos organizados por artigo e tema, preencha os dados da autuação e gere um documento para revisar. Confira o enquadramento, o inciso e as provas antes de protocolar.
+        </p>
+        <div class="hero-features">
+          <span class="hero-feat-pill">⚡ Preenchimento rápido</span>
+          <span class="hero-feat-pill">🛡️ Zero rastro de dados pessoais</span>
+          <span class="hero-feat-pill">🖨️ Imprimir, PDF e Word (.doc)</span>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="traffic-scene-box" aria-hidden="true">
+          <svg viewBox="0 0 420 140" width="100%" height="126">
+            <ellipse cx="65" cy="26" rx="26" ry="11" fill="#ffffff" opacity="0.85"/>
+            <ellipse cx="82" cy="24" rx="18" ry="10" fill="#ffffff" opacity="0.85"/>
+            <ellipse cx="320" cy="22" rx="30" ry="10" fill="#ffffff" opacity="0.8"/>
+
+            <rect x="215" y="18" width="6" height="82" fill="#475569"/>
+            <rect x="360" y="18" width="6" height="82" fill="#475569"/>
+            <rect x="210" y="16" width="160" height="12" rx="3" fill="#1e3a8a"/>
+            <rect x="242" y="18" width="96" height="8" rx="2" fill="#38bdf8"/>
+            <text x="290" y="25" font-size="6.5" font-weight="bold" fill="#0f172a" text-anchor="middle" font-family="Arial">FREE FLOW / RADAR</text>
+
+            <rect x="162" y="50" width="3.5" height="50" fill="#64748b"/>
+            <circle cx="163.7" cy="40" r="16" fill="#ffffff" stroke="#dc2626" stroke-width="4"/>
+            <text x="163.7" y="42.5" font-size="11" font-weight="900" fill="#0f172a" text-anchor="middle" font-family="Arial">80</text>
+            <text x="163.7" y="49.5" font-size="4.8" font-weight="bold" fill="#334155" text-anchor="middle" font-family="Arial">km/h</text>
+
+            <rect x="34" y="56" width="4" height="44" fill="#334155"/>
+            <rect x="26" y="20" width="20" height="42" rx="4" fill="#1e293b"/>
+            <circle cx="36" cy="29" r="4.5" fill="#ef4444"/>
+            <circle cx="36" cy="41" r="4.5" fill="#f59e0b"/>
+            <circle cx="36" cy="53" r="4.5" fill="#22c55e"/>
+
+            <rect x="0" y="96" width="420" height="44" fill="#334155"/>
+            <rect x="0" y="96" width="420" height="3" fill="#fbbf24"/>
+            <rect x="52" y="102" width="26" height="5" fill="#ffffff" opacity="0.9"/>
+            <rect x="52" y="112" width="26" height="5" fill="#ffffff" opacity="0.9"/>
+            <rect x="52" y="122" width="26" height="5" fill="#ffffff" opacity="0.9"/>
+            <rect x="52" y="132" width="26" height="5" fill="#ffffff" opacity="0.9"/>
+            <rect x="105" y="117" width="32" height="4" rx="2" fill="#f8fafc" opacity="0.8"/>
+            <rect x="160" y="117" width="32" height="4" rx="2" fill="#f8fafc" opacity="0.8"/>
+            <rect x="215" y="117" width="32" height="4" rx="2" fill="#f8fafc" opacity="0.8"/>
+            <rect x="270" y="117" width="32" height="4" rx="2" fill="#f8fafc" opacity="0.8"/>
+            <rect x="325" y="117" width="32" height="4" rx="2" fill="#f8fafc" opacity="0.8"/>
+            <rect x="380" y="117" width="32" height="4" rx="2" fill="#f8fafc" opacity="0.8"/>
+
+            <g transform="translate(115, 76)">
+              <path d="M12,16 L20,4 L54,4 L66,16 L80,18 L82,29 L4,29 L6,18 Z" fill="#2563eb"/>
+              <path d="M22,7 L36,7 L36,15 L15,15 Z" fill="#bae6fd"/>
+              <path d="M40,7 L52,7 L61,15 L40,15 Z" fill="#bae6fd"/>
+              <circle cx="20" cy="30" r="7" fill="#0f172a"/>
+              <circle cx="20" cy="30" r="3" fill="#cbd5e1"/>
+              <circle cx="66" cy="30" r="7" fill="#0f172a"/>
+              <circle cx="66" cy="30" r="3" fill="#cbd5e1"/>
+              <rect x="77" y="20" width="5" height="4" rx="1" fill="#fef08a"/>
+            </g>
+
+            <g transform="translate(275, 81)">
+              <rect x="4" y="4" width="16" height="14" rx="2" fill="#dc2626"/>
+              <circle cx="12" cy="24" r="6" fill="#0f172a"/>
+              <circle cx="12" cy="24" r="2.5" fill="#cbd5e1"/>
+              <circle cx="42" cy="24" r="6" fill="#0f172a"/>
+              <circle cx="42" cy="24" r="2.5" fill="#cbd5e1"/>
+              <path d="M14,22 L24,14 L36,14 L41,22" stroke="#f59e0b" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+              <circle cx="28" cy="6" r="5" fill="#fbbf24"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="how-strip" aria-label="Como funciona">
+    <div class="how-item">
+      <div class="how-emoji">🔍</div>
+      <div><strong>1. Escolha a Infração</strong><span>Busque por artigo ou assunto</span></div>
+    </div>
+    <div class="how-item">
+      <div class="how-emoji">📝</div>
+      <div><strong>2. Preencha os Dados</strong><span>Sem salvar rastro no servidor</span></div>
+    </div>
+    <div class="how-item">
+      <div class="how-emoji">📄</div>
+      <div><strong>3. Gere o Documento</strong><span>Revise antes de protocolar</span></div>
+    </div>
+    <div class="how-item">
+      <div class="how-emoji">🖨️</div>
+      <div><strong>4. Imprima ou PDF</strong><span>Assine e protocole no órgão</span></div>
+    </div>
+  </section>
+
+  <main class="container">
+
+    <section id="step-1" class="step-card">
+      <div class="step-header">
+        <div class="step-title-group">
+          <div class="step-num">1</div>
+          <div>
+            <h3>🚦 Escolha a Infração ou Busque pelo Artigo do CTB</h3>
+            <p>Pesquise por artigo, inciso ou descrição. O catálogo reúne modelos por dispositivo sancionador do CTB; confira o artigo, inciso e código efetivamente indicados no AIT.</p>
+          </div>
+        </div>
+        <span id="catalogCountBadge" style="font-size: 0.82rem; font-weight: 700; color: var(--primary); background: #e0f2fe; padding: 6px 13px; border-radius: 999px;">
+          Modelos por artigo do CTB
+        </span>
+      </div>
+
+      <div class="signs-showcase">
+        <div class="signs-showcase-title">
+          <span>🛑 Acesso Rápido por Tema</span>
+          <span style="font-weight: 500; color: var(--muted); text-transform: none;">Clique em um tema para filtrar</span>
+        </div>
+        <div class="signs-row" id="signsRow"></div>
+      </div>
+
+      <div class="catalog-controls">
+        <div class="search-box">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+          <input type="text" id="templateSearch" placeholder="🔍 Busque por artigo (ex.: 218), inciso ou assunto (velocidade, estacionamento, documentação)..." oninput="renderTemplates()" />
+        </div>
+        <div id="filterPills" class="filter-pills"></div>
+      </div>
+
+      <div id="templateGrid" class="template-grid"></div>
     </section>
 
-    <section class="how-strip" aria-label="Como funciona">
-      <div class="how-item">
-        <div class="how-emoji">🔍</div>
-        <div><strong>1. Escolha a Multa</strong><span>Busque pelo código ou placa</span></div>
+    <section id="step-2" class="step-card">
+      <div class="step-header">
+        <div class="step-title-group">
+          <div class="step-num">2</div>
+          <div>
+            <h3>📝 Preenchimento dos Dados (Sem Rastro em Servidores)</h3>
+            <p>Tudo é montado dentro do seu navegador. Seus dados pessoais nunca ficam gravados.</p>
+          </div>
+        </div>
+        <button id="btnClearForm" type="button" class="btn btn-danger-outline" onclick="clearFormData()">
+          🗑️ Apagar Dados da Tela
+        </button>
       </div>
-      <div class="how-item">
-        <div class="how-emoji">📝</div>
-        <div><strong>2. Preencha os Dados</strong><span>Sem salvar rastro no servidor</span></div>
-      </div>
-      <div class="how-item">
-        <div class="how-emoji">📄</div>
-        <div><strong>3. Gere o Documento</strong><span>Modelo pronto para protocolar</span></div>
-      </div>
-      <div class="how-item">
-        <div class="how-emoji">🖨️</div>
-        <div><strong>4. Imprima ou PDF</strong><span>Assine e protocole no órgão</span></div>
-      </div>
+
+      <form id="resourceForm" onsubmit="handleGenerate(event)">
+        <div class="form-section-title">1. Instância e Órgão Destinatário</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Fase / Tipo de Peça <span class="req">*</span></label>
+            <select id="f_instancia" required>
+              <option value="DEFESA PRÉVIA (Defesa da Autuação)">Defesa Prévia (Notificação de Autuação)</option>
+              <option value="RECURSO ADMINISTRATIVO À JARI (1ª Instância)" selected>Recurso à JARI (1ª Instância - Penalidade)</option>
+              <option value="RECURSO AO CETRAN / CONTRANDIFE (2ª Instância)">Recurso ao CETRAN (2ª Instância)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Órgão Autuador <span class="req">*</span></label>
+            <input type="text" id="f_orgao" placeholder="Ex: DETRAN-SP, PRF, DNIT, DER, CET" required />
+          </div>
+          <div class="form-group">
+            <label>Cidade / UF <span class="req">*</span></label>
+            <input type="text" id="f_cidade_uf" placeholder="Ex: São Paulo / SP" required />
+          </div>
+        </div>
+
+        <div class="form-section-title">2. Dados do Condutor / Proprietário</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Nome Completo <span class="req">*</span></label>
+            <input type="text" id="f_nome" placeholder="Nome completo sem abreviações" required />
+          </div>
+          <div class="form-group">
+            <label>CPF <span class="req">*</span></label>
+            <input type="text" id="f_cpf" placeholder="000.000.000-00" maxlength="14" oninput="maskCPF(this)" required />
+          </div>
+          <div class="form-group">
+            <label>RG / Órgão Emissor</label>
+            <input type="text" id="f_rg" placeholder="Ex: 12.345.678-9 SSP/SP" />
+          </div>
+          <div class="form-group">
+            <label>Nº da CNH <span class="req">*</span></label>
+            <input type="text" id="f_cnh" placeholder="Registro da CNH" required />
+          </div>
+          <div class="form-group">
+            <label>Categoria CNH</label>
+            <select id="f_cat_cnh">
+              <option value="A">A</option>
+              <option value="B" selected>B</option>
+              <option value="AB">AB</option>
+              <option value="C">C</option>
+              <option value="D">D</option>
+              <option value="E">E</option>
+              <option value="AC">AC</option>
+              <option value="AD">AD</option>
+              <option value="AE">AE</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>E-mail ou Telefone (opcional)</label>
+            <input type="text" id="f_contato" placeholder="Opcional na qualificação" />
+          </div>
+          <div class="form-group full">
+            <label>Endereço Completo (Rua, Nº, Bairro, CEP) <span class="req">*</span></label>
+            <input type="text" id="f_endereco" placeholder="Ex: Rua Exemplo, 100, Centro, CEP 01000-000" required />
+          </div>
+        </div>
+
+        <label class="ear-highlight">
+          <input type="checkbox" id="f_ear" />
+          <span>🚕 Condutor possui <strong>EAR (Exerce Atividade Remunerada)</strong> na CNH — Motorista de App / Entregador / Profissional</span>
+        </label>
+
+        <div class="form-section-title">3. Dados do Veículo e da Notificação (Campos Obrigatórios)</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Placa do Veículo <span class="req">*</span></label>
+            <input type="text" id="f_placa" placeholder="ABC1D23" maxlength="8" style="text-transform: uppercase;" required />
+          </div>
+          <div class="form-group">
+            <label>Marca / Modelo / Cor</label>
+            <input type="text" id="f_veiculo" placeholder="Ex: Fiat Argo Branco 2023" />
+          </div>
+          <div class="form-group">
+            <label>RENAVAM</label>
+            <input type="text" id="f_renavam" placeholder="Número do RENAVAM" />
+          </div>
+          <div class="form-group">
+            <label>Nº do Auto de Infração (AIT) <span class="req">*</span></label>
+            <input type="text" id="f_ait" placeholder="Ex: E101234567" required />
+          </div>
+          <div class="form-group">
+            <label>Data do Ocorrido (Infração) <span class="req">*</span></label>
+            <input type="date" id="f_data_infracao" required />
+          </div>
+          <div class="form-group">
+            <label>Data de Expedição da Notificação <span class="req">*</span></label>
+            <input type="date" id="f_data_notificacao" required />
+          </div>
+          <div class="form-group">
+            <label>Local da Infração <span class="req">*</span></label>
+            <input type="text" id="f_local" placeholder="Rodovia/Rua, KM ou altura do nº" required />
+          </div>
+          <div class="form-group">
+            <label>Enquadramento / código do AIT <span class="req">*</span></label>
+            <input type="text" id="f_artigo" required />
+          </div>
+          <div class="form-group full">
+            <label>Detalhes Específicos do Ocorrido (Opcional — ex: havia veículo quebrado na pista, trânsito travou sobre a faixa, sinalização encoberta, etc.)</label>
+            <textarea id="f_obs" rows="3" placeholder="Descreva aqui qualquer detalhe do momento da multa para reforçar seu documento..."></textarea>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <div style="font-size: 0.84rem; color: var(--muted);">
+            ✅ Acesso liberado — gere quantos recursos precisar nesta sessão.
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button type="button" class="btn btn-outline" onclick="fillDemoExample()">
+              ⚡ Preencher Exemplo Teste
+            </button>
+            <button id="btnGenerateDoc" type="submit" class="btn btn-primary">
+              📄 Gerar Recurso
+            </button>
+          </div>
+        </div>
+      </form>
     </section>
 
-    <main class="container">
-
-      <section id="step-1" class="step-card">
-        <div class="step-header">
-          <div class="step-title-group">
-            <div class="step-num">1</div>
-            <div>
-              <h3>🚦 Escolha a Categoria ou Busque pelo Código da Multa</h3>
-              <p>Clique em uma placa de trânsito abaixo ou digite o código (ex: 590-80, 567-32, 605-03, 745-50, 773-02).</p>
-            </div>
+    <section id="step-4" class="step-card hidden">
+      <div class="step-header">
+        <div class="step-title-group">
+          <div class="step-num">3</div>
+          <div>
+            <h3>📄 Documento Gerado — Imprimir, Salvar PDF ou Word</h3>
+            <p>Formato limpo em papel A4 pronto para assinar e protocolar no órgão de trânsito.</p>
           </div>
-          <span id="catalogCountBadge" style="font-size: 0.82rem; font-weight: 700; color: var(--primary); background: #e0f2fe; padding: 6px 13px; border-radius: 999px;">
-            25 modelos disponíveis
-          </span>
         </div>
+      </div>
 
-        <div class="signs-showcase">
-          <div class="signs-showcase-title">
-            <span>🛑 Acesso Rápido por Sinalização &amp; Tipo de Infração</span>
-            <span style="font-weight: 500; color: var(--muted); text-transform: none;">Clique em uma placa para filtrar</span>
-          </div>
-          <div class="signs-row" id="signsRow"></div>
-        </div>
-
-        <div class="catalog-controls">
-          <div class="search-box">
-            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-            </svg>
-            <input type="text" id="templateSearch" placeholder="🔍 Digite o código da multa (590-80, 567-32, 605-03, 745-50, 773-02, 763-31...) ou palavra (acostamento, faixa de pedestre, farol vermelho)..." oninput="renderTemplates()" />
-          </div>
-          <div id="filterPills" class="filter-pills"></div>
-        </div>
-
-        <div id="templateGrid" class="template-grid"></div>
-      </section>
-
-      <section id="step-2" class="step-card">
-        <div class="step-header">
-          <div class="step-title-group">
-            <div class="step-num">2</div>
-            <div>
-              <h3>📝 Preenchimento dos Dados (Sem Rastro em Servidores)</h3>
-              <p>Tudo é montado dentro do seu navegador. Seus dados pessoais nunca ficam gravados.</p>
-            </div>
-          </div>
-          <button id="btnClearForm" type="button" class="btn btn-danger-outline" onclick="clearFormData()">
-            🗑️ Apagar Dados da Tela
+      <div class="toolbar-doc">
+        <span style="font-size: 0.86rem; color: var(--primary); font-weight: 700;">
+          ✅ Ações do Documento:
+        </span>
+        <div class="toolbar-buttons">
+          <button type="button" class="btn btn-primary" onclick="printOrSavePDF()">
+            🖨️ Imprimir / Salvar em PDF
+          </button>
+          <button type="button" class="btn btn-dark" onclick="downloadWordDoc()">
+            📥 Baixar em Word (.doc)
+          </button>
+          <button type="button" class="btn btn-outline" onclick="copyDocText()">
+            📋 Copiar Texto
           </button>
         </div>
+      </div>
 
-        <form id="resourceForm" onsubmit="handleGenerate(event)">
-          <div class="form-section-title">1. Instância e Órgão Destinatário</div>
-          <div class="form-grid">
-            <div class="form-group">
-              <label>Fase / Tipo de Peça <span class="req">*</span></label>
-              <select id="f_instancia" required>
-                <option value="DEFESA PRÉVIA (Defesa da Autuação)">Defesa Prévia (Notificação de Autuação)</option>
-                <option value="RECURSO ADMINISTRATIVO À JARI (1ª Instância)" selected>Recurso à JARI (1ª Instância - Penalidade)</option>
-                <option value="RECURSO AO CETRAN / CONTRANDIFE (2ª Instância)">Recurso ao CETRAN (2ª Instância)</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Órgão Autuador <span class="req">*</span></label>
-              <input type="text" id="f_orgao" placeholder="Ex: DETRAN-SP, PRF, DNIT, DER, CET" required />
-            </div>
-            <div class="form-group">
-              <label>Cidade / UF <span class="req">*</span></label>
-              <input type="text" id="f_cidade_uf" placeholder="Ex: São Paulo / SP" required />
-            </div>
-          </div>
+      <div class="paper-wrapper">
+        <article id="generatedDocument" class="a4-document"></article>
+      </div>
+    </section>
 
-          <div class="form-section-title">2. Dados do Condutor / Proprietário</div>
-          <div class="form-grid">
-            <div class="form-group">
-              <label>Nome Completo <span class="req">*</span></label>
-              <input type="text" id="f_nome" placeholder="Nome completo sem abreviações" required />
-            </div>
-            <div class="form-group">
-              <label>CPF <span class="req">*</span></label>
-              <input type="text" id="f_cpf" placeholder="000.000.000-00" maxlength="14" oninput="maskCPF(this)" required />
-            </div>
-            <div class="form-group">
-              <label>RG / Órgão Emissor</label>
-              <input type="text" id="f_rg" placeholder="Ex: 12.345.678-9 SSP/SP" />
-            </div>
-            <div class="form-group">
-              <label>Nº da CNH <span class="req">*</span></label>
-              <input type="text" id="f_cnh" placeholder="Registro da CNH" required />
-            </div>
-            <div class="form-group">
-              <label>Categoria CNH</label>
-              <select id="f_cat_cnh">
-                <option value="A">A</option>
-                <option value="B" selected>B</option>
-                <option value="AB">AB</option>
-                <option value="C">C</option>
-                <option value="D">D</option>
-                <option value="E">E</option>
-                <option value="AC">AC</option>
-                <option value="AD">AD</option>
-                <option value="AE">AE</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>E-mail ou Telefone (opcional)</label>
-              <input type="text" id="f_contato" placeholder="Opcional na qualificação" />
-            </div>
-            <div class="form-group full">
-              <label>Endereço Completo (Rua, Nº, Bairro, CEP) <span class="req">*</span></label>
-              <input type="text" id="f_endereco" placeholder="Ex: Rua Exemplo, 100, Centro, CEP 01000-000" required />
-            </div>
-          </div>
+  </main>
 
-          <label class="ear-highlight">
-            <input type="checkbox" id="f_ear" />
-            <span>🚕 Condutor possui <strong>EAR (Exerce Atividade Remunerada)</strong> na CNH — Motorista de App / Entregador / Profissional</span>
-          </label>
-
-          <div class="form-section-title">3. Dados do Veículo e da Notificação (Campos Obrigatórios)</div>
-          <div class="form-grid">
-            <div class="form-group">
-              <label>Placa do Veículo <span class="req">*</span></label>
-              <input type="text" id="f_placa" placeholder="ABC1D23" maxlength="8" style="text-transform: uppercase;" required />
-            </div>
-            <div class="form-group">
-              <label>Marca / Modelo / Cor</label>
-              <input type="text" id="f_veiculo" placeholder="Ex: Fiat Argo Branco 2023" />
-            </div>
-            <div class="form-group">
-              <label>RENAVAM</label>
-              <input type="text" id="f_renavam" placeholder="Número do RENAVAM" />
-            </div>
-            <div class="form-group">
-              <label>Nº do Auto de Infração (AIT) <span class="req">*</span></label>
-              <input type="text" id="f_ait" placeholder="Ex: E101234567" required />
-            </div>
-            <div class="form-group">
-              <label>Data do Ocorrido (Infração) <span class="req">*</span></label>
-              <input type="date" id="f_data_infracao" required />
-            </div>
-            <div class="form-group">
-              <label>Data de Expedição da Notificação <span class="req">*</span></label>
-              <input type="date" id="f_data_notificacao" required />
-            </div>
-            <div class="form-group">
-              <label>Local da Infração <span class="req">*</span></label>
-              <input type="text" id="f_local" placeholder="Rodovia/Rua, KM ou altura do nº" required />
-            </div>
-            <div class="form-group">
-              <label>Enquadramento / Código e Artigo <span class="req">*</span></label>
-              <input type="text" id="f_artigo" required />
-            </div>
-            <div class="form-group full">
-              <label>Detalhes Específicos do Ocorrido (Opcional — ex: havia veículo quebrado na pista, trânsito travou sobre a faixa, sinalização encoberta, etc.)</label>
-              <textarea id="f_obs" rows="3" placeholder="Descreva aqui qualquer detalhe do momento da multa para reforçar seu documento..."></textarea>
-            </div>
-          </div>
-
-          <div class="form-actions">
-            <div style="font-size: 0.84rem; color: var(--muted);">
-              ✅ Acesso liberado — gere quantos recursos precisar nesta sessão.
-            </div>
-            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-              <button type="button" class="btn btn-outline" onclick="fillDemoExample()">
-                ⚡ Preencher Exemplo Teste
-              </button>
-              <button id="btnGenerateDoc" type="submit" class="btn btn-primary">
-                📄 Gerar Recurso
-              </button>
-            </div>
-          </div>
-        </form>
-      </section>
-
-      <section id="step-4" class="step-card hidden">
-        <div class="step-header">
-          <div class="step-title-group">
-            <div class="step-num">3</div>
-            <div>
-              <h3>📄 Documento Gerado — Imprimir, Salvar PDF ou Word</h3>
-              <p>Formato limpo em papel A4 pronto para assinar e protocolar no órgão de trânsito.</p>
-            </div>
-          </div>
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <strong style="color: #ffffff; font-size: 1rem;">🚦 AutoRecurso</strong>
+          <p style="margin-top: 4px; max-width: 590px;">
+            Ferramenta tecnológica de autoatendimento documental. Não somos escritório de advocacia, não prestamos consultoria jurídica e não possuímos vínculo com DETRAN, CONTRAN, SENATRAN, PRF, ANTT ou Prefeituras.
+          </p>
+          <p style="margin-top: 8px; color: #fbbf24; font-weight: 600;">
+            💳 Serviço pago — acesso adquirido por intermédio de maisfy.com.br ou plwdesign.online.
+          </p>
         </div>
-
-        <div class="toolbar-doc">
-          <span style="font-size: 0.86rem; color: var(--primary); font-weight: 700;">
-            ✅ Ações do Documento:
-          </span>
-          <div class="toolbar-buttons">
-            <button type="button" class="btn btn-primary" onclick="printOrSavePDF()">
-              🖨️ Imprimir / Salvar em PDF
-            </button>
-            <button type="button" class="btn btn-dark" onclick="downloadWordDoc()">
-              📥 Baixar em Word (.doc)
-            </button>
-            <button type="button" class="btn btn-outline" onclick="copyDocText()">
-              📋 Copiar Texto
-            </button>
-          </div>
-        </div>
-
-        <div class="paper-wrapper">
-          <article id="generatedDocument" class="a4-document"></article>
-        </div>
-      </section>
-
-    </main>
-
-    <footer>
-      <div class="footer-inner">
-        <div class="footer-top">
-          <div>
-            <strong style="color: #ffffff; font-size: 1rem;">🚦 AutoRecurso</strong>
-            <p style="margin-top: 4px; max-width: 590px;">
-              Ferramenta tecnológica de autoatendimento documental. Não somos escritório de advocacia, não prestamos consultoria jurídica e não possuímos vínculo com DETRAN, CONTRAN, SENATRAN, PRF, ANTT ou Prefeituras.
-            </p>
-            <p style="margin-top: 8px; color: #fbbf24; font-weight: 600;">
-              💳 Serviço pago — acesso adquirido por intermédio de maisfy.com.br ou plwdesign.online.
-            </p>
-          </div>
-          <div class="footer-links">
-            <a onclick="openModal('termsModal')">📄 Termos de Uso</a>
-            <a onclick="openModal('privacyModal')">🛡️ Privacidade (Zero Rastro)</a>
-          </div>
-        </div>
-        <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
-          <span>&copy; 2026 AutoRecurso — Todos os direitos reservados.</span>
-          <span>🔒 Processamento 100% no Navegador (LGPD Friendly).</span>
-        </div>
-        <div style="text-align: center; padding-top: 12px; border-top: 1px solid rgba(255, 255, 255, 0.08); color: #94a3b8; font-size: 0.8rem;">
-          Site desenvolvido por <strong style="color: #fbbf24;">Rodrigo Rocha</strong> • Projeto e desenvolvimento web.
+        <div class="footer-links">
+          <a onclick="openModal('termsModal')">📄 Termos de Uso</a>
+          <a onclick="openModal('privacyModal')">🛡️ Privacidade (Zero Rastro)</a>
         </div>
       </div>
-    </footer>
-
-    <!-- MODAIS DE TERMOS E PRIVACIDADE -->
-    <div id="termsModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
-      <div class="modal-card wide">
-        <button type="button" class="modal-close" onclick="closeModal('termsModal')">&times;</button>
-        <h3 style="color: var(--primary); margin-bottom: 12px;">📄 Termos de Uso</h3>
-        <div style="font-size: 0.88rem; color: #334155; line-height: 1.7;">
-          <p><strong>1. Objeto.</strong> Este site disponibiliza uma ferramenta tecnológica de autoatendimento para geração de modelos de documentos administrativos relacionados a multas de trânsito.</p>
-          <p><strong>2. Natureza do serviço.</strong> O AutoRecurso não é escritório de advocacia, não presta consultoria jurídica, não analisa casos concretos e não garante resultado favorável em recursos administrativos.</p>
-          <p><strong>3. Serviço pago e origem do acesso.</strong> Trata-se de serviço pago, cujo acesso é disponibilizado exclusivamente por intermédio das plataformas <strong>maisfy.com.br</strong> ou <strong>plwdesign.online</strong>. A reprodução, o compartilhamento indevido do link ou o uso por terceiros não autorizados é expressamente proibido.</p>
-          <p><strong>4. Responsabilidade do usuário.</strong> O usuário é integralmente responsável pelas informações preenchidas, pela conferência dos dados e pelo protocolo do documento perante o órgão de trânsito competente.</p>
-          <p><strong>5. Privacidade.</strong> Os dados informados são processados exclusivamente no navegador do usuário, não sendo armazenados em servidores do AutoRecurso.</p>
-          <p><strong>6. Atualização.</strong> Os modelos são baseados no Código de Trânsito Brasileiro (Lei 9.503/1997) e podem ser atualizados periodicamente, sem aviso prévio.</p>
-          <p><strong>7. Desenvolvimento.</strong> Site desenvolvido por <strong>Rodrigo Rocha</strong>.</p>
-        </div>
+      <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+        <span>&copy; 2026 AutoRecurso — Todos os direitos reservados.</span>
+        <span>🔒 Processamento 100% no Navegador (LGPD Friendly).</span>
+      </div>
+      <div style="text-align: center; padding-top: 12px; border-top: 1px solid rgba(255, 255, 255, 0.08); color: #94a3b8; font-size: 0.8rem;">
+        Desenvolvido por <strong style="color: #fbbf24;">Rodrigo Rocha</strong> • Contato: <a href="mailto:rcruzoe4@gmail.com" style="color: #fbbf24;">rcruzoe4@gmail.com</a>
       </div>
     </div>
+  </footer>
 
-    <div id="privacyModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
-      <div class="modal-card wide">
-        <button type="button" class="modal-close" onclick="closeModal('privacyModal')">&times;</button>
-        <h3 style="color: var(--primary); margin-bottom: 12px;">🛡️ Política de Privacidade (Zero Rastro)</h3>
-        <div style="font-size: 0.88rem; color: #334155; line-height: 1.7;">
-          <p><strong>1. Processamento local.</strong> Todos os dados preenchidos no formulário são processados exclusivamente no navegador do usuário (client-side), não sendo transmitidos, armazenados ou compartilhados com o AutoRecurso ou terceiros.</p>
-          <p><strong>2. Sem cookies de rastreamento.</strong> Esta ferramenta não utiliza cookies de rastreamento, pixels de terceiros ou ferramentas de analytics que identifiquem o usuário.</p>
-          <p><strong>3. Sem armazenamento.</strong> Ao fechar a página ou clicar em "Apagar Dados da Tela", todas as informações preenchidas são permanentemente descartadas da memória do navegador.</p>
-          <p><strong>4. LGPD.</strong> Esta ferramenta foi projetada em conformidade com a Lei Geral de Proteção de Dados (Lei 13.709/2018), adotando o princípio da minimização de dados.</p>
-          <p><strong>5. Acesso restrito.</strong> O serviço é pago e de acesso restrito a clientes das plataformas maisfy.com.br e plwdesign.online. O link não deve ser compartilhado.</p>
-        </div>
+  <!-- MODAIS DE TERMOS E PRIVACIDADE -->
+  <div id="termsModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="modal-card wide">
+      <button type="button" class="modal-close" onclick="closeModal('termsModal')">&times;</button>
+      <h3 style="color: var(--primary); margin-bottom: 12px;">📄 Termos de Uso</h3>
+      <div style="font-size: 0.88rem; color: #334155; line-height: 1.7;">
+        <p><strong>1. Objeto.</strong> Este site disponibiliza uma ferramenta tecnológica de autoatendimento para geração de modelos de documentos administrativos relacionados a multas de trânsito.</p>
+        <p><strong>2. Natureza do serviço.</strong> O AutoRecurso não é escritório de advocacia, não presta consultoria jurídica, não analisa casos concretos e não garante resultado favorável em recursos administrativos.</p>
+        <p><strong>3. Serviço pago e origem do acesso.</strong> Trata-se de serviço pago, cujo acesso é disponibilizado exclusivamente por intermédio das plataformas <strong>maisfy.com.br</strong> ou <strong>plwdesign.online</strong>. A reprodução, o compartilhamento indevido do link ou o uso por terceiros não autorizados é expressamente proibido.</p>
+        <p><strong>4. Responsabilidade do usuário.</strong> O usuário é integralmente responsável pelas informações preenchidas, pela conferência dos dados e pelo protocolo do documento perante o órgão de trânsito competente.</p>
+        <p><strong>5. Privacidade.</strong> Os dados informados são processados exclusivamente no navegador do usuário, não sendo armazenados em servidores do AutoRecurso.</p>
+        <p><strong>6. Atualização.</strong> Os modelos são baseados no Código de Trânsito Brasileiro (Lei 9.503/1997) e podem ser atualizados periodicamente, sem aviso prévio.</p>
+        <p><strong>7. Desenvolvimento.</strong> Desenvolvido por <strong>Rodrigo Rocha</strong>. Contato: <a href="mailto:rcruzoe4@gmail.com">rcruzoe4@gmail.com</a>.</p>
       </div>
     </div>
+  </div>
+
+  <div id="privacyModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="modal-card wide">
+      <button type="button" class="modal-close" onclick="closeModal('privacyModal')">&times;</button>
+      <h3 style="color: var(--primary); margin-bottom: 12px;">🛡️ Política de Privacidade (Zero Rastro)</h3>
+      <div style="font-size: 0.88rem; color: #334155; line-height: 1.7;">
+        <p><strong>1. Processamento local.</strong> Todos os dados preenchidos no formulário são processados exclusivamente no navegador do usuário (client-side), não sendo transmitidos, armazenados ou compartilhados com o AutoRecurso ou terceiros.</p>
+        <p><strong>2. Sem cookies de rastreamento.</strong> Esta ferramenta não utiliza cookies de rastreamento, pixels de terceiros ou ferramentas de analytics que identifiquem o usuário.</p>
+        <p><strong>3. Sem armazenamento.</strong> Ao fechar a página ou clicar em "Apagar Dados da Tela", todas as informações preenchidas são permanentemente descartadas da memória do navegador.</p>
+        <p><strong>4. LGPD.</strong> Esta ferramenta foi projetada em conformidade com a Lei Geral de Proteção de Dados (Lei 13.709/2018), adotando o princípio da minimização de dados.</p>
+        <p><strong>5. Acesso restrito.</strong> O serviço é pago e de acesso restrito a clientes das plataformas maisfy.com.br e plwdesign.online. O link não deve ser compartilhado.</p>
+      </div>
+    </div>
+  </div>
 
   </div>
 
   <script>
-    // ============================================================
-    // 0. PROTEÇÃO POR SENHA (troque a senha todo mês)
-    // ============================================================
-    const SENHA_ATUAL = "AUTORECURSO2026"; // <-- TROQUE ESTA SENHA MENSALMENTE
+    const SENHA_ATUAL = "AUTORECURSO2026";
 
     function tryUnlock() {
       const input = document.getElementById('lockPassword');
       const error = document.getElementById('lockError');
-      const valor = input.value.trim();
 
-      if (valor === SENHA_ATUAL) {
+      if (input.value.trim() === SENHA_ATUAL) {
         sessionStorage.setItem('autorecurso_ok', '1');
         mostrarSite();
       } else {
@@ -1211,64 +1204,169 @@
       }
     }
 
+    verificarSessao();
+
     // ============================================================
-    // 1. CATÁLOGO DE MODELOS (25 modelos)
+    // 1. CATÁLOGO DE INFRAÇÕES POR ARTIGO DO CTB
     // ============================================================
-    const TEMPLATES = [
-      { id: 'acostamento', emoji: '🛣️', categoria: 'Acostamento', titulo: 'Ultrapassagem pelo Acostamento', gravidade: 'gravissima', gravLabel: 'Gravíssima', codigos: ['590-80', '567-32'], artigo: 'Art. 202, CTB', desc: 'Ultrapassagem ou marcha pelo acostamento, conversão ou deslocamento irregular.', sinal: 'acostamento' },
-      { id: 'farol_vermelho', emoji: '🚦', categoria: 'Sinalização', titulo: 'Avanço de Sinal Vermelho', gravidade: 'gravissima', gravLabel: 'Gravíssima', codigos: ['605-03', '745-50'], artigo: 'Art. 208, CTB', desc: 'Avanço de sinal vermelho do semáforo ou desrespeito à parada obrigatória.', sinal: 'semaforo' },
-      { id: 'faixa_pedestre', emoji: '🚸', categoria: 'Pedestre', titulo: 'Desrespeito à Faixa de Pedestres', gravidade: 'gravissima', gravLabel: 'Gravíssima', codigos: ['763-31', '745-50'], artigo: 'Art. 214, CTB', desc: 'Deixar de dar preferência a pedestre na faixa ou em travessia.', sinal: 'faixa' },
-      { id: 'lei_seca', emoji: '🍺', categoria: 'Lei Seca', titulo: 'Lei Seca — Recusa ao Bafômetro', gravidade: 'gravissima', gravLabel: 'Gravíssima', codigos: ['747-10', '763-31'], artigo: 'Art. 165-A, CTB', desc: 'Recusa à realização de teste ou exame de alcoolemia.', sinal: 'lei_seca' },
-      { id: 'radar', emoji: '📸', categoria: 'Radar', titulo: 'Multa de Radar / Velocidade', gravidade: 'grave', gravLabel: 'Grave', codigos: ['745-50', '746-30'], artigo: 'Art. 218, CTB', desc: 'Transitar em velocidade superior à máxima permitida.', sinal: 'radar' },
-      { id: 'free_flow', emoji: '🚧', categoria: 'Free Flow', titulo: 'Free Flow / Pedágio Eletrônico', gravidade: 'grave', gravLabel: 'Grave', codigos: ['590-80', '605-03'], artigo: 'Art. 209, CTB', desc: 'Deixar de efetuar o pagamento de pedágio eletrônico (free flow).', sinal: 'free_flow' },
-      { id: 'app_entregador', emoji: '🛵', categoria: 'App / EAR', titulo: 'Motorista de App / Entregador (EAR)', gravidade: 'especial', gravLabel: 'Especial', codigos: ['763-31', '745-50'], artigo: 'Art. 147-A, CTB', desc: 'Recurso com foco no impacto da penalidade na atividade remunerada (EAR).', sinal: 'app' },
-      { id: 'celular', emoji: '📱', categoria: 'Celular', titulo: 'Uso de Celular ao Volante', gravidade: 'gravissima', gravLabel: 'Gravíssima', codigos: ['763-31', '745-50'], artigo: 'Art. 252, VI, CTB', desc: 'Dirigir segurando ou manuseando telefone celular.', sinal: 'celular' },
-      { id: 'cinto', emoji: '🔗', categoria: 'Cinto', titulo: 'Não Uso do Cinto de Segurança', gravidade: 'grave', gravLabel: 'Grave', codigos: ['763-31', '745-50'], artigo: 'Art. 167, CTB', desc: 'Deixar de usar o cinto de segurança.', sinal: 'cinto' },
-      { id: 'estacionamento', emoji: '🅿️', categoria: 'Estacionamento', titulo: 'Estacionamento em Local Proibido', gravidade: 'media', gravLabel: 'Média', codigos: ['590-80', '605-03'], artigo: 'Art. 181, CTB', desc: 'Estacionar em local ou horário proibido pela sinalização.', sinal: 'estacionamento' },
-      { id: 'ultrapassagem', emoji: '↔️', categoria: 'Ultrapassagem', titulo: 'Ultrapassagem pela Contramão', gravidade: 'gravissima', gravLabel: 'Gravíssima', codigos: ['590-80', '567-32'], artigo: 'Art. 203, CTB', desc: 'Ultrapassar pela contramão em local proibido.', sinal: 'ultrapassagem' },
-      { id: 'conversao', emoji: '⬅️', categoria: 'Conversão', titulo: 'Conversão em Local Proibido', gravidade: 'grave', gravLabel: 'Grave', codigos: ['605-03', '745-50'], artigo: 'Art. 206, CTB', desc: 'Executar conversão em local proibido pela sinalização.', sinal: 'conversao' },
-      { id: 'moto', emoji: '🏍️', categoria: 'Moto', titulo: 'Infrações de Motocicleta', gravidade: 'grave', gravLabel: 'Grave', codigos: ['763-31', '745-50'], artigo: 'Art. 244, CTB', desc: 'Conduzir motocicleta em desacordo com as normas.', sinal: 'moto' },
-      { id: 'caminhao', emoji: '🚚', categoria: 'Caminhão', titulo: 'Infrações de Caminhão', gravidade: 'grave', gravLabel: 'Grave', codigos: ['590-80', '605-03'], artigo: 'Art. 230, CTB', desc: 'Conduzir veículo com irregularidades ou em local proibido.', sinal: 'caminhao' },
-      { id: 'onibus', emoji: '🚌', categoria: 'Ônibus', titulo: 'Infrações de Ônibus', gravidade: 'grave', gravLabel: 'Grave', codigos: ['590-80', '605-03'], artigo: 'Art. 230, CTB', desc: 'Conduzir ônibus em desacordo com as normas.', sinal: 'onibus' },
-      { id: 'van', emoji: '🚐', categoria: 'Van', titulo: 'Infrações de Van / Transporte', gravidade: 'grave', gravLabel: 'Grave', codigos: ['590-80', '605-03'], artigo: 'Art. 230, CTB', desc: 'Conduzir van em desacordo com as normas.', sinal: 'van' },
-      { id: 'bicicleta', emoji: '🚲', categoria: 'Bicicleta', titulo: 'Infrações de Bicicleta', gravidade: 'leve', gravLabel: 'Leve', codigos: ['763-31', '745-50'], artigo: 'Art. 255, CTB', desc: 'Conduzir bicicleta em desacordo com as normas.', sinal: 'bicicleta' },
-      { id: 'patinete', emoji: '🛴', categoria: 'Patinete', titulo: 'Infrações de Patinete Elétrico', gravidade: 'leve', gravLabel: 'Leve', codigos: ['763-31', '745-50'], artigo: 'Art. 255, CTB', desc: 'Conduzir patinete elétrico em desacordo com as normas.', sinal: 'patinete' },
-      { id: 'animal', emoji: '🐕', categoria: 'Animal', titulo: 'Transporte Irregular de Animal', gravidade: 'media', gravLabel: 'Média', codigos: ['763-31', '745-50'], artigo: 'Art. 235, CTB', desc: 'Transportar animal em desacordo com as normas.', sinal: 'animal' },
-      { id: 'carga', emoji: '📦', categoria: 'Carga', titulo: 'Transporte Irregular de Carga', gravidade: 'grave', gravLabel: 'Grave', codigos: ['590-80', '605-03'], artigo: 'Art. 230, CTB', desc: 'Transportar carga em desacordo com as normas.', sinal: 'carga' },
-      { id: 'escolar', emoji: '🚌', categoria: 'Escolar', titulo: 'Transporte Escolar Irregular', gravidade: 'gravissima', gravLabel: 'Gravíssima', codigos: ['590-80', '605-03'], artigo: 'Art. 230, CTB', desc: 'Transporte escolar em desacordo com as normas.', sinal: 'escolar' },
-      { id: 'taxis', emoji: '🚕', categoria: 'Táxi', titulo: 'Infrações de Táxi', gravidade: 'grave', gravLabel: 'Grave', codigos: ['590-80', '605-03'], artigo: 'Art. 230, CTB', desc: 'Conduzir táxi em desacordo com as normas.', sinal: 'taxis' },
-      { id: 'drone', emoji: '🛸', categoria: 'Drone', titulo: 'Infrações com Drone', gravidade: 'media', gravLabel: 'Média', codigos: ['763-31', '745-50'], artigo: 'Art. 255, CTB', desc: 'Operar drone em desacordo com as normas.', sinal: 'drone' },
-      { id: 'reboque', emoji: '🔗', categoria: 'Reboque', titulo: 'Infrações de Reboque', gravidade: 'grave', gravLabel: 'Grave', codigos: ['590-80', '605-03'], artigo: 'Art. 230, CTB', desc: 'Rebocar veículo em desacordo com as normas.', sinal: 'reboque' },
-      { id: 'guincho', emoji: '🏗️', categoria: 'Guincho', titulo: 'Infrações de Guincho', gravidade: 'grave', gravLabel: 'Grave', codigos: ['590-80', '605-03'], artigo: 'Art. 230, CTB', desc: 'Operar guincho em desacordo com as normas.', sinal: 'guincho' }
+    const TEMPLATE_DATA = `
+161|Regras gerais|Descumprimento de regra de trânsito|Inobservância de preceito do CTB ou de norma complementar; informe a regra específica descrita no auto.
+162, I|Habilitação|Dirigir sem CNH, PPD ou ACC|Conduzir veículo sem possuir habilitação compatível.
+162, II|Habilitação|Dirigir com habilitação cassada ou suspensa|Conduzir durante período de suspensão ou após cassação do direito de dirigir.
+162, III|Habilitação|Dirigir com categoria diferente|Conduzir veículo incompatível com a categoria da habilitação.
+162, IV|Habilitação|Dirigir com validade vencida|Conduzir com CNH vencida além do prazo legal.
+162, V|Habilitação|Dirigir sem lentes ou adaptação obrigatória|Descumprir restrição ou observação obrigatória registrada na habilitação.
+162, VI|Habilitação|Dirigir sem curso especializado obrigatório|Conduzir veículo que exige curso especializado sem a certificação exigida.
+163|Condutor|Entregar direção a pessoa não habilitada|Entregar a direção a pessoa enquadrada nas hipóteses do art. 162.
+164|Condutor|Permitir que pessoa não habilitada conduza|Permitir que pessoa nas condições do art. 162 tome posse do veículo e passe a conduzi-lo.
+165|Álcool e substâncias|Dirigir sob influência de álcool ou substância psicoativa|Autuação por condução sob influência de álcool ou outra substância psicoativa.
+165-A|Álcool e substâncias|Recusa a teste ou procedimento|Recusar teste, exame clínico, perícia ou outro procedimento previsto para verificar influência de álcool ou substância psicoativa.
+165-B|Álcool e substâncias|Exame toxicológico periódico pendente|Conduzir nas categorias e condições em que o CTB exige exame toxicológico periódico.
+166|Condutor|Entregar direção a pessoa sem condições|Entregar o veículo a pessoa sem condições físicas ou psíquicas para conduzir com segurança.
+167|Segurança|Cinto de segurança|Deixar condutor ou passageiro de usar o cinto de segurança.
+168|Segurança|Transporte de criança|Transportar criança sem observar as normas especiais de segurança.
+169|Condutor|Dirigir sem atenção ou cuidados indispensáveis|Conduzir sem a atenção ou os cuidados indispensáveis à segurança.
+170|Condutor|Ameaçar pedestres ou outros veículos|Dirigir ameaçando pedestres ou demais veículos.
+171|Condutor|Arremessar água ou detritos|Usar o veículo para arremessar água ou detritos sobre pedestres ou outros veículos.
+172|Condutor|Atirar objetos ou substâncias na via|Atirar do veículo ou abandonar na via objetos ou substâncias.
+173|Condutor|Disputar corrida|Disputar corrida por espírito de emulação (racha).
+174|Condutor|Competição ou exibição não autorizada|Promover ou participar de competição, evento organizado ou exibição sem autorização.
+175|Condutor|Exibição de manobra perigosa|Utilizar o veículo para demonstrar ou exibir manobra perigosa.
+176|Condutor|Deveres em sinistro com vítima|Deixar de cumprir deveres específicos do condutor envolvido em sinistro com vítima.
+177|Condutor|Deixar de prestar socorro|Deixar de prestar ou providenciar socorro à vítima quando solicitado pela autoridade.
+178|Condutor|Deixar de remover veículo em sinistro sem vítima|Não adotar providências para remover veículo quando necessário à segurança e fluidez.
+179|Circulação|Operação de retorno ou marcha à ré|Executar retorno ou marcha à ré em desacordo com as regras do art. 179.
+180|Circulação|Veículo imobilizado por falta de combustível|Ter o veículo imobilizado na via por falta de combustível.
+181|Estacionamento|Estacionar em local proibido|Estacionar em desacordo com uma das hipóteses específicas do art. 181; confirme inciso, local e sinalização.
+182|Parada e estacionamento|Parar em local proibido|Parar em desacordo com uma das hipóteses específicas do art. 182; confirme inciso, local e sinalização.
+183|Circulação|Parar sobre faixa de pedestres|Parar o veículo sobre a faixa de pedestres na mudança de sinal luminoso.
+184|Circulação|Transitar em faixa ou pista exclusiva|Transitar em faixa ou pista de circulação exclusiva em desacordo com a regulamentação.
+185|Circulação|Deixar de conservar o veículo na faixa correta|Deixar de conservar o veículo na faixa a ele destinada ou junto ao bordo da pista.
+186|Circulação|Transitar pela contramão|Transitar em sentido contrário ao estabelecido para a via ou trecho.
+187|Circulação|Transitar em local ou horário proibido|Transitar em local ou horário não permitido pela regulamentação.
+188|Circulação|Transitar ao lado de outro veículo|Transitar ao lado de outro veículo interrompendo ou perturbando o trânsito.
+189|Preferência e passagem|Deixar de dar passagem a veículo de emergência|Deixar de dar passagem a veículo em serviço de urgência com dispositivos de alarme acionados.
+190|Preferência e passagem|Seguir veículo de emergência|Seguir veículo em serviço de urgência, estando este com prioridade de passagem.
+191|Ultrapassagem|Forçar passagem entre veículos|Forçar passagem entre veículos que transitam em sentidos opostos durante ultrapassagem.
+192|Circulação|Deixar de guardar distância de segurança|Não manter distância lateral ou frontal segura em relação a veículos ou ao bordo da pista.
+193|Circulação|Transitar sobre calçada, passeio ou ciclovia|Transitar com o veículo em áreas destinadas a pedestres ou ciclistas.
+194|Circulação|Transitar em marcha à ré|Transitar em marcha à ré além da distância necessária a pequenas manobras.
+195|Sinalização e autoridade|Desobedecer ordem de agente ou sinal|Desobedecer às ordens da autoridade ou de seus agentes de trânsito.
+196|Sinalização e autoridade|Deixar de indicar manobra|Deixar de indicar com antecedência, por gesto ou sinal luminoso, mudança de direção ou faixa.
+197|Circulação|Deixar de deslocar o veículo para a direita|Deixar de deslocar o veículo para a direita ao receber ordem de parada ou indicação de manobra.
+198|Circulação|Deixar de dar passagem pela esquerda|Deixar de dar passagem pela esquerda quando solicitado.
+199|Ultrapassagem|Ultrapassar pela direita|Ultrapassar outro veículo pela direita fora das exceções legais.
+200|Ultrapassagem|Ultrapassar pela direita veículo coletivo|Ultrapassar pela direita veículo de transporte coletivo ou escolar parado para embarque ou desembarque.
+201|Ultrapassagem|Distância lateral ao ultrapassar ciclista|Ultrapassar bicicleta sem guardar a distância lateral mínima prevista.
+202|Ultrapassagem|Ultrapassar pelo acostamento ou contramão|Ultrapassar pelo acostamento, em interseção ou passagem de nível.
+203|Ultrapassagem|Ultrapassar em local proibido|Ultrapassar pela contramão em uma das situações proibidas descritas no art. 203.
+204|Circulação|Não aguardar no acostamento para cruzar ou entrar à esquerda|Deixar de parar no acostamento à direita para aguardar oportunidade de cruzar a pista ou entrar à esquerda, quando não houver local apropriado para retorno.
+205|Ultrapassagem|Ultrapassar cortejo ou formação militar|Ultrapassar cortejo, desfile, formação militar ou agrupamento organizado.
+206|Circulação|Executar retorno em local proibido|Executar operação de retorno em local ou condição proibida pelo art. 206.
+207|Circulação|Executar conversão em local proibido|Executar conversão à direita ou à esquerda em local proibido pela sinalização.
+208|Sinalização e autoridade|Avançar sinal vermelho ou parada obrigatória|Avançar sinal vermelho do semáforo ou sinal de parada obrigatória.
+209|Circulação|Deixar de efetuar pagamento de pedágio|Deixar de efetuar o pagamento pelo uso de rodovia ou via urbana.
+209-A|Circulação|Evitar ou evadir cobrança de pedágio|Evitar ou evadir, por qualquer meio, o pagamento de pedágio ou tarifa pelo uso da via.
+210|Sinalização e autoridade|Transpor bloqueio viário policial|Transpor, sem autorização, bloqueio viário policial.
+211|Circulação|Ultrapassar veículo em fila junto a semáforo|Ultrapassar veículos em fila parados em razão de sinal luminoso, cancela, bloqueio ou impedimento.
+212|Circulação|Deixar de parar antes de cruzar linha férrea|Deixar de parar o veículo antes de transpor linha férrea.
+213|Preferência e passagem|Deixar de parar para passagem de veículos|Deixar de parar o veículo quando a marcha for interceptada por agrupamento ou cortejo.
+214|Pedestres e ciclistas|Deixar de dar preferência a pedestre|Deixar de dar preferência a pedestre ou veículo não motorizado nas hipóteses do art. 214.
+215|Preferência e passagem|Deixar de dar preferência em interseção|Deixar de dar preferência de passagem nos casos previstos no art. 215.
+216|Circulação|Entrar ou sair de área lindeira sem precaução|Entrar ou sair de área lindeira sem posicionamento adequado e sem as precauções de segurança.
+217|Circulação|Entrar ou sair de fila de veículos|Entrar ou sair de fila de veículos estacionados sem dar preferência a pedestres e a outros veículos.
+218|Velocidade|Transitar acima da velocidade permitida|Exceder o limite regulamentado; confira velocidade medida e considerada, limite, local e dados do equipamento.
+219|Velocidade|Transitar abaixo da metade da velocidade máxima|Transitar em velocidade inferior à metade da máxima da via, retardando ou obstruindo o trânsito sem justificativa.
+220|Velocidade e segurança|Deixar de reduzir a velocidade|Deixar de reduzir a velocidade nas situações de risco ou nas condições previstas no art. 220.
+221|Sinalização e autoridade|Portar placa em desacordo com especificações|Portar placa de identificação em desacordo com especificações e modelos estabelecidos pelo CONTRAN.
+222|Sinalização e autoridade|Deixar de manter sinalização de advertência|Deixar de manter acionada a sinalização de advertência nas condições previstas no CTB.
+223|Iluminação|Farol desregulado ou facho de luz irregular|Transitar com farol desregulado ou facho de luz alta que perturbe a visão de outro condutor.
+224|Iluminação|Usar farol alto em via iluminada|Fazer uso do facho de luz alta dos faróis em vias providas de iluminação pública.
+225|Segurança e sinalização|Deixar de sinalizar obstáculo ou carga|Deixar de sinalizar obstáculo à circulação ou carga que ofereça risco.
+226|Segurança e sinalização|Deixar de retirar sinalização de obstáculo|Deixar de retirar sinalização de obra ou obstáculo após sua regularização.
+227|Iluminação|Usar buzina em desacordo|Usar buzina fora das hipóteses, horários ou padrões permitidos.
+228|Ruído e equipamento|Usar equipamento de som em volume ou frequência proibidos|Usar no veículo equipamento com som em volume ou frequência não autorizados.
+229|Segurança e equipamento|Usar alarme ou aparelho que produza ruído|Usar alarme ou aparelho que produza sons e ruídos em desacordo com as normas.
+230|Veículo e documentação|Conduzir veículo em condição irregular|Conduzir veículo sem registro, licenciamento, equipamento obrigatório ou em outra condição prevista no art. 230; confira o inciso do AIT.
+231|Veículo e transporte|Transitar com veículo em condição irregular|Transitar com veículo em desacordo com as condições de dimensão, lotação, carga, autorização ou demais hipóteses do art. 231.
+232|Veículo e documentação|Conduzir sem documentos obrigatórios|Conduzir veículo sem os documentos de porte obrigatório exigidos.
+233|Veículo e documentação|Deixar de registrar ou licenciar veículo|Deixar de efetuar o registro ou licenciamento no prazo estabelecido.
+234|Veículo e identificação|Falsificar ou adulterar documento do veículo|Falsificar ou adulterar documento de identificação do veículo ou de seus componentes.
+235|Veículo e segurança|Conduzir pessoas, animais ou carga fora do veículo|Conduzir pessoas, animais ou carga nas partes externas do veículo, ressalvadas as hipóteses legais.
+236|Veículo e segurança|Rebocar outro veículo em desacordo|Rebocar veículo com cabo flexível ou corda, salvo nas hipóteses permitidas.
+237|Veículo e identificação|Transitar sem placas ou com identificação irregular|Transitar sem uma das placas de identificação ou com placa sem legibilidade e visibilidade.
+238|Veículo e documentação|Recusar entrega de documentos à autoridade|Recusar a entrega de documentos à autoridade ou agente de trânsito nas hipóteses legais.
+239|Veículo e identificação|Retirar veículo retido sem autorização|Retirar do local veículo legalmente retido sem permissão da autoridade competente.
+240|Veículo e documentação|Deixar de providenciar baixa de registro|Deixar de providenciar baixa de registro de veículo irrecuperável ou definitivamente desmontado.
+241|Veículo e identificação|Deixar de atualizar cadastro do veículo ou condutor|Deixar de atualizar o cadastro de registro do veículo ou de habilitação do condutor.
+242|Veículo e identificação|Fazer falsa declaração de domicílio|Fazer falsa declaração de domicílio para fins de registro, licenciamento ou habilitação.
+243|Veículo e transporte|Transitar com veículo de tração animal sem identificação|Transitar com veículo de tração animal sem registro ou identificação, quando exigidos.
+244|Motocicleta e ciclomotor|Conduzir motocicleta ou ciclomotor em desacordo|Conduzir motocicleta, motoneta ou ciclomotor em uma das condições específicas do art. 244; confira o inciso.
+245|Veículo e transporte|Utilizar a via para depósito de materiais|Utilizar a via para depósito de mercadorias, materiais ou equipamentos sem autorização.
+246|Sinalização e autoridade|Deixar de sinalizar obstáculo à circulação|Deixar de sinalizar obstáculo à livre circulação ou à segurança de veículos e pedestres.
+247|Pedestres e ciclistas|Deixar de conduzir animal ou grupo pelo bordo|Deixar de conduzir animal ou grupo de animais junto ao bordo da pista.
+248|Transporte e segurança|Transportar carga excedente em veículo de passageiros|Transportar carga em veículo destinado ao transporte de passageiros em desacordo com o art. 248.
+249|Iluminação e sinalização|Deixar de manter luzes de posição acesas|Deixar de manter as luzes de posição acesas nas situações de parada ou estacionamento previstas no CTB.
+250|Iluminação e sinalização|Deixar de usar luzes do veículo|Deixar de manter acesa a luz baixa, lanternas ou luz de placa nas hipóteses do art. 250.
+251|Circulação|Usar luzes do veículo em desacordo|Usar luzes do veículo em desacordo com as determinações do CTB.
+252|Condutor|Dirigir usando telefone ou em condição proibida|Dirigir com apenas uma das mãos fora das hipóteses permitidas, usando telefone celular ou em outra condição descrita no art. 252.
+253|Circulação|Bloquear a via com veículo|Bloquear a via com veículo, inclusive por uso deliberado do veículo para interromper a circulação.
+253-A|Circulação|Organizar bloqueio deliberado da via|Usar veículo para interromper, restringir ou perturbar a circulação sem autorização.
+254|Pedestres e ciclistas|Conduta irregular de pedestre|Desobedecer às regras de circulação aplicáveis a pedestres previstas no art. 254.
+255|Pedestres e ciclistas|Conduzir bicicleta em local proibido|Conduzir bicicleta em passeios onde não seja permitida a circulação ou de forma agressiva, conforme o art. 255.
+`;
+
+    const CHECKLISTS = {
+      'Habilitação': ['Compare a categoria, validade e restrições da CNH com o veículo e com a data da abordagem.', 'Verifique qual conduta e qual inciso foram efetivamente registrados no AIT.'],
+      'Álcool e substâncias': ['Confira a descrição do procedimento, equipamento, identificação, registros e documentos entregues ao condutor.', 'Relate os fatos com precisão e anexe apenas documentos ou provas que os confirmem.'],
+      'Velocidade': ['Confira limite da via, local, sentido, velocidade medida e considerada e identificação do equipamento.', 'Verifique sinalização e documentação metrológica aplicáveis ao equipamento e à data da infração.'],
+      'Estacionamento': ['Identifique a conduta exata (parada ou estacionamento), o inciso indicado e a posição do veículo.', 'Junte fotos do local e da sinalização na data, se disponíveis; descreva restrições ou circunstâncias comprováveis.'],
+      'Sinalização e autoridade': ['Confira a sinalização existente, sua visibilidade, localização e sentido de circulação.', 'Compare o relato do AIT com fotos, vídeos e demais provas contemporâneas, se houver.'],
+      'Pedestres e ciclistas': ['Descreva a posição e o deslocamento dos envolvidos e do veículo no momento dos fatos.', 'Junte imagens, testemunhos ou outros elementos que possam ser conferidos.'],
+      'Veículo e documentação': ['Confira o inciso do art. 230 ou outro enquadramento, a característica apontada e a documentação do veículo.', 'Anexe comprovantes contemporâneos de regularização, quando pertinentes ao fato e à legislação aplicável.'],
+      'Veículo e identificação': ['Confira placa, identificação, cadastro e características descritas no auto.', 'Anexe documentos oficiais e registros do veículo relacionados à data da autuação.'],
+      'Veículo e transporte': ['Compare a descrição do AIT com o veículo, a carga, a autorização e os limites aplicáveis.', 'Junte documentos de transporte, pesagem, dimensões ou autorização se forem pertinentes ao enquadramento.'],
+      'Veículo e segurança': ['Confira a condição do veículo ou da carga descrita no AIT e o dispositivo legal correspondente.', 'Anexe registros de inspeção, manutenção ou imagens que sejam pertinentes.'],
+      'Preferência e passagem': ['Descreva a sinalização, a trajetória dos veículos e a situação de preferência no local.', 'Indique provas que permitam reconstituir o evento sem presumir fatos não documentados.'],
+      'Circulação': ['Confira sentido, faixa, local, sinalização e manobra descritos no AIT.', 'Apresente registros do local e da circunstância alegada, se disponíveis.'],
+      'Ultrapassagem': ['Confira o trecho, a sinalização horizontal e vertical, a visibilidade e a manobra descrita.', 'Junte imagens ou outros registros do trecho e da data, caso existam.'],
+      'Segurança': ['Confira quem estava no veículo, o equipamento exigido e a conduta descrita no AIT.', 'Junte documentos ou imagens que demonstrem a situação existente na data.'],
+      'Iluminação': ['Confira o tipo de luz, as condições da via e o horário indicados no auto.', 'Apresente registros ou documentos do veículo que sejam relevantes ao fato.'],
+      'Ruído e equipamento': ['Confira o equipamento, a condição de uso e a norma citada no AIT.', 'Apresente laudo, especificação ou registro somente se relacionado ao fato autuado.'],
+      'Segurança e sinalização': ['Confira o obstáculo, a carga, a sinalização exigida e a responsabilidade apontada.', 'Junte fotos do local e documentos de autorização ou remoção, se pertinentes.'],
+      'Motocicleta e ciclomotor': ['Confira o tipo de veículo, o inciso do art. 244 e a conduta individualizada no AIT.', 'Apresente documentos e registros da motocicleta e dos equipamentos de segurança pertinentes.'],
+      'Transporte e segurança': ['Confira o tipo de veículo, a carga e a regra específica indicada no auto.', 'Junte documentos de transporte, autorização e imagens contemporâneas que sejam pertinentes.'],
+      'Pedestres e ciclistas': ['Confira a conduta descrita, o local e as regras aplicáveis ao usuário da via.', 'Apresente registros ou documentos que confirmem os fatos narrados.'],
+      'Condutor': ['Confira a descrição objetiva da conduta, o local, a data e a identificação do condutor no AIT.', 'Relate somente fatos que possam ser confirmados por documentos ou outros meios de prova.'],
+      'Parada e estacionamento': ['Identifique a conduta exata (parada ou estacionamento), o inciso indicado e a posição do veículo.', 'Junte fotos do local e da sinalização na data, se disponíveis.']
+    };
+
+    const SIGNALS = [
+      { key: 'todos', emoji: '📚', label: 'Todos' },
+      { key: 'Habilitação', emoji: '🪪', label: 'Habilitação' },
+      { key: 'Circulação', emoji: '↔️', label: 'Circulação' },
+      { key: 'Velocidade', emoji: '📸', label: 'Velocidade' },
+      { key: 'Estacionamento', emoji: '🅿️', label: 'Estacionamento' },
+      { key: 'Sinalização e autoridade', emoji: '🚦', label: 'Sinalização' },
+      { key: 'Segurança', emoji: '🦺', label: 'Segurança' },
+      { key: 'Veículo e documentação', emoji: '🚘', label: 'Veículo' },
+      { key: 'Pedestres e ciclistas', emoji: '🚸', label: 'Pedestres/ciclistas' }
     ];
 
-    const SIGNS = [
-      { key: 'acostamento', emoji: '🛣️', label: 'Acostamento' },
-      { key: 'semaforo', emoji: '🚦', label: 'Farol Vermelho' },
-      { key: 'faixa', emoji: '🚸', label: 'Faixa Pedestre' },
-      { key: 'lei_seca', emoji: '🍺', label: 'Lei Seca' },
-      { key: 'radar', emoji: '📸', label: 'Radar' },
-      { key: 'free_flow', emoji: '🚧', label: 'Free Flow' },
-      { key: 'app', emoji: '🛵', label: 'App / EAR' },
-      { key: 'celular', emoji: '📱', label: 'Celular' },
-      { key: 'cinto', emoji: '🔗', label: 'Cinto' },
-      { key: 'estacionamento', emoji: '🅿️', label: 'Estacionamento' },
-      { key: 'ultrapassagem', emoji: '↔️', label: 'Ultrapassagem' },
-      { key: 'conversao', emoji: '⬅️', label: 'Conversão' },
-      { key: 'moto', emoji: '🏍️', label: 'Moto' },
-      { key: 'caminhao', emoji: '🚚', label: 'Caminhão' },
-      { key: 'onibus', emoji: '🚌', label: 'Ônibus' },
-      { key: 'van', emoji: '🚐', label: 'Van' },
-      { key: 'bicicleta', emoji: '🚲', label: 'Bicicleta' },
-      { key: 'patinete', emoji: '🛴', label: 'Patinete' },
-      { key: 'animal', emoji: '🐕', label: 'Animal' },
-      { key: 'carga', emoji: '📦', label: 'Carga' },
-      { key: 'escolar', emoji: '🚌', label: 'Escolar' },
-      { key: 'taxis', emoji: '🚕', label: 'Táxi' },
-      { key: 'drone', emoji: '🛸', label: 'Drone' },
-      { key: 'reboque', emoji: '🔗', label: 'Reboque' },
-      { key: 'guincho', emoji: '🏗️', label: 'Guincho' }
-    ];
+    const TEMPLATES = TEMPLATE_DATA.trim().split('\n').map((row, index) => {
+      const [artigo, categoria, titulo, desc] = row.split('|');
+      return {
+        id: `ctb-${index}`,
+        artigo: `Art. ${artigo}, CTB`,
+        categoria,
+        titulo,
+        desc,
+        pontos: CHECKLISTS[categoria] || [
+          'Confira se o enquadramento, a descrição, o local e a data correspondem ao que ocorreu.',
+          'Junte documentos e provas relacionados aos fatos; não inclua alegações sem suporte.'
+        ]
+      };
+    });
 
     let selectedTemplate = TEMPLATES[0];
     let activeFilter = 'todos';
@@ -1280,8 +1378,8 @@
     // ============================================================
     function renderSigns() {
       const row = document.getElementById('signsRow');
-      row.innerHTML = SIGNS.map(s => `
-        <button type="button" class="sign-btn ${activeSign === s.key ? 'active' : ''}" onclick="toggleSign('${s.key}')">
+      row.innerHTML = SIGNALS.map(s => `
+        <button type="button" class="sign-btn ${(s.key === 'todos' ? activeSign === null : activeSign === s.key) ? 'active' : ''}" onclick="toggleSign('${s.key}')">
           <span style="font-size:1.4rem;">${s.emoji}</span>
           <span>${s.label}</span>
         </button>
@@ -1289,7 +1387,7 @@
     }
 
     function toggleSign(key) {
-      activeSign = activeSign === key ? null : key;
+      activeSign = key === 'todos' || activeSign === key ? null : key;
       activeFilter = 'todos';
       renderSigns();
       renderFilterPills();
@@ -1320,12 +1418,11 @@
       let list = TEMPLATES;
 
       if (activeFilter !== 'todos') list = list.filter(t => t.categoria === activeFilter);
-      if (activeSign) list = list.filter(t => t.sinal === activeSign);
+      if (activeSign) list = list.filter(t => t.categoria === activeSign);
       if (search) {
         list = list.filter(t =>
           t.titulo.toLowerCase().includes(search) ||
           t.desc.toLowerCase().includes(search) ||
-          t.codigos.some(c => c.includes(search)) ||
           t.artigo.toLowerCase().includes(search) ||
           t.categoria.toLowerCase().includes(search)
         );
@@ -1341,11 +1438,10 @@
       grid.innerHTML = list.map(t => `
         <div class="template-card ${selectedTemplate.id === t.id ? 'selected' : ''}" onclick="selectTemplate('${t.id}')">
           <div class="template-card-head">
-            <div class="template-emoji-box">${t.emoji}</div>
+            <div class="template-emoji-box">⚖️</div>
             <div>
               <div class="template-top-meta">
-                <span class="grav-pill grav-${t.gravidade}">${t.gravLabel}</span>
-                ${t.codigos.map(c => `<span class="template-codes">${c}</span>`).join('')}
+                <span class="template-codes">${t.artigo}</span>
               </div>
               <h4>${t.titulo}</h4>
             </div>
@@ -1361,6 +1457,7 @@
 
     function selectTemplate(id) {
       selectedTemplate = TEMPLATES.find(t => t.id === id);
+      document.getElementById('f_artigo').value = `${selectedTemplate.artigo} — ${selectedTemplate.titulo}`;
       renderTemplates();
       showToast(`Modelo selecionado: ${selectedTemplate.titulo}`, 'success');
       document.getElementById('step-2').scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1375,6 +1472,16 @@
       v = v.replace(/(\d{3})(\d)/, '$1.$2');
       v = v.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
       input.value = v;
+    }
+
+    function escapeHTML(value) {
+      return String(value).replace(/[&<>"']/g, char => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      }[char]));
     }
 
     // ============================================================
@@ -1397,8 +1504,9 @@
       document.getElementById('f_data_infracao').value = '2026-01-15';
       document.getElementById('f_data_notificacao').value = '2026-02-10';
       document.getElementById('f_local').value = 'Av. Paulista, 1000 - São Paulo/SP';
-      document.getElementById('f_artigo').value = 'Art. 202, CTB — Ultrapassagem pelo acostamento';
-      document.getElementById('f_obs').value = 'Havia um veículo quebrado na pista, o que obrigou o deslocamento momentâneo.';
+      const modeloDemo = TEMPLATES.find(t => t.artigo.startsWith('Art. 202,'));
+      if (modeloDemo) selectTemplate(modeloDemo.id);
+      document.getElementById('f_obs').value = 'Descreva apenas os fatos que possam ser confirmados por documentos ou outros meios de prova.';
       showToast('Exemplo preenchido! Clique em "Gerar Recurso".', 'success');
     }
 
@@ -1440,50 +1548,49 @@
         return `${day}/${m}/${y}`;
       };
 
-      const qualificacao = `${nome}, portador(a) do CPF nº ${cpf}${rg ? `, RG nº ${rg}` : ''}, CNH nº ${cnh} categoria ${catCnh}${ear ? ', com EAR (Exercício de Atividade Remunerada)' : ''}${contato ? `, contato ${contato}` : ''}, residente e domiciliado(a) em ${endereco}`;
-
-      const veiculoTexto = `veículo de placa ${placa}${veiculo ? `, marca/modelo ${veiculo}` : ''}${renavam ? `, RENAVAM nº ${renavam}` : ''}`;
+      const qualificacao = `${escapeHTML(nome)}, portador(a) do CPF nº ${escapeHTML(cpf)}${rg ? `, RG nº ${escapeHTML(rg)}` : ''}, CNH nº ${escapeHTML(cnh)} categoria ${escapeHTML(catCnh)}${ear ? ', com EAR (Exercício de Atividade Remunerada)' : ''}${contato ? `, contato ${escapeHTML(contato)}` : ''}, residente e domiciliado(a) em ${escapeHTML(endereco)}`;
+      const veiculoTexto = `veículo de placa ${escapeHTML(placa)}${veiculo ? `, marca/modelo ${escapeHTML(veiculo)}` : ''}${renavam ? `, RENAVAM nº ${escapeHTML(renavam)}` : ''}`;
 
       const tituloPeca = instancia.includes('DEFESA') ? 'DEFESA PRÉVIA (DEFESA DA AUTUAÇÃO)' : instancia.includes('JARI') ? 'RECURSO ADMINISTRATIVO À JARI (1ª INSTÂNCIA)' : 'RECURSO AO CETRAN / CONTRANDIFE (2ª INSTÂNCIA)';
 
-      const destinatario = instancia.includes('DEFESA') ? `AO ILUSTRÍSSIMO SENHOR DIRETOR DE TRÂNSITO DO ÓRGÃO AUTUADOR — ${orgao}` : instancia.includes('JARI') ? `À JUNTA ADMINISTRATIVA DE RECURSOS DE INFRAÇÕES — JARI DO ${orgao}` : `AO CONSELHO ESTADUAL DE TRÂNSITO — CETRAN / CONTRANDIFE — ${orgao}`;
+      const destinatario = instancia.includes('DEFESA') ? `À AUTORIDADE DE TRÂNSITO DO ÓRGÃO AUTUADOR — ${escapeHTML(orgao)}` : instancia.includes('JARI') ? `À JUNTA ADMINISTRATIVA DE RECURSOS DE INFRAÇÕES — JARI — ${escapeHTML(orgao)}` : `AO CONSELHO ESTADUAL DE TRÂNSITO — CETRAN / CONTRANDIFE — ${escapeHTML(orgao)}`;
+      const pontosEspecificos = selectedTemplate.pontos.map(ponto => `<li>${escapeHTML(ponto)}</li>`).join('');
 
       const html = `
         <h2 class="doc-enderecamento">${destinatario}</h2>
-        <p class="no-indent"><strong>Auto de Infração nº:</strong> ${ait}</p>
-        <p class="no-indent"><strong>Placa:</strong> ${placa} &nbsp;|&nbsp; <strong>Data da Infração:</strong> ${fmtData(dataInfracao)} &nbsp;|&nbsp; <strong>Notificação:</strong> ${fmtData(dataNotificacao)}</p>
+        <p class="no-indent"><strong>Auto de Infração nº:</strong> ${escapeHTML(ait)}</p>
+        <p class="no-indent"><strong>Placa:</strong> ${escapeHTML(placa)} &nbsp;|&nbsp; <strong>Data da Infração:</strong> ${fmtData(dataInfracao)} &nbsp;|&nbsp; <strong>Notificação:</strong> ${fmtData(dataNotificacao)}</p>
 
         <h3 class="doc-topic">${tituloPeca}</h3>
 
-        <p>${qualificacao}, vem, respeitosamente, à presença de Vossa Senhoria, com fundamento no Código de Trânsito Brasileiro (Lei nº 9.503/1997), apresentar <strong>${tituloPeca.toLowerCase()}</strong> em face do Auto de Infração nº ${ait}, pelos fatos e fundamentos a seguir expostos.</p>
+        <p>${qualificacao}, vem, respeitosamente, apresentar <strong>${tituloPeca.toLowerCase()}</strong> em face do Auto de Infração nº ${escapeHTML(ait)}, com base nos fatos, documentos e fundamentos pertinentes a seguir expostos.</p>
 
         <h3 class="doc-topic">I — DOS FATOS</h3>
-        <p>Consta no auto de infração que o ${veiculoTexto} teria supostamente cometido a infração enquadrada em <strong>${artigo}</strong>, no local <strong>${local}</strong>, em ${fmtData(dataInfracao)}.</p>
-        ${obs ? `<p>Ocorre que, conforme se verifica, ${obs}</p>` : ''}
-        <p>A notificação da autuação foi expedida em ${fmtData(dataNotificacao)}.</p>
+        <p>O Auto de Infração nº ${escapeHTML(ait)} atribui ao ${veiculoTexto} a conduta enquadrada como <strong>${escapeHTML(artigo)}</strong>, no local <strong>${escapeHTML(local)}</strong>, em ${fmtData(dataInfracao)}.</p>
+        ${obs ? `<p>Sobre os fatos, declaro: ${escapeHTML(obs)}</p>` : '<p>Descreva, de forma objetiva, a versão dos fatos e relacione os documentos que a comprovam.</p>'}
+        <p>A data informada para a notificação é ${fmtData(dataNotificacao)}. Requer-se a conferência dos registros e documentos correspondentes.</p>
 
-        <h3 class="doc-topic">II — DO DIREITO</h3>
-        <p>Inicialmente, cumpre destacar que o auto de infração deve observar os requisitos formais previstos nos artigos 280 e 281 do CTB, sob pena de nulidade.</p>
-        <p>Ademais, nos termos do art. 281, § 1º, II, do CTB, o auto de infração será arquivado se a notificação da autuação não for expedida no prazo máximo de 30 (trinta) dias. No caso concreto, deve ser verificada a tempestividade da expedição da notificação.</p>
-        <p>Ainda, o art. 282, §§ 6º e 7º, do CTB estabelece prazo decadencial de 180 (cento e oitenta) dias — ou 360 (trezentos e sessenta) dias em caso de defesa prévia — para a expedição da notificação da penalidade, sob pena de decadência.</p>
-        ${ear ? `<p>Registre-se que o condutor exerce atividade remunerada (EAR), nos termos do art. 147-A do CTB, de modo que a penalidade imposta impacta diretamente sua subsistência e de sua família, razão pela qual se requer a análise com especial atenção aos princípios da proporcionalidade e da razoabilidade.</p>` : ''}
+        <h3 class="doc-topic">II — DOS PONTOS A CONFERIR</h3>
+        <p>Os itens abaixo são sugestões de conferência, não afirmações de irregularidade. Mantenha no recurso apenas os pontos que se apliquem ao caso e que possam ser demonstrados:</p>
+        <ol class="doc-list">${pontosEspecificos}</ol>
+        <p>Confira também os requisitos do auto previstos no art. 280 do CTB e as regras de consistência e notificação do art. 281, inclusive o prazo de expedição aplicável ao caso. A incidência de prazo ou de qualquer consequência depende das datas, da forma de constatação e das circunstâncias comprovadas.</p>
+        ${ear ? `<p>Informo que exerço atividade remunerada (EAR), dado apresentado para contextualização. Seus efeitos devem ser avaliados conforme a situação concreta e a legislação aplicável.</p>` : ''}
 
         <h3 class="doc-topic">III — DOS PEDIDOS</h3>
         <p>Diante do exposto, requer-se:</p>
         <ol class="doc-list">
-          <li>O recebimento e o processamento da presente ${tituloPeca.toLowerCase()}, com efeito suspensivo, nos termos do art. 285 do CTB;</li>
-          <li>A análise da tempestividade da notificação da autuação e da notificação da penalidade, com a consequente declaração de nulidade por decadência, se for o caso;</li>
-          <li>O deferimento do recurso, com o cancelamento integral do Auto de Infração nº ${ait};</li>
-          <li>Subsidiariamente, a redução da penalidade ou a aplicação de medida mais benéfica.</li>
+          <li>O recebimento e a análise desta peça pela autoridade competente;</li>
+          <li>A apreciação dos fatos e documentos apresentados e, se comprovada irregularidade ou não caracterizada a infração, o arquivamento do auto e o cancelamento da penalidade, conforme a legislação aplicável;</li>
+          <li>O acesso aos elementos que fundamentaram a autuação e a decisão motivada sobre os argumentos apresentados, quando cabível.</li>
         </ol>
 
         <p class="no-indent">Nestes termos, pede deferimento.</p>
 
-        <p class="no-indent" style="margin-top: 30px;">${cidadeUf}, ${fmtData(new Date().toISOString().split('T')[0])}.</p>
+        <p class="no-indent" style="margin-top: 30px;">${escapeHTML(cidadeUf)}, ${fmtData(new Date().toISOString().split('T')[0])}.</p>
 
         <div class="doc-signature">
-          <div class="doc-sig-line">${nome}</div>
-          <p class="no-indent" style="margin-top: 6px; font-size: 11pt;">CPF: ${cpf} &nbsp;|&nbsp; CNH: ${cnh}</p>
+          <div class="doc-sig-line">${escapeHTML(nome)}</div>
+          <p class="no-indent" style="margin-top: 6px; font-size: 11pt;">CPF: ${escapeHTML(cpf)} &nbsp;|&nbsp; CNH: ${escapeHTML(cnh)}</p>
         </div>
       `;
 
@@ -1593,15 +1700,9 @@
     // 12. INICIALIZAÇÃO
     // ============================================================
     document.addEventListener('DOMContentLoaded', () => {
-      verificarSessao();
       renderSigns();
       renderFilterPills();
       renderTemplates();
-
-      // Se a sessão já estiver válida, foca direto no conteúdo
-      if (sessionStorage.getItem('autorecurso_ok') === '1') {
-        setTimeout(() => document.getElementById('lockPassword').blur(), 100);
-      }
     });
   </script>
 </body>
